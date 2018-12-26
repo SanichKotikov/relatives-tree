@@ -1,0 +1,37 @@
+{
+  "name": "family-tree",
+  "version": "0.0.1",
+  "description": "Calculates families and nodes positions for rendering a family tree",
+  "main": "lib/index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanichKotikov/family-tree.git"
+  },
+  "author": "Sanich Kotikov <sancho@cdrpro.ru> (https://sanichkotikov.github.io)",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "src",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "family-tree",
+    "family",
+    "relatives",
+    "node",
+    "connection"
+  ],
+  "bugs": {
+    "url": "https://github.com/SanichKotikov/family-tree/issues"
+  },
+  "devDependencies": {
+    "typescript": "3.2.2"
+  },
+  "dependencies": {},
+  "homepage": "https://github.com/SanichKotikov/family-tree"
+}
