@@ -29,7 +29,7 @@ class Store {
 
   getNode(id: string): IFamilyNode {
     const node = this.nodes.get(id);
-    if (!node) throw new Error(`[family-tree-store]: can't find node with id: ${id}`);
+    if (!node) throw new Error(`[relatives-tree::store]: can't find node with id: ${id}`);
     return node;
   }
 
@@ -39,7 +39,7 @@ class Store {
 
   getFamily(id: number): Family {
     const family = this.families.get(id);
-    if (!family) throw new Error(`[family-tree-store]: can't find family with id: ${id}`);
+    if (!family) throw new Error(`[relatives-tree::store]: can't find family with id: ${id}`);
     return family;
   }
 
