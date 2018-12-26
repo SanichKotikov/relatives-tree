@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SanichKotikov/family-tree.git"
+    "url": "git+https://github.com/SanichKotikov/relatives-tree.git"
   },
   "author": "Sanich Kotikov <sancho@cdrpro.ru> (https://sanichkotikov.github.io)",
   "license": "MIT",
@@ -27,11 +27,11 @@
     "connection"
   ],
   "bugs": {
-    "url": "https://github.com/SanichKotikov/family-tree/issues"
+    "url": "https://github.com/SanichKotikov/relatives-tree/issues"
   },
   "devDependencies": {
     "typescript": "3.2.2"
   },
   "dependencies": {},
-  "homepage": "https://github.com/SanichKotikov/family-tree"
+  "homepage": "https://github.com/SanichKotikov/relatives-tree"
 }
