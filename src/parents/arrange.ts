@@ -4,15 +4,16 @@ import Unit from '../models/unit';
 
 export default (store: Store, family: Family): void => {
   if (family.cID === null) return;
-
   let right = 0;
 
   while (family) {
+    const fUnit = family.cUnits[0];
+
     if (family.pUnits.length === 2 && family.pCount > 2) {
-      family.cUnits[0].shift = Math.floor(family.pUnits[1].shift / 2);
+      fUnit.shift = Math.floor(family.pUnits[1].shift / 2);
     }
 
-    const shift = family.cUnits[0].shift;
+    const shift = fUnit.shift;
     const fRight = family.left + family.width;
     right = Math.max(right, fRight);
 
@@ -20,12 +21,10 @@ export default (store: Store, family: Family): void => {
 
     // root family
     if (cFamily.cID === null) {
-      const cUnit = family.cUnits[0];
-      cUnit.shift = (family.width - cUnit.size * 2) / 2;
+      fUnit.shift = (family.width - fUnit.size * 2) / 2;
       break;
     }
 
-    const fUnit = family.cUnits[0];
     const pUnit = cFamily.pUnits.find(unit => unit.isSame(fUnit)) as Unit; // TODO
     const uIndex = cFamily.pUnits.findIndex(unit => (
       unit.nodes[0].id === fUnit.nodes[0].id

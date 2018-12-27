@@ -1,31 +1,31 @@
 import Store from '../store';
 import Family from '../models/family';
+import Unit from '../models/unit';
 import arrangeMiddle from '../middle/arrange';
 
 export default (store: Store, family: Family): void => {
-  const shift = family.pUnits[0].shift;
-  if (shift === 0 || family.pID === null) return;
-
+  if (family.pID === null) return;
   let right = 0;
 
   while (family) {
+    const fUnit = family.pUnits[0];
+
+    const shift = fUnit.shift;
     const fRight = family.left + family.width;
     right = Math.max(right, fRight);
 
     const pFamily = store.getFamily(family.pID as number); // TODO
 
-    const fUnit = family.pUnits[0];
-    const fShift = fUnit.shift;
-
+    const cUnit = pFamily.cUnits.find(unit => unit.isSame(fUnit)) as Unit; // TODO
     const uIndex = pFamily.cUnits.findIndex(unit => (
       unit.nodes[0].id === fUnit.nodes[0].id
     ));
 
     if (uIndex === 0) {
-      pFamily.left = family.left + fShift;
+      const left = family.left + shift - cUnit.shift;
+      pFamily.left = Math.max(pFamily.left, left);
     } else {
-      const pUnit = pFamily.cUnits.find(unit => unit.isSame(fUnit));
-      if (pUnit) pUnit.shift += fShift;
+      cUnit.shift = family.left + fUnit.shift - pFamily.left;
     }
 
     const next = pFamily.cUnits[uIndex + 1];
@@ -46,9 +46,9 @@ export default (store: Store, family: Family): void => {
     }
 
     if (pFamily.pID === null) {
-      const rNodes = [...store.families.values()].filter(f => f.type === 'root');
-      const start = rNodes.findIndex(f => f.id === pFamily.id);
-      arrangeMiddle(rNodes, start + 1, fRight);
+      const rootFamily = [...store.families.values()].filter(f => f.type === 'root');
+      const start = rootFamily.findIndex(f => f.id === pFamily.id);
+      arrangeMiddle(rootFamily, start + 1, fRight);
       break;
     }
 
