@@ -13,7 +13,7 @@ class Store {
     this.families = new Map();
     this.nodes = new Map();
 
-    nodes.forEach(node => this.nodes.set(node.id, node));
+    nodes.forEach(node => this.nodes.set(node.id, { ...node }));
 
     // TODO:
     this.rootNode = (this.nodes.get(rootId) as IFamilyNode);
