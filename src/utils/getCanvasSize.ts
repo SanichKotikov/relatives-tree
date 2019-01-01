@@ -12,6 +12,6 @@ export default (store: Store): ICanvasSize => {
 
   return {
     width: Math.max.apply(null, rValues),
-    height: Math.max.apply(null, bValues) + 2,
+    height: Math.max.apply(null, bValues) + 4,
   };
 }

@@ -17,7 +17,7 @@ export default (store: Store): void => {
       const childFamily = store.getFamily(familyUnit.familyId);
 
       family.cID = childFamily.id;
-      family.top = childFamily.top - 1;
+      family.top = childFamily.top - 2;
       family.left = childFamily.left + familyUnit.shift;
 
       arrange(store, family);
