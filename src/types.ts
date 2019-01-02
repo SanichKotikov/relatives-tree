@@ -24,7 +24,12 @@ export interface IFamilyNode {
   placeholder?: boolean;
 }
 
+export interface IConnector {
+  points: [number, number, number, number];
+}
+
 export interface IFamilyData {
   canvas: ICanvasSize;
   families: Family[];
+  connectors: IConnector[];
 }

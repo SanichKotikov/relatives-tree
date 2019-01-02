@@ -3,8 +3,9 @@ import createPlaceholders from './middle/placeholders';
 import createMiddle from './middle/create';
 import createParents from './parents/create';
 import createChildren from './children/create';
-import correctPositions from './utils/correctPositions.js';
-import getCanvasSize from './utils/getCanvasSize.js';
+import connectors from './connectors';
+import correctPositions from './utils/correctPositions';
+import getCanvasSize from './utils/getCanvasSize';
 import { IFamilyNode, IFamilyData } from './types';
 
 export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
@@ -16,8 +17,11 @@ export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
   createChildren(store);
   correctPositions(store);
 
+  const families = [...store.families.values()];
+
   return {
+    families: families,
     canvas: getCanvasSize(store),
-    families: [...store.families.values()],
+    connectors: connectors(families),
   };
 }
