@@ -5,16 +5,19 @@ export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
   families.forEach(family => {
+    if (family.pUnits.length !== 1) {
+      throw new Error(`[relatives-tree]: a child family should have only one parent's unit`);
+    }
+
     const mY = family.top + 2;
 
-    // from parent(s) to child
-    family.pUnits.forEach(pUnit => {
-      const pX = family.left + pUnit.shift + (pUnit.size); // TODO
-      const pY = family.top + 1;
+    const pUnit = family.pUnits[0];
+    const pX = family.left + pUnit.shift + (pUnit.size); // TODO
+    const pY = family.top + 1;
 
-      connectors.push({
-        points: [pX, pY, pX, mY],
-      });
+    // from parent(s) to child
+    connectors.push({
+      points: [pX, pY, pX, mY],
     });
 
     // TODO
@@ -55,10 +58,17 @@ export default (families: Family[]): IConnector[] => {
       }
     });
 
-    // horizontal above children
-    connectors.push({
-      points: [Math.min.apply(null, cXs), mY, Math.max.apply(null, cXs), mY],
-    });
+    if (cXs.length > 1) {
+      // horizontal above children
+      connectors.push({
+        points: [Math.min.apply(null, cXs), mY, Math.max.apply(null, cXs), mY],
+      });
+    } else if (cXs.length === 1 && pX !== cXs[0]) {
+      // horizontal between parent(s) and child
+      connectors.push({
+        points: [Math.min(pX, cXs[0]), mY, Math.max(pX, cXs[0]), mY],
+      });
+    }
   });
 
   return connectors;

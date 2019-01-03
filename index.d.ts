@@ -1,5 +1,16 @@
-import { ICanvasSize, IRelation, IFamilyNode, IConnector, IFamilyData } from './src/types';
+import { IFamilyNode, IFamilyData } from './src/types';
 
-export { ICanvasSize, IRelation, IFamilyNode, IConnector, IFamilyData };
+export {
+  Gender,
+  RelationType,
+  FamilyType,
+  Family,
+  Unit,
+  ICanvasSize,
+  IRelation,
+  IFamilyNode,
+  IConnector,
+  IFamilyData,
+} from './src/types';
 
 export default function (nodes: IFamilyNode[], rootId: string): IFamilyData;
