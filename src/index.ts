@@ -8,6 +8,9 @@ import correctPositions from './utils/correctPositions';
 import getCanvasSize from './utils/getCanvasSize';
 import { IFamilyNode, IFamilyData } from './types';
 
+import hasHiddenRelatives from './utils/hasHiddenRelatives';
+export { hasHiddenRelatives };
+
 export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
   const store = new Store(nodes, rootId);
 
