@@ -40,8 +40,8 @@ export default (store: Store): void => {
     { id: mother.id, type: 'blood' },
   ];
 
-  store.rootNode.siblings.forEach(link => {
-    const sibling = store.getNode(link.id);
+  store.rootNode.siblings.forEach(rel => {
+    const sibling = store.getNode(rel.id);
     sibling.parents = store.rootNode.parents;
   });
 

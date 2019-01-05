@@ -1,16 +1,17 @@
 import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
+import { relToNode } from '../utils';
 import getSpouses from '../utils/getSpouses';
 import setUnitDefShifts from '../utils/setUnitDefShifts';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store, parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family => {
+  const relToNodeFunc = relToNode(store);
   const family = new Family(store.getNextId(), type, isMain);
 
-  const parents = family.main
-    ? parentIDs.map(id => store.getNode(id)).sort((a, b) => (b.gender !== store.gender) ? -1 : 0)
-    : parentIDs.map(id => store.getNode(id));
+  const parents = parentIDs.map(id => store.getNode(id));
+  if (family.main) parents.sort((a, b) => (b.gender !== store.gender) ? -1 : 0);
 
   family.pUnits.push(new Unit(family.id, parents));
 
@@ -18,25 +19,23 @@ export default (store: Store, parentIDs: string[], type: FamilyType = 'root', is
   let children: IFamilyNode[] = [];
 
   if (parents.length === 1) {
-    children = parents[0].children
-      .map(link => store.getNode(link.id));
+    children = parents[0].children.map(relToNodeFunc);
   } else {
     const firstParent = parents[0];
     const secondParent = parents[1];
 
     children = firstParent.children
-      .filter(fLink => secondParent.children.find(sLink => sLink.id === fLink.id))
-      .map(link => store.getNode(link.id));
+      .filter(rel => secondParent.children.find(sRel => sRel.id === rel.id))
+      .map(relToNodeFunc);
   }
 
   // CHILDREN's SPOUSES
   children.forEach(child => {
     if (child.spouses.length) {
-      const spouses = getSpouses(store, [child]);
-      if (spouses) {
-        [...spouses.left.map(node => [node]), spouses.target, ...spouses.right.map(node => [node])]
-          .forEach(nodes => family.cUnits.push(new Unit(family.id, nodes)));
-      }
+      const { left, middle, right } = getSpouses(store, [child]);
+      [...left.map(node => [node]), middle, ...right.map(node => [node])].forEach(nodes => (
+        family.cUnits.push(new Unit(family.id, nodes))
+      ));
     } else {
       family.cUnits.push(new Unit(family.id, [child]));
     }

@@ -1,7 +1,7 @@
 import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
-import hasDiffParents from '../utils/hasDiffParents';
+import { hasDiffParents } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
 
@@ -36,15 +36,12 @@ export default (store: Store): void => {
       .reduce((all, next) => all.concat(next), []);
 
     if (parents.length === 2) {
-      const spouses = getSpouses(store, parents);
-
-      if (spouses) {
-        families = [
-          ...spouses.left.map(node => byParents(store, [node.id])),
-          ...families,
-          ...spouses.right.map(node => byParents(store, [node.id])),
-        ];
-      }
+      const { left, right } = getSpouses(store, parents);
+      families = [
+        ...left.map(node => byParents(store, [node.id])),
+        ...families,
+        ...right.map(node => byParents(store, [node.id])),
+      ];
     }
   }
 

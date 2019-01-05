@@ -34,7 +34,7 @@ class Store {
   }
 
   getNodes(ids: string[]): IFamilyNode[] {
-    return [...ids].map(id => this.getNode(id));
+    return ids.map(id => this.getNode(id));
   }
 
   getFamily(id: number): Family {
