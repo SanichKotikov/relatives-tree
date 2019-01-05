@@ -2,7 +2,7 @@ import Family from './models/family';
 import Unit from './models/unit';
 
 export type Gender = 'male' | 'female';
-export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted';
+export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half';
 export type FamilyType = 'root' | 'child' | 'parent';
 
 export { Family, Unit }
