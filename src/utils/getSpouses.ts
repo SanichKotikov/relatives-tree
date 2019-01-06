@@ -10,7 +10,6 @@ interface ISpousesData {
 
 export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
   const middle = [...parents];
-  const relToNodeFunc = relToNode(store);
 
   if (middle.length === 1) {
     let spouse: IFamilyNode | undefined;
@@ -23,10 +22,11 @@ export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
     } else if (parent.spouses.length === 1) {
       spouse = store.getNode(parent.spouses[0].id)
     } else if (parent.spouses.length > 1) {
-      spouse = parent.spouses
-        .map(relToNodeFunc)
-        .sort((a, b) => b.children.length - a.children.length)
-        .shift();
+      spouse = (
+        parent.spouses
+          .map(relToNode(store))
+          .sort((a, b) => b.children.length - a.children.length)
+      )[0];
     }
 
     if (spouse) {
@@ -44,12 +44,12 @@ export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
     result.left = middle[0].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
       .sort((a) => a.type === 'married' ? 1 : 0)
-      .map(relToNodeFunc);
+      .map(relToNode(store));
 
     result.right = middle[1].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
       .sort((a) => a.type === 'married' ? -1 : 0)
-      .map(relToNodeFunc);
+      .map(relToNode(store));
   }
 
   return result;

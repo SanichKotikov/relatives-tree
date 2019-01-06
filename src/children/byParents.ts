@@ -7,7 +7,6 @@ import setUnitDefShifts from '../utils/setUnitDefShifts';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store, parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family => {
-  const relToNodeFunc = relToNode(store);
   const family = new Family(store.getNextId(), type, isMain);
 
   const parents = parentIDs.map(id => store.getNode(id));
@@ -19,14 +18,14 @@ export default (store: Store, parentIDs: string[], type: FamilyType = 'root', is
   let children: IFamilyNode[] = [];
 
   if (parents.length === 1) {
-    children = parents[0].children.map(relToNodeFunc);
+    children = parents[0].children.map(relToNode(store));
   } else {
     const firstParent = parents[0];
     const secondParent = parents[1];
 
     children = firstParent.children
       .filter(rel => secondParent.children.find(sRel => sRel.id === rel.id))
-      .map(relToNodeFunc);
+      .map(relToNode(store));
   }
 
   // CHILDREN's SPOUSES
