@@ -6,10 +6,8 @@ import createChildren from './children/create';
 import connectors from './connectors';
 import correctPositions from './utils/correctPositions';
 import getCanvasSize from './utils/getCanvasSize';
+import getExtendedNodes from './utils/getExtendedNodes';
 import { IFamilyNode, IFamilyData } from './types';
-
-import hasHiddenRelatives from './utils/hasHiddenRelatives';
-export { hasHiddenRelatives };
 
 export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
   const store = new Store(nodes, rootId);
@@ -25,6 +23,7 @@ export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
   return {
     families: families,
     canvas: getCanvasSize(store),
+    nodes: getExtendedNodes(families),
     connectors: connectors(families),
   };
 }

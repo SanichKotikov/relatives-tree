@@ -33,10 +33,10 @@ export default (store: Store, parentIDs: string[], type: FamilyType = 'root', is
     if (child.spouses.length) {
       const { left, middle, right } = getSpouses(store, [child]);
       [...left.map(node => [node]), middle, ...right.map(node => [node])].forEach(nodes => (
-        family.cUnits.push(new Unit(family.id, nodes))
+        family.cUnits.push(new Unit(family.id, nodes, true))
       ));
     } else {
-      family.cUnits.push(new Unit(family.id, [child]));
+      family.cUnits.push(new Unit(family.id, [child], true));
     }
   });
 

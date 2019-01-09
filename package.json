@@ -1,6 +1,6 @@
 {
   "name": "relatives-tree",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
   "typings": "index.d.ts",

@@ -27,6 +27,12 @@ export interface IFamilyNode {
   placeholder?: boolean;
 }
 
+export interface IFamilyExtNode extends IFamilyNode {
+  top: number;
+  left: number;
+  hasSubTree: boolean;
+}
+
 export interface IConnector {
   points: [number, number, number, number];
 }
@@ -34,5 +40,6 @@ export interface IConnector {
 export interface IFamilyData {
   canvas: ICanvasSize;
   families: Family[];
+  nodes: IFamilyExtNode[];
   connectors: IConnector[];
 }

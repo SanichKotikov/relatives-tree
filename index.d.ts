@@ -1,4 +1,4 @@
-import { Family, IFamilyNode, IFamilyData } from './src/types';
+import { Family, IFamilyNode, IFamilyExtNode, IFamilyData } from './src/types';
 
 export {
   Gender,
@@ -9,11 +9,9 @@ export {
   ICanvasSize,
   IRelation,
   IFamilyNode,
+  IFamilyExtNode,
   IConnector,
   IFamilyData,
 } from './src/types';
-
-declare const hasHiddenRelatives: (family: Family, node: IFamilyNode) => boolean;
-export { hasHiddenRelatives };
 
 export default function (nodes: IFamilyNode[], rootId: string): IFamilyData;
