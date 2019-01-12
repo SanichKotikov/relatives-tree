@@ -29,9 +29,7 @@ class Family {
   }
 
   get width(): number {
-    const units = this.cCount > this.pCount ? this.cUnits : this.pUnits;
-    const lastUnit = units[units.length - 1];
-    return lastUnit.shift + (2 * lastUnit.size);
+    return Math.max.apply(null, [...this.pUnits, ...this.cUnits].map(unit => unit.right));
   }
 
   get pCount(): number {

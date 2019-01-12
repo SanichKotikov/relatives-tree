@@ -2,10 +2,9 @@ import Family from '../models/family';
 import Unit from '../models/unit';
 
 const shiftUnits = (units: Unit[], shift: number): void => {
-  units.forEach((unit) => {
-    unit.shift = shift;
-    shift += unit.size * 2;
-  });
+  units.forEach((unit, idx, self) => (
+    unit.shift = idx === 0 ? shift : self[idx - 1].right
+  ));
 };
 
 export default (family: Family): void => {

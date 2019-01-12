@@ -18,6 +18,10 @@ class Unit {
     return this.nodes.length;
   }
 
+  get right(): number {
+    return this.shift + (this.size * 2);
+  }
+
   get ids(): string[] {
     return this.nodes.map(node => node.id);
   }
