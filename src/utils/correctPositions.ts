@@ -14,10 +14,7 @@ export default (store: Store): void => {
     const cUnit = rootChild.pUnits[0];
     const pUnit = rootParent.cUnits[0];
 
-    const cLeft = rootChild.left + cUnit.shift;
-    const pLeft = rootParent.left + pUnit.shift;
-
-    const diff = pLeft - cLeft;
+    const diff = (rootParent.left + pUnit.shift) - (rootChild.left + cUnit.shift);
 
     if (diff > 0) families
       .filter(family => (family.type === 'child' || family.type === 'root'))
