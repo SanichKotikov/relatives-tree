@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "typings": "index.d.ts",
   "scripts": {
+    "benchmarks": "node ./benchmarks/index.js",
     "start": "tsc --watch",
     "build": "tsc"
   },
@@ -30,6 +31,8 @@
     "url": "https://github.com/SanichKotikov/relatives-tree/issues"
   },
   "devDependencies": {
+    "@types/node": "10.12.19",
+    "benchmark": "2.1.4",
     "typescript": "3.2.2"
   },
   "dependencies": {},
