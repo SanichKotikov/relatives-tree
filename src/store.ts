@@ -1,6 +1,8 @@
 import Family from './models/family';
 import { IFamilyNode } from './types';
 
+const ERROR_PREFIX = '[relatives-tree::store]:';
+
 class Store {
 
   nextId: number;
@@ -9,13 +11,15 @@ class Store {
   rootNode: IFamilyNode;
 
   constructor(nodes: IFamilyNode[], rootId: string) {
+    if (!nodes.find(node => node.id === rootId)) {
+      throw new Error(`${ERROR_PREFIX} Can't find a root node with ID: ${rootId}`);
+    }
+
     this.nextId = 1;
     this.families = new Map();
     this.nodes = new Map();
 
     nodes.forEach(node => this.nodes.set(node.id, { ...node }));
-
-    // TODO:
     this.rootNode = (this.nodes.get(rootId) as IFamilyNode);
   }
 
@@ -29,7 +33,7 @@ class Store {
 
   getNode(id: string): IFamilyNode {
     const node = this.nodes.get(id);
-    if (!node) throw new Error(`[relatives-tree::store]: can't find node with id: ${id}`);
+    if (!node) throw new Error(`${ERROR_PREFIX} Can't find a node with ID: ${id}`);
     return node;
   }
 
@@ -39,7 +43,7 @@ class Store {
 
   getFamily(id: number): Family {
     const family = this.families.get(id);
-    if (!family) throw new Error(`[relatives-tree::store]: can't find family with id: ${id}`);
+    if (!family) throw new Error(`${ERROR_PREFIX} Can't find a family with ID: ${id}`);
     return family;
   }
 
