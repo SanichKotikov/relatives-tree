@@ -1,18 +1,8 @@
-import { max } from './index';
-import Store from '../store';
+import { prop, max } from './index';
+import Family from '../models/family';
 import { ICanvasSize } from '../types';
 
-export default (store: Store): ICanvasSize => {
-  const rValues: number[] = [];
-  const bValues: number[] = [];
-
-  store.familiesArray.forEach((family) => {
-    rValues.push(family.left + family.width);
-    bValues.push(family.top);
-  });
-
-  return {
-    width: max(rValues),
-    height: max(bValues) + 4,
-  };
-}
+export default (families: Family[]): ICanvasSize => ({
+  width: max(families.map(prop('right'))),
+  height: max(families.map(prop('top'))) + 4,
+});

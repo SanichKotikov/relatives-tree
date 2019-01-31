@@ -49,7 +49,7 @@ export default (store: Store): Store => {
 
   if (families.length > 1) {
     for (let i = 1; i < families.length; i++) {
-      families[i].left = families[i - 1].left + families[i - 1].width;
+      families[i].left = families[i - 1].right;
     }
   }
 

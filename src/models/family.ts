@@ -33,6 +33,10 @@ class Family {
     return max([...this.pUnits, ...this.cUnits].map(prop('right')));
   }
 
+  get right(): number {
+    return this.left + this.width;
+  }
+
   get pCount(): number {
     return this.pUnits.reduce((a, b) => a + b.size, 0);
   }

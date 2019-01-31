@@ -13,8 +13,7 @@ export default (store: Store) => {
       const fUnit = family.pUnits[0];
 
       const shift = fUnit.shift;
-      const fRight = family.left + family.width;
-      right = Math.max(right, fRight);
+      right = Math.max(right, family.right);
 
       const pFamily = store.getFamily(family.pID as number); // TODO
 
@@ -50,7 +49,7 @@ export default (store: Store) => {
       if (pFamily.pID === null) {
         const rootFamily = store.familiesArray.filter(withType('root'));
         const start = rootFamily.findIndex(withId(pFamily.id));
-        arrangeMiddle(rootFamily, start + 1, fRight);
+        arrangeMiddle(rootFamily, start + 1, family.right);
         break;
       }
 

@@ -16,8 +16,7 @@ export default (store: Store) => {
       }
 
       const shift = fUnit.shift;
-      const fRight = family.left + family.width;
-      right = Math.max(right, fRight);
+      right = Math.max(right, family.right);
 
       const cFamily = store.getFamily(family.cID as number); // TODO
 

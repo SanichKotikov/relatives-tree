@@ -10,15 +10,15 @@ import getExtendedNodes from './utils/getExtendedNodes';
 import { pipe } from './utils';
 import { IFamilyNode, IFamilyData } from './types';
 
-const pipeline = pipe(placeholders, middle, parents, children, positions);
+const pipeline: (store: Store) => Store = pipe(placeholders, middle, parents, children, positions);
 
 export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
-  const store = pipeline(new Store(nodes, rootId));
+  const families = pipeline(new Store(nodes, rootId)).familiesArray;
 
   return {
-    families: store.familiesArray,
-    canvas: getCanvasSize(store),
-    nodes: getExtendedNodes(store.familiesArray),
-    connectors: connectors(store.familiesArray),
+    families: families,
+    canvas: getCanvasSize(families),
+    nodes: getExtendedNodes(families),
+    connectors: connectors(families),
   };
 }

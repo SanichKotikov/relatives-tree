@@ -1,5 +1,6 @@
 import Store from '../store';
 import { Gender, RelationType, IRelation, IFamilyNode } from '../types';
+import { relToNode } from '../utils';
 
 const createRel = (id: string, type: RelationType = 'blood'): IRelation => ({ id, type });
 
@@ -28,13 +29,18 @@ const createParents = (store: Store, root: IFamilyNode): IRelation[] => {
   });
 };
 
+const setParents = (parents: IRelation[]) => (node: IFamilyNode) => node.parents = parents.slice();
+
 export default (store: Store): Store => {
   if (store.rootNode.parents.length) return store;
   const root = store.rootNode;
-  const parents = createParents(store, root);
+  const setParentsTo = setParents(createParents(store, root));
 
-  root.parents = parents.slice();
-  root.siblings.forEach(rel => store.getNode(rel.id).parents = parents.slice());
+  setParentsTo(root);
+
+  root.siblings
+    .map(relToNode(store))
+    .forEach(setParentsTo);
 
   return store;
 };
