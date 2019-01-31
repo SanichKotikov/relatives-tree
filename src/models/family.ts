@@ -1,3 +1,4 @@
+import { prop, max } from '../utils';
 import { FamilyType } from '../types';
 import Unit from './unit';
 
@@ -29,7 +30,7 @@ class Family {
   }
 
   get width(): number {
-    return Math.max.apply(null, [...this.pUnits, ...this.cUnits].map(unit => unit.right));
+    return max([...this.pUnits, ...this.cUnits].map(prop('right')));
   }
 
   get pCount(): number {

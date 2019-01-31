@@ -1,3 +1,4 @@
+import { max } from './index';
 import Store from '../store';
 import { ICanvasSize } from '../types';
 
@@ -11,7 +12,7 @@ export default (store: Store): ICanvasSize => {
   });
 
   return {
-    width: Math.max.apply(null, rValues),
-    height: Math.max.apply(null, bValues) + 4,
+    width: max(rValues),
+    height: max(bValues) + 4,
   };
 }

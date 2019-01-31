@@ -1,4 +1,4 @@
-import { withType, itemToID, flat } from '../utils';
+import { prop, withType, flat, unique } from '../utils';
 import Family from '../models/family';
 import { IConnector } from '../types';
 
@@ -23,11 +23,11 @@ export default (families: Family[]): IConnector[] => {
         points: [pX, pY, pX, mY],
       });
 
-      // TODO
       const ids: string[] = pUnit.nodes
-        .map(node => node.children.map(itemToID))
+        .map(prop('children'))
         .reduce(flat)
-        .filter((id, idx, self) => self.findIndex(val => val === id) === idx);
+        .map(prop('id'))
+        .filter(unique);
 
       family.cUnits.forEach(cUnit => {
         const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);

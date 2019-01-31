@@ -10,7 +10,7 @@ export default (store: Store) => {
   return function (parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family {
     const family = new Family(store.getNextId(), type, isMain);
 
-    const parents = parentIDs.map(id => store.getNode(id));
+    const parents = parentIDs.map(store.getNode.bind(store));
     if (family.main) parents.sort((a, b) => (b.gender !== store.gender) ? -1 : 0);
 
     family.pUnits.push(new Unit(family.id, parents));

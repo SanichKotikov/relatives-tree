@@ -1,5 +1,5 @@
 import Family from '../models/family';
-import { withId, withType } from '../utils';
+import { withId, withType, inAscOrder } from '../utils';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
@@ -22,7 +22,7 @@ export default (families: Family[]): IConnector[] => {
           .forEach(rFamily => {
             rFamily.pUnits.forEach(unit => {
               if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
-                const xX = [pX, rFamily.left + unit.shift + 1].sort((a, b) => a - b);
+                const xX = [pX, rFamily.left + unit.shift + 1].sort(inAscOrder);
                 connectors.push({
                   points: [xX[0], pY, xX[1], pY],
                 });

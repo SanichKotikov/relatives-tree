@@ -1,5 +1,5 @@
 import Family from '../models/family';
-import { withId, withType, flat } from '../utils';
+import { prop, withId, withType, flat, inAscOrder, min, max } from '../utils';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
@@ -21,9 +21,8 @@ export default (families: Family[]): IConnector[] => {
       points: [pX, pY, pX, mY],
     });
 
-    // TODO
     const parentIds = family.pUnits
-      .map(unit => unit.ids)
+      .map(prop('ids'))
       .reduce(flat);
 
     const cXs: number[] = [];
@@ -50,7 +49,7 @@ export default (families: Family[]): IConnector[] => {
       } else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
         family.cUnits.forEach(nUnit => {
           if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
-            const xX = [cX, family.left + nUnit.shift + 1].sort((a, b) => a - b);
+            const xX = [cX, family.left + nUnit.shift + 1].sort(inAscOrder);
             connectors.push({
               points: [xX[0], mY + 1, xX[1], mY + 1],
             });
@@ -62,7 +61,7 @@ export default (families: Family[]): IConnector[] => {
     if (cXs.length > 1) {
       // horizontal above children
       connectors.push({
-        points: [Math.min.apply(null, cXs), mY, Math.max.apply(null, cXs), mY],
+        points: [min(cXs), mY, max(cXs), mY],
       });
     } else if (cXs.length === 1 && pX !== cXs[0]) {
       // horizontal between parent(s) and child

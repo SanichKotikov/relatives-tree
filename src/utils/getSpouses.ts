@@ -1,5 +1,5 @@
 import Store from '../store';
-import { withType, relToNode, itemToID } from './index';
+import { prop, withType, relToNode } from './index';
 import { IFamilyNode } from '../types';
 
 interface ISpousesData {
@@ -39,7 +39,7 @@ export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
   const result: ISpousesData = { left: [], middle, right: [] };
 
   if (middle.length === 2) {
-    const middleIds = result.middle.map(itemToID);
+    const middleIds = result.middle.map(prop('id'));
 
     result.left = middle[0].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)

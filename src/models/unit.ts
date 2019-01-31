@@ -1,4 +1,4 @@
-import { itemToID } from '../utils';
+import { prop } from '../utils';
 import { IFamilyNode } from '../types';
 
 class Unit {
@@ -24,7 +24,7 @@ class Unit {
   }
 
   get ids(): string[] {
-    return this.nodes.map(itemToID);
+    return this.nodes.map(prop('id'));
   }
 
 }

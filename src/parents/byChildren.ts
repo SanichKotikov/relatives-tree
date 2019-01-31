@@ -1,4 +1,4 @@
-import { itemToID } from '../utils';
+import { prop } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
@@ -10,7 +10,7 @@ export default (store: Store) => {
 
     cUnit.nodes.forEach((child, cIndex) => {
       const parents = store
-        .getNodes(child.parents.map(itemToID))
+        .getNodes(child.parents.map(prop('id')))
         .sort((a, b) => (b.gender !== store.gender) ? -1 : 0);
 
       if (parents.length) {

@@ -10,7 +10,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
     "alwaysStrict": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": false,
     "removeComments": true,
     "strict": true,

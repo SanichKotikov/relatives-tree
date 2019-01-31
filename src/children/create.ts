@@ -1,6 +1,6 @@
 import byParents from './byParents';
 import arrange from './arrange';
-import { withType, itemToID } from '../utils';
+import { prop, withType } from '../utils';
 import Store from '../store';
 import Unit from '../models/unit';
 
@@ -15,7 +15,7 @@ export default (store: Store): Store => {
     while (stack.length) {
       const familyUnit = stack.pop() as Unit; // TODO
 
-      const family = createFamily(familyUnit.nodes.map(itemToID), 'child');
+      const family = createFamily(familyUnit.nodes.map(prop('id')), 'child');
       const parentFamily = store.getFamily(familyUnit.familyId);
 
       family.pID = parentFamily.id;

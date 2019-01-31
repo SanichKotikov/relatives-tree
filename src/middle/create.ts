@@ -1,9 +1,10 @@
 import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
-import { withType, itemToID, flat, hasDiffParents } from '../utils';
+import { prop, withType, flat, hasDiffParents } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
+import { IFamilyNode } from '../types';
 
 export default (store: Store): Store => {
   let families: Family[] = [];
@@ -14,11 +15,11 @@ export default (store: Store): Store => {
     // Hide: another spouses for parents, half-siblings (for both parents)
     const bloodParentIDs = store.rootNode.parents
       .filter(withType('blood'))
-      .map(itemToID);
+      .map(prop('id'));
 
     const adoptedParentIDs = store.rootNode.parents
       .filter(withType('adopted'))
-      .map(itemToID);
+      .map(prop('id'));
 
     const bloodFamily = createFamily(bloodParentIDs, 'root', true);
     const adoptedFamily = createFamily(adoptedParentIDs);
@@ -27,13 +28,13 @@ export default (store: Store): Store => {
     families = [bloodFamily, adoptedFamily];
   } else {
     // Show: parents + their spouses, my siblings + half-siblings, my spouses
-    const parentIDs = store.rootNode.parents.map(itemToID);
+    const parentIDs = store.rootNode.parents.map(prop('id'));
     const mainFamily = createFamily(parentIDs, 'root', true);
 
     families.push(mainFamily);
 
-    const parents = mainFamily.pUnits
-      .map(unit => unit.nodes)
+    const parents: IFamilyNode[] = mainFamily.pUnits
+      .map(prop('nodes'))
       .reduce(flat);
 
     if (parents.length === 2) {

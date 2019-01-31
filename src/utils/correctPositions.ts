@@ -1,11 +1,11 @@
 import Store from '../store';
 import Family from '../models/family';
-import { withType } from './index';
+import { prop, withType, min } from './index';
 
 export default (store: Store): Store => {
   const families = store.familiesArray;
 
-  const vShift = Math.min.apply(null, families.map(family => family.top)) * -1;
+  const vShift = min(families.map(prop('top'))) * -1;
   if (vShift !== 0) families.forEach(family => family.top += vShift);
 
   const rootChild = families.find(f => f.main) as Family; // TODO
@@ -24,7 +24,7 @@ export default (store: Store): Store => {
       .filter(withType('parent'))
       .forEach(family => family.left += diff * -1);
 
-    const hShift = Math.min.apply(null, families.map(family => family.left));
+    const hShift = min(families.map(prop('left')));
     if (hShift > 0) families.forEach(family => family.left -= hShift);
   }
 
