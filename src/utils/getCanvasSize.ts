@@ -5,7 +5,7 @@ export default (store: Store): ICanvasSize => {
   const rValues: number[] = [];
   const bValues: number[] = [];
 
-  [...store.families.values()].forEach((family) => {
+  store.familiesArray.forEach((family) => {
     rValues.push(family.left + family.width);
     bValues.push(family.top);
   });

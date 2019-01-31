@@ -41,13 +41,13 @@ class Family {
   }
 
   get pUnitsWithParents() {
-    return [...this.pUnits].filter(unit => (
+    return this.pUnits.filter(unit => (
       !!unit.nodes.find(node => !!node.parents.length)
     ));
   }
 
   get cUnitsWithChildren() {
-    return [...this.cUnits].filter(unit => (
+    return this.cUnits.filter(unit => (
       !!unit.nodes.find(node => !!node.children.length)
     ));
   }

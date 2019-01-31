@@ -1,10 +1,11 @@
 import Family from '../models/family';
+import { withId, withType } from '../utils';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
-  families.forEach(family => {
+  families.filter(withType('root')).forEach(family => {
     // between parents
     family.pUnits.forEach(pUnit => {
       const pX = family.left + pUnit.shift + 1;
@@ -20,7 +21,7 @@ export default (families: Family[]): IConnector[] => {
           .filter(rFamily => rFamily.id !== family.id)
           .forEach(rFamily => {
             rFamily.pUnits.forEach(unit => {
-              if (unit.nodes.findIndex(node => node.id === pUnit.nodes[0].spouses[0].id) !== -1) {
+              if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
                 const xX = [pX, rFamily.left + unit.shift + 1].sort((a, b) => a - b);
                 connectors.push({
                   points: [xX[0], pY, xX[1], pY],

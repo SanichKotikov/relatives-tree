@@ -1,10 +1,11 @@
 import Family from '../models/family';
+import { withId, withType, flat } from '../utils';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
-  families.forEach(family => {
+  families.filter(withType('root', 'child')).forEach(family => {
     if (family.pUnits.length !== 1) {
       throw new Error(`[relatives-tree]: a child family should have only one parent's unit`);
     }
@@ -23,7 +24,7 @@ export default (families: Family[]): IConnector[] => {
     // TODO
     const parentIds = family.pUnits
       .map(unit => unit.ids)
-      .reduce((ids, id) => ids.concat(id), []);
+      .reduce(flat);
 
     const cXs: number[] = [];
 
@@ -48,7 +49,7 @@ export default (families: Family[]): IConnector[] => {
         });
       } else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
         family.cUnits.forEach(nUnit => {
-          if (nUnit.nodes.findIndex(node => node.id === cUnit.nodes[0].spouses[0].id) !== -1) {
+          if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
             const xX = [cX, family.left + nUnit.shift + 1].sort((a, b) => a - b);
             connectors.push({
               points: [xX[0], mY + 1, xX[1], mY + 1],

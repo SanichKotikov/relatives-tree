@@ -1,3 +1,4 @@
+import { itemToID } from '../utils';
 import { IFamilyNode } from '../types';
 
 class Unit {
@@ -23,12 +24,7 @@ class Unit {
   }
 
   get ids(): string[] {
-    return this.nodes.map(node => node.id);
-  }
-
-  // TODO
-  isSame(unit: Unit): boolean {
-    return this.ids.join('') === unit.ids.join('')
+    return this.nodes.map(itemToID);
   }
 
 }

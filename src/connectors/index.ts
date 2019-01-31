@@ -1,14 +1,13 @@
 import parents from './parents';
 import middle from './middle';
 import children from './children';
+import { flat } from '../utils';
 import Family from '../models/family';
 import { IConnector } from '../types';
 
+const sequence = [parents, middle, children];
+const toConnectors = (families: Family[]) => (fn: Function) => fn(families);
+
 export default (families: Family[]): IConnector[] => (
-  [
-    parents(families.filter(f => f.type === 'parent')),
-    middle(families.filter(f => f.type === 'root')),
-    children(families.filter(f => f.type === 'root' || f.type === 'child')),
-  ]
-    .reduce((all, next) => all.concat(next), [])
+  sequence.map(toConnectors(families)).reduce(flat)
 );

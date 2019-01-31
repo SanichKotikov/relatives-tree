@@ -1,10 +1,11 @@
 import Family from '../models/family';
 import Unit from '../models/unit';
+import { withId } from './index';
 import { IFamilyNode } from '../types';
 
 const inUnits = (units: Unit[], nodeId: string) => (
   !!units.find(unit => (
-    !!unit.nodes.find(node => node.id === nodeId)
+    !!unit.nodes.find(withId(nodeId))
   ))
 );
 
@@ -22,8 +23,7 @@ export default (family: Family, node: IFamilyNode): boolean => {
 
     // TODO
     const sameParents: boolean = !!node.parents
-      .map(rel => parentIds.indexOf(rel.id) !== -1)
-      .filter(Boolean)
+      .filter(rel => parentIds.indexOf(rel.id) !== -1)
       .length;
 
     return (!sameParents && (!!node.parents.length || !!node.siblings.length));

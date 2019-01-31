@@ -23,7 +23,7 @@ const getChildNodes = (family: Family) =>
   (~CHILDREN.indexOf(family.type) ? family.cUnits : []).map(extendNode(family));
 
 const mapFamily = (family: Family) =>
-  [...getParentNodes(family), ...getChildNodes(family)].reduce(flat, []);
+  [...getParentNodes(family), ...getChildNodes(family)].reduce(flat);
 
 export default (families: Family[]): IFamilyExtNode[] =>
-  families.map(mapFamily).reduce(flat, []);
+  families.map(mapFamily).reduce(flat);

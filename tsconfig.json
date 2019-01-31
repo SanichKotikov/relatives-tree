@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["es6"],
+    "lib": ["es6", "es7"],
     "outDir": "lib",
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,

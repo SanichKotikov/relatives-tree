@@ -2,8 +2,8 @@ import Store from '../store';
 import { IFamilyNode } from '../types';
 
 // TODO:
-export default (store: Store): void => {
-  if (store.rootNode.parents.length) return;
+export default (store: Store): Store => {
+  if (store.rootNode.parents.length) return store;
 
   const father: IFamilyNode = {
     id: 'father-placeholder',
@@ -47,4 +47,6 @@ export default (store: Store): void => {
 
   store.nodes.set(father.id, father);
   store.nodes.set(mother.id, mother);
+
+  return store;
 };

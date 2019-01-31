@@ -1,8 +1,9 @@
 import Store from '../store';
 import Family from '../models/family';
+import { withType } from './index';
 
-export default (store: Store): void => {
-  const families = [...store.families.values()];
+export default (store: Store): Store => {
+  const families = store.familiesArray;
 
   const vShift = Math.min.apply(null, families.map(family => family.top)) * -1;
   if (vShift !== 0) families.forEach(family => family.top += vShift);
@@ -17,13 +18,15 @@ export default (store: Store): void => {
     const diff = (rootParent.left + pUnit.shift) - (rootChild.left + cUnit.shift);
 
     if (diff > 0) families
-      .filter(family => (family.type === 'child' || family.type === 'root'))
+      .filter(withType('child', 'root'))
       .forEach(family => family.left += diff);
     else if (diff < 0) families
-      .filter(family => family.type === 'parent')
+      .filter(withType('parent'))
       .forEach(family => family.left += diff * -1);
 
     const hShift = Math.min.apply(null, families.map(family => family.left));
     if (hShift > 0) families.forEach(family => family.left -= hShift);
   }
+
+  return store;
 };

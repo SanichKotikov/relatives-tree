@@ -1,46 +1,47 @@
 import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
-import { hasDiffParents } from '../utils';
+import { withType, itemToID, flat, hasDiffParents } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
 
-export default (store: Store): void => {
+export default (store: Store): Store => {
   let families: Family[] = [];
+  const createFamily = byParents(store);
 
   if (hasDiffParents(store.rootNode)) {
     // Show: parents, my spouses, my siblings (for both parents)
     // Hide: another spouses for parents, half-siblings (for both parents)
     const bloodParentIDs = store.rootNode.parents
-      .filter(rel => rel.type === 'blood')
-      .map(rel => rel.id);
+      .filter(withType('blood'))
+      .map(itemToID);
 
     const adoptedParentIDs = store.rootNode.parents
-      .filter(rel => rel.type === 'adopted')
-      .map(rel => rel.id);
+      .filter(withType('adopted'))
+      .map(itemToID);
 
-    const bloodFamily = byParents(store, bloodParentIDs, 'root', true);
-    const adoptedFamily = byParents(store, adoptedParentIDs);
+    const bloodFamily = createFamily(bloodParentIDs, 'root', true);
+    const adoptedFamily = createFamily(adoptedParentIDs);
 
     fixOverlaps(bloodFamily, adoptedFamily);
     families = [bloodFamily, adoptedFamily];
   } else {
     // Show: parents + their spouses, my siblings + half-siblings, my spouses
-    const parentIDs = store.rootNode.parents.map(rel => rel.id);
-    const mainFamily = byParents(store, parentIDs, 'root', true);
+    const parentIDs = store.rootNode.parents.map(itemToID);
+    const mainFamily = createFamily(parentIDs, 'root', true);
 
     families.push(mainFamily);
 
     const parents = mainFamily.pUnits
       .map(unit => unit.nodes)
-      .reduce((all, next) => all.concat(next), []);
+      .reduce(flat);
 
     if (parents.length === 2) {
       const { left, right } = getSpouses(store, parents);
       families = [
-        ...left.map(node => byParents(store, [node.id])),
+        ...left.map(node => createFamily([node.id])),
         ...families,
-        ...right.map(node => byParents(store, [node.id])),
+        ...right.map(node => createFamily([node.id])),
       ];
     }
   }
@@ -52,4 +53,6 @@ export default (store: Store): void => {
   }
 
   families.forEach(family => store.families.set(family.id, family));
+
+  return store;
 };

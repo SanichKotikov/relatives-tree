@@ -1,10 +1,11 @@
+import { withType, itemToID, flat } from '../utils';
 import Family from '../models/family';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
-  families.forEach(family => {
+  families.filter(withType('parent')).forEach(family => {
     family.pUnits.forEach(pUnit => {
       const pX = family.left + pUnit.shift + (pUnit.size); // TODO
       const pY = family.top + 1;
@@ -24,8 +25,8 @@ export default (families: Family[]): IConnector[] => {
 
       // TODO
       const ids: string[] = pUnit.nodes
-        .map(node => node.children.map(rel => rel.id))
-        .reduce((ids, id) => ids.concat(id), [])
+        .map(node => node.children.map(itemToID))
+        .reduce(flat)
         .filter((id, idx, self) => self.findIndex(val => val === id) === idx);
 
       family.cUnits.forEach(cUnit => {

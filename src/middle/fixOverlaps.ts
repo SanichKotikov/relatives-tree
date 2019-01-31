@@ -1,6 +1,7 @@
 import Family from '../models/family';
 import Unit from '../models/unit';
 import setUnitDefShifts from '../utils/setUnitDefShifts';
+import { withId, itemToID } from '../utils';
 import { IFamilyNode } from '../types';
 
 // left is blood, right is adopted
@@ -10,7 +11,7 @@ export default (lFamily: Family, rFamily: Family) => {
   const rChildren: IFamilyNode[] = rFamily.cUnits
     .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
 
-  const ids = lChildren.filter(node => !!rChildren.find(n => n.id === node.id)).map(node => node.id);
+  const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(itemToID);
   const shifts = lFamily.cUnits.map(unit => unit.shift);
 
   // TODO:
