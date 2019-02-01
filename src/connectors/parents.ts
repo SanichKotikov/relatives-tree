@@ -23,7 +23,7 @@ export default (families: Family[]): IConnector[] => {
         points: [pX, pY, pX, mY],
       });
 
-      const ids: string[] = pUnit.nodes
+      const ids = pUnit.nodes
         .map(prop('children'))
         .reduce(flat)
         .map(prop('id'))

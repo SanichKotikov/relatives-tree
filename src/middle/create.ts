@@ -4,7 +4,6 @@ import fixOverlaps from './fixOverlaps';
 import { prop, withType, flat, hasDiffParents } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
-import { IFamilyNode } from '../types';
 
 export default (store: Store): Store => {
   let families: Family[] = [];
@@ -33,7 +32,7 @@ export default (store: Store): Store => {
 
     families.push(mainFamily);
 
-    const parents: IFamilyNode[] = mainFamily.pUnits
+    const parents = mainFamily.pUnits
       .map(prop('nodes'))
       .reduce(flat);
 
