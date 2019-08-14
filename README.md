@@ -1,14 +1,17 @@
-# family-tree
+# relatives-tree
 
-Tiny library (~3.3kb gz) for calculating specific JSON data to family tree nodes and connectors.
-[Demo](https://sanichkotikov.github.io/react-family-tree-example/).
+A tiny library (~3.3kb gz) for calculating specific JSON data to family tree nodes and connectors.
 
-## Install
+🖥 [Here is a demo](https://sanichkotikov.github.io/react-family-tree-example/) app with React rendering.
 
-```bash
-npm i -S relatives-tree
+```js
+import relativesTree from 'relatives-tree';
+const data = relativesTree(jsonData, rootId);
 ```
+
+The nodes & the connectors are simple JS objects, so you can use any rendering layer.
 
 ## Usage
 
-Example: [react-family-tree](https://github.com/SanichKotikov/react-family-tree) source code.
+🛠️ [Usage example](https://github.com/SanichKotikov/react-family-tree) (react-family-tree source code)  
+📝 [JSON data example](https://github.com/SanichKotikov/react-family-tree-example/blob/master/src/sample.json)
