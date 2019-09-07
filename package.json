@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "benchmarks": "node ./benchmarks/index.js",
+    "benchmarks": "tsc --project ./benchmarks/tsconfig.json && node ./benchmarks/index.js",
     "start": "tsc --watch",
     "build": "tsc"
   },

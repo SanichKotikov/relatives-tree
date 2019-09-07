@@ -1,5 +1,5 @@
 const benchmark = require('benchmark');
-const getFamilyTree = require('../lib/index').default;
+const getFamilyTree = require('./lib/index').default;
 const sample = require('./sample.json');
 
 const DEFAULT_ROOT_ID = 'kuVISwh7w';
