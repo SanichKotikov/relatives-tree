@@ -11,7 +11,7 @@
     "downlevelIteration": true,
     "alwaysStrict": true,
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "removeComments": true,
     "strict": true,
     "noImplicitReturns": true,
