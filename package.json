@@ -1,8 +1,9 @@
 {
   "name": "relatives-tree",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
+  "module": "lib/index.js",
   "scripts": {
     "benchmarks": "tsc --project ./benchmarks/tsconfig.json && node ./benchmarks/index.js",
     "start": "parcel docs/index.html --open",
