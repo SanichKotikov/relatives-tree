@@ -1,12 +1,14 @@
 {
   "name": "relatives-tree",
-  "version": "1.3.3",
+  "version": "2.0.0",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
   "scripts": {
     "benchmarks": "tsc --project ./benchmarks/tsconfig.json && node ./benchmarks/index.js",
-    "start": "tsc --watch",
-    "build": "tsc"
+    "start": "parcel docs/index.html --open",
+    "build": "tsc",
+    "size": "npm run build && size-limit",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "files": [
     "lib",
     "src",
-    "index.d.ts"
+    "samples"
   ],
   "keywords": [
     "family-tree",
@@ -30,10 +32,21 @@
     "url": "https://github.com/SanichKotikov/relatives-tree/issues"
   },
   "devDependencies": {
+    "@size-limit/preset-small-lib": "4.5.0",
+    "@types/jest": "25.2.1",
     "@types/node": "13.13.5",
     "benchmark": "2.1.4",
+    "jest": "25.5.4",
+    "parcel-bundler": "1.12.4",
+    "size-limit": "4.5.0",
+    "ts-jest": "25.5.1",
     "typescript": "3.8.3"
   },
   "dependencies": {},
+  "size-limit": [
+    {
+      "path": "lib/index.js"
+    }
+  ],
   "homepage": "https://github.com/SanichKotikov/relatives-tree"
 }

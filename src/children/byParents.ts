@@ -2,8 +2,8 @@ import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
 import { withId, relToNode } from '../utils';
-import getSpouses from '../utils/getSpouses';
 import setUnitDefShifts from '../utils/setUnitDefShifts';
+import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store) => {
@@ -31,14 +31,9 @@ export default (store: Store) => {
 
     // CHILDREN's SPOUSES
     children.forEach(child => {
-      if (child.spouses.length) {
-        const { left, middle, right } = getSpouses(store, [child]);
-        [...left.map(node => [node]), middle, ...right.map(node => [node])].forEach(nodes => (
-          family.cUnits.push(new Unit(family.id, nodes, true))
-        ));
-      } else {
-        family.cUnits.push(new Unit(family.id, [child], true));
-      }
+      getChildUnits(store, family.id, child).forEach(unit => {
+        family.cUnits.push(unit);
+      });
     });
 
     setUnitDefShifts(family);

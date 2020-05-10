@@ -20,10 +20,10 @@ export interface IRelation {
 export interface IFamilyNode {
   id: string;
   gender: Gender;
-  parents: IRelation[];
-  children: IRelation[];
-  siblings: IRelation[];
-  spouses: IRelation[];
+  parents: ReadonlyArray<IRelation>;
+  children: ReadonlyArray<IRelation>;
+  siblings: ReadonlyArray<IRelation>;
+  spouses: ReadonlyArray<IRelation>;
   placeholder?: boolean;
 }
 
@@ -39,7 +39,12 @@ export interface IConnector {
 
 export interface IFamilyData {
   canvas: ICanvasSize;
-  families: Family[];
-  nodes: IFamilyExtNode[];
-  connectors: IConnector[];
+  families: ReadonlyArray<Family>;
+  nodes: ReadonlyArray<IFamilyExtNode>;
+  connectors: ReadonlyArray<IConnector>;
+}
+
+export interface IOptions {
+  rootId: string;
+  placeholders?: boolean;
 }

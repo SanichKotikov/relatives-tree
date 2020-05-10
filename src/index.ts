@@ -8,12 +8,15 @@ import positions from './utils/correctPositions';
 import getCanvasSize from './utils/getCanvasSize';
 import getExtendedNodes from './utils/getExtendedNodes';
 import { pipe } from './utils';
-import { IFamilyNode, IFamilyData } from './types';
+import { IFamilyNode, IFamilyData, IOptions } from './types';
 
-const pipeline = pipe(placeholders, middle, parents, children, positions);
+const pipeline = pipe(middle, parents, children, positions);
 
-export default (nodes: IFamilyNode[], rootId: string): IFamilyData => {
-  const families = pipeline(new Store(nodes, rootId)).familiesArray;
+export default (nodes: ReadonlyArray<Readonly<IFamilyNode>>, options: Readonly<IOptions>): Readonly<IFamilyData> => {
+  const store = new Store(nodes, options.rootId);
+  if (options.placeholders) placeholders(store);
+
+  const families = pipeline(store).familiesArray;
 
   return {
     families: families,

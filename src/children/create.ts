@@ -1,8 +1,9 @@
-import byParents from './byParents';
-import arrange from './arrange';
+import Unit from '../models/unit';
+import { SIZE } from '../constants';
 import { prop, withType } from '../utils';
 import Store from '../store';
-import Unit from '../models/unit';
+import byParents from './byParents';
+import arrange from './arrange';
 
 export default (store: Store): Store => {
   const createFamily = byParents(store);
@@ -19,7 +20,7 @@ export default (store: Store): Store => {
       const parentFamily = store.getFamily(familyUnit.familyId);
 
       family.pID = parentFamily.id;
-      family.top = parentFamily.top + 2;
+      family.top = parentFamily.top + parentFamily.height - SIZE;
       family.left = parentFamily.left + familyUnit.shift;
 
       arrangeFamily(family);

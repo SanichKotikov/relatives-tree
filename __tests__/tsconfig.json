@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["es6"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "strict": true
+  }
+}

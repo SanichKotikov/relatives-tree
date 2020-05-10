@@ -1,0 +1,45 @@
+[
+  {
+    "id": "dyTpfj6sr",
+    "gender": "Male",
+    "spouses": [],
+    "siblings": [],
+    "parents": [],
+    "children": [
+      {
+        "id": "ahfR5lR2s",
+        "type": "blood"
+      },
+      {
+        "id": "aoF9dn5Ew",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "ahfR5lR2s",
+    "gender": "Female",
+    "spouses": [],
+    "siblings": [],
+    "parents": [
+      {
+        "id": "dyTpfj6sr",
+        "type": "blood"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "aoF9dn5Ew",
+    "gender": "Male",
+    "spouses": [],
+    "siblings": [],
+    "parents": [
+      {
+        "id": "dyTpfj6sr",
+        "type": "blood"
+      }
+    ],
+    "children": []
+  }
+]

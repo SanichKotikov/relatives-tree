@@ -28,5 +28,8 @@ export default (store: Store): Store => {
     if (hShift > 0) families.forEach(family => family.left -= hShift);
   }
 
+  const totalShift = min(families.map(f => f.left)) * -1;
+  if (totalShift !== 0) families.forEach(family => family.left += totalShift);
+
   return store;
 };

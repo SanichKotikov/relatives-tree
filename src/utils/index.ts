@@ -6,7 +6,7 @@ const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
 const withId = <T extends { id: any; }, K extends keyof { id: any; }>(id: T[K]) => (item: T) => item.id === id;
 const withType = <T extends { type: string; }>(...types: string[]) => (item: T) => types.includes(item.type);
 const withSameIDs = (target: Unit) => (unit: Unit) => target.ids.join('') === unit.ids.join('');
-const flat = <T>(items: T[], item: T[]) => items.concat(item);
+const flat = <T>(items: ReadonlyArray<T>, item: ReadonlyArray<T>) => items.concat(item);
 const unique = <T>(item: T, index: number, arr: T[]): boolean => arr.indexOf(item) === index;
 const inAscOrder = (v1: number, v2: number) => v1 - v2;
 const pipe = (...fus: Function[]) => <T>(init: T) => fus.reduce((res, fn) => fn(res), init);

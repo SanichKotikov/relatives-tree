@@ -6,8 +6,11 @@ import Family from '../models/family';
 import { IConnector } from '../types';
 
 const sequence = [parents, middle, children];
-const toConnectors = (families: Family[]) => (fn: Function) => fn(families);
 
-export default (families: Family[]): IConnector[] => (
-  sequence.map(toConnectors(families)).reduce(flat)
-);
+function toConnectors(families: ReadonlyArray<Family>) {
+  return (fn: Function) => fn(families);
+}
+
+export default (families: ReadonlyArray<Family>): ReadonlyArray<IConnector> => {
+  return sequence.map(toConnectors(families)).reduce(flat);
+}

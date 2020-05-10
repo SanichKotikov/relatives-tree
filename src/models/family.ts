@@ -1,3 +1,4 @@
+import { SIZE } from '../constants';
 import { prop, max } from '../utils';
 import { FamilyType } from '../types';
 import Unit from './unit';
@@ -31,6 +32,10 @@ class Family {
 
   get width(): number {
     return max([...this.pUnits, ...this.cUnits].map(prop('right')));
+  }
+
+  get height(): number {
+    return this.pUnits.length ? SIZE * 2 : SIZE;
   }
 
   get right(): number {

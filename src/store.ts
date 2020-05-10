@@ -15,7 +15,7 @@ class Store {
   rootNode: IFamilyNode;
   gender: Gender;
 
-  constructor(nodes: IFamilyNode[], rootId: string) {
+  constructor(nodes: ReadonlyArray<Readonly<IFamilyNode>>, rootId: string) {
     if (!nodes.find(withId(rootId))) {
       throw new Error(`${ERROR_PREFIX} Can't find a root node with ID: ${rootId}`);
     }
