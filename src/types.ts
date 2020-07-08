@@ -5,7 +5,7 @@ export type Gender = 'male' | 'female';
 export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half';
 export type FamilyType = 'root' | 'child' | 'parent';
 
-export { Family, Unit }
+export { Family, Unit };
 
 export interface ICanvasSize {
   width: number;

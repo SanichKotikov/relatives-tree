@@ -1,6 +1,6 @@
 import Store from '../store';
 import Unit from '../models/unit';
-import { IRelation, IFamilyNode } from '../types';
+import { IFamilyNode, IRelation } from '../types';
 
 const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
 const withId = <T extends { id: any; }, K extends keyof { id: any; }>(id: T[K]) => (item: T) => item.id === id;

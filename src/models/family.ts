@@ -1,5 +1,5 @@
 import { SIZE } from '../constants';
-import { prop, max } from '../utils';
+import { max, prop } from '../utils';
 import { FamilyType } from '../types';
 import Unit from './unit';
 

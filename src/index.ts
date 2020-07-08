@@ -8,7 +8,7 @@ import positions from './utils/correctPositions';
 import getCanvasSize from './utils/getCanvasSize';
 import getExtendedNodes from './utils/getExtendedNodes';
 import { pipe } from './utils';
-import { IFamilyNode, IFamilyData, IOptions } from './types';
+import { IFamilyData, IFamilyNode, IOptions } from './types';
 
 const pipeline = pipe(middle, parents, children, positions);
 

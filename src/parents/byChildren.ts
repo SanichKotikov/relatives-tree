@@ -4,7 +4,7 @@ import Family from '../models/family';
 import Unit from '../models/unit';
 
 export default (store: Store) => {
-  return function (childIDs: string[]): Family {
+  return function(childIDs: string[]): Family {
     const family = new Family(store.getNextId(), 'parent');
     const cUnit = new Unit(family.id, store.getNodes(childIDs), true);
 
@@ -26,5 +26,5 @@ export default (store: Store) => {
 
     family.cUnits.push(cUnit);
     return family;
-  }
+  };
 }

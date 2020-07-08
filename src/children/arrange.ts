@@ -2,10 +2,10 @@ import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
 import arrangeMiddle from '../middle/arrange';
-import { withId, withType, withSameIDs } from '../utils';
+import { withId, withSameIDs, withType } from '../utils';
 
 export default (store: Store) => {
-  return function (family: Family): void {
+  return function(family: Family): void {
     if (family.pID === null) return;
     let right = 0;
 
@@ -25,7 +25,8 @@ export default (store: Store) => {
       if (uIndex === 0) {
         const left = family.left + shift - cUnit.shift;
         pFamily.left = Math.max(pFamily.left, left);
-      } else {
+      }
+      else {
         cUnit.shift = family.left + fUnit.shift - pFamily.left;
       }
 
@@ -55,5 +56,5 @@ export default (store: Store) => {
 
       family = pFamily;
     }
-  }
+  };
 };

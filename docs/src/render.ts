@@ -1,5 +1,5 @@
 import { SIZE } from '../../src/constants';
-import { IFamilyData, ICanvasSize } from '../../src/types';
+import { ICanvasSize, IFamilyData } from '../../src/types';
 
 const X = 40;
 const uP = 4; // unit padding
@@ -37,7 +37,7 @@ function setupCanvas(canvas: HTMLCanvasElement, size: ICanvasSize) {
 export function draw(
   canvas: HTMLCanvasElement,
   tree: Readonly<IFamilyData>,
-  options: Partial<Readonly<IRenderOptions>> = {}
+  options: Partial<Readonly<IRenderOptions>> = {},
 ) {
   const ctx = setupCanvas(canvas, tree.canvas);
 
@@ -78,7 +78,7 @@ export function draw(
             (left + unit.shift) * X + uP,
             y + uP,
             ((unit.size * SIZE) * X) - (uP * 2),
-            (X * SIZE) - (uP * 2)
+            (X * SIZE) - (uP * 2),
           );
           ctx.stroke();
         });
@@ -91,7 +91,7 @@ export function draw(
             (left + unit.shift) * X + uP,
             y + uP + (family.pUnits.length ? X * SIZE : 0),
             ((unit.size * SIZE) * X) - (uP * 2),
-            (X * SIZE) - (uP * 2)
+            (X * SIZE) - (uP * 2),
           );
           ctx.stroke();
         });
@@ -123,5 +123,5 @@ export function draw(
       ctx.arc(x + (X * SIZE) - nP, y + nP, 4, 0, Math.PI * 2);
       ctx.fill();
     }
-  })
+  });
 }

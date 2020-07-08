@@ -4,7 +4,7 @@ import Unit from '../models/unit';
 import { withSameIDs } from '../utils';
 
 export default (store: Store) => {
-  return function (family: Family): void {
+  return function(family: Family): void {
     if (family.cID === null) return;
     let right = 0;
 
@@ -34,7 +34,8 @@ export default (store: Store) => {
       if (uIndex === 0 && pUnit.shift === 0) {
         const left = family.left + shift;
         cFamily.left = Math.max(cFamily.left, left);
-      } else {
+      }
+      else {
         pUnit.shift = family.left + fUnit.shift - cFamily.left;
       }
 
@@ -52,5 +53,5 @@ export default (store: Store) => {
 
       family = cFamily;
     }
-  }
+  };
 };

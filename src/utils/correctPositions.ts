@@ -1,6 +1,6 @@
 import Store from '../store';
 import Family from '../models/family';
-import { prop, withType, min } from './index';
+import { min, prop, withType } from './index';
 
 export default (store: Store): Store => {
   const families = store.familiesArray;

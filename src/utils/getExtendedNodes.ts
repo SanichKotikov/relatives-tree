@@ -2,7 +2,7 @@ import hasHiddenRelatives from './hasHiddenRelatives';
 import { flat } from './index';
 import Family from '../models/family';
 import Unit from '../models/unit';
-import { IFamilyNode, IFamilyExtNode } from '../types';
+import { IFamilyExtNode, IFamilyNode } from '../types';
 
 const PARENTS = ['root', 'parent'];
 const CHILDREN = ['root', 'child'];
@@ -15,14 +15,14 @@ function extendNode(family: Family) {
       left: family.left + unit.shift + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))
-  )
+  );
 }
 
 function getParentNodes(family: Family) {
   return (PARENTS.includes(family.type) ? family.pUnits : []).map(extendNode(family));
 }
 
-function getChildNodes (family: Family) {
+function getChildNodes(family: Family) {
   return (CHILDREN.includes(family.type) ? family.cUnits : []).map(extendNode(family));
 }
 

@@ -2,7 +2,7 @@ import getChildUnits from '../children/getChildUnits';
 import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
-import { prop, withType, flat, hasDiffParents } from '../utils';
+import { flat, hasDiffParents, prop, withType } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
 
@@ -13,7 +13,8 @@ export default (store: Store): Store => {
     const family = new Family(store.getNextId(), 'root', true);
     getChildUnits(store, family.id, store.rootNode).forEach(unit => family.cUnits.push(unit));
     families.push(family);
-  } else {
+  }
+  else {
     const createFamily = byParents(store);
 
     if (hasDiffParents(store.rootNode)) {
@@ -32,7 +33,8 @@ export default (store: Store): Store => {
 
       fixOverlaps(bloodFamily, adoptedFamily);
       families = [bloodFamily, adoptedFamily];
-    } else {
+    }
+    else {
       // Show: parents + their spouses, my siblings + half-siblings, my spouses
       const parentIDs = store.rootNode.parents.map(prop('id'));
       const mainFamily = createFamily(parentIDs, 'root', true);

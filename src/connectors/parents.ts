@@ -1,4 +1,4 @@
-import { prop, withType, flat, unique } from '../utils';
+import { flat, prop, unique, withType } from '../utils';
 import Family from '../models/family';
 import { IConnector } from '../types';
 

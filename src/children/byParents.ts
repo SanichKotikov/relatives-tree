@@ -1,13 +1,13 @@
 import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
-import { withId, relToNode } from '../utils';
+import { relToNode, withId } from '../utils';
 import setUnitDefShifts from '../utils/setUnitDefShifts';
 import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store) => {
-  return function (parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family {
+  return function(parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family {
     const family = new Family(store.getNextId(), type, isMain);
 
     const parents = parentIDs.map(store.getNode.bind(store));
@@ -20,7 +20,8 @@ export default (store: Store) => {
 
     if (parents.length === 1) {
       children = parents[0].children.map(relToNode(store));
-    } else {
+    }
+    else {
       const firstParent = parents[0];
       const secondParent = parents[1];
 
@@ -38,5 +39,5 @@ export default (store: Store) => {
 
     setUnitDefShifts(family);
     return family;
-  }
+  };
 };

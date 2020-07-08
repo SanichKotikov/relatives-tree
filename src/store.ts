@@ -31,10 +31,12 @@ class Store {
   getNextId(): number { return ++this.nextId; }
 
   getNode(id: string): IFamilyNode { return this.nodes.get(id) as IFamilyNode; }
+
   getNodes(ids: string[]): IFamilyNode[] { return ids.map(this.getNode.bind(this)); }
+
   getFamily(id: number): Family { return this.families.get(id) as Family; }
 
-  get familiesArray(): Family[] { return [...this.families.values()] }
+  get familiesArray(): Family[] { return [...this.families.values()]; }
 
 }
 

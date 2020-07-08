@@ -1,5 +1,5 @@
 import Store from '../store';
-import { prop, withType, relToNode } from './index';
+import { prop, relToNode, withType } from './index';
 import { IFamilyNode } from '../types';
 
 interface ISpousesData {
@@ -19,9 +19,11 @@ export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
 
     if (married) {
       spouse = store.getNode(married.id);
-    } else if (parent.spouses.length === 1) {
-      spouse = store.getNode(parent.spouses[0].id)
-    } else if (parent.spouses.length > 1) {
+    }
+    else if (parent.spouses.length === 1) {
+      spouse = store.getNode(parent.spouses[0].id);
+    }
+    else if (parent.spouses.length > 1) {
       spouse = (
         parent.spouses
           .map(relToNode(store))

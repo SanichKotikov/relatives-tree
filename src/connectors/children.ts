@@ -1,5 +1,5 @@
 import Family from '../models/family';
-import { prop, withId, withType, flat, inAscOrder, min, max } from '../utils';
+import { flat, inAscOrder, max, min, prop, withId, withType } from '../utils';
 import { SIZE } from '../constants';
 import { IConnector } from '../types';
 
@@ -46,7 +46,8 @@ export default (families: Family[]): IConnector[] => {
         connectors.push({
           points: [cX, mY + 1, cX + 2, mY + 1],
         });
-      } else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
+      }
+      else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
         family.cUnits.forEach(nUnit => {
           if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
             const xX = [cX, family.left + nUnit.shift + 1].sort(inAscOrder);
@@ -63,7 +64,8 @@ export default (families: Family[]): IConnector[] => {
       connectors.push({
         points: [min(cXs), mY, max(cXs), mY],
       });
-    } else if (cXs.length === 1 && pX !== cXs[0]) {
+    }
+    else if (cXs.length === 1 && pX !== cXs[0]) {
       // horizontal between parent(s) and child
       connectors.push({
         points: [Math.min(pX, cXs[0]), mY, Math.max(pX, cXs[0]), mY],

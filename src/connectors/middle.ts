@@ -1,5 +1,5 @@
 import Family from '../models/family';
-import { withId, withType, inAscOrder } from '../utils';
+import { inAscOrder, withId, withType } from '../utils';
 import { IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
@@ -15,7 +15,8 @@ export default (families: Family[]): IConnector[] => {
         connectors.push({
           points: [pX, pY, pX + 2, pY],
         });
-      } else if (pUnit.size === 1 && pUnit.nodes[0].spouses.length) {
+      }
+      else if (pUnit.size === 1 && pUnit.nodes[0].spouses.length) {
         // TODO
         families
           .filter(rFamily => rFamily.id !== family.id)

@@ -1,5 +1,5 @@
 import Store from '../store';
-import { Gender, RelationType, IRelation, IFamilyNode } from '../types';
+import { Gender, IFamilyNode, IRelation, RelationType } from '../types';
 import { relToNode } from '../utils';
 
 const createRel = (id: string, type: RelationType = 'blood'): IRelation => ({ id, type });

@@ -1,6 +1,6 @@
 import Family from '../models/family';
 import { ICanvasSize } from '../types';
-import { prop, max } from './index';
+import { max, prop } from './index';
 
 export default (families: ReadonlyArray<Family>): ICanvasSize => {
   return {
