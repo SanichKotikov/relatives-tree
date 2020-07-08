@@ -13,12 +13,12 @@ export default (families: Family[]): IConnector[] => {
     if (family.pUnits.length === 1) {
       const pUnit = family.pUnits[0];
       pX = family.left + pUnit.shift + (pUnit.size); // TODO
-      const pY = family.top + 1;
 
       // from parent(s) to child
-      connectors.push({
-        points: [pX, pY, pX, mY],
-      });
+      if (pUnit.nodes.every(node => !!node.children.length)) {
+        const pY = family.top + 1;
+        connectors.push({ points: [pX, pY, pX, mY] });
+      }
     }
 
     const parentIds = family.pUnits

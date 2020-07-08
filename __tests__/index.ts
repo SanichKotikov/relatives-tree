@@ -3,6 +3,7 @@ import { Family, IFamilyExtNode } from '../src/types';
 import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';
 import simple from '../samples/simple-family.json';
+import spouses from '../samples/several-spouses.json';
 import average from '../samples/average-tree.json';
 
 type ResultObj = { [id: string]: boolean | string };
@@ -10,6 +11,7 @@ type ResultObj = { [id: string]: boolean | string };
 const emptyTree = calcTree(empty as any, { rootId: 'gRstruEr4' });
 const coupleTree = calcTree(couple as any, { rootId: 'jsyRsE5sr' });
 const simpleTree = calcTree(simple as any, { rootId: 'dyTpfj6sr' });
+const spousesTree = calcTree(spouses as any, { rootId: 'js2RsE5sr' });
 const average1 = calcTree(average as any, { rootId: 'kuVISwh7w' });
 const average2 = calcTree(average as any, { rootId: 'PXACjDxmR' });
 const average3 = calcTree(average as any, { rootId: 'UIEjvLJMd' });
@@ -21,6 +23,7 @@ test('Canvas size', () => {
   expect(emptyTree.canvas).toEqual({ width: 2, height: 2 });
   expect(coupleTree.canvas).toEqual({ width: 4, height: 2 });
   expect(simpleTree.canvas).toEqual({ width: 4, height: 4 });
+  expect(spousesTree.canvas).toEqual({ width: 6, height: 2 });
   expect(average1.canvas).toEqual({ width: 18, height: 12 });
   expect(average2.canvas).toEqual({ width: 20, height: 10 });
   expect(average3.canvas).toEqual({ width: 18, height: 12 });
@@ -37,6 +40,7 @@ test('Family size & position', () => {
   expect(convert(emptyTree.families)).toEqual(['1|0|0|2|2']);
   expect(convert(coupleTree.families)).toEqual(['1|0|0|4|4']);
   expect(convert(simpleTree.families)).toEqual(['1|0|1|3|2', '2|0|0|4|4']);
+  expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
   expect(convert(average1.families)).toEqual([
     '1|4|0|18|18',
     '2|2|5|13|8',
@@ -85,6 +89,11 @@ test('Node position', () => {
     'dyTpfj6sr': '0|1',
     'ahfR5lR2s': '2|0',
     'aoF9dn5Ew': '2|2',
+  });
+  expect(convert(spousesTree.nodes)).toEqual({
+    'js2RsE5sr': '0|2',
+    'pdRwdtR54': '0|4',
+    'tdRwdtR54': '0|0',
   });
   expect(convert(average1.nodes)).toEqual({
     '011jVS4rb': '4|7',
@@ -218,6 +227,11 @@ test('Node sub tree', () => {
     'dyTpfj6sr': false,
     'ahfR5lR2s': false,
     'aoF9dn5Ew': false,
+  });
+  expect(convert(spousesTree.nodes)).toEqual({
+    'js2RsE5sr': false,
+    'pdRwdtR54': false,
+    'tdRwdtR54': false,
   });
   expect(convert(average1.nodes)).toEqual({
     '011jVS4rb': false,

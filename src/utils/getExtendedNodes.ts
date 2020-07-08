@@ -27,7 +27,7 @@ function getChildNodes(family: Family) {
 }
 
 function mapFamily(family: Family) {
-  return [...getParentNodes(family), ...getChildNodes(family)].reduce(flat);
+  return [...getParentNodes(family), ...getChildNodes(family)].reduce(flat, []);
 }
 
 export default (families: ReadonlyArray<Family>): ReadonlyArray<IFamilyExtNode> => {

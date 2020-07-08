@@ -10,8 +10,8 @@ function inUnits(units: ReadonlyArray<Unit>, nodeId: string) {
 export default (family: Family, node: IFamilyNode): boolean => {
   if (family.type !== 'child' && inUnits(family.pUnits, node.id)) {
     return (
-      (!node.parents.length && !!node.siblings.length) ||
-      (family.type === 'parent' && node.children.length > 1)
+      (family.type === 'parent' && (node.children.length > 1 || node.spouses.length > 1)) ||
+      (!node.parents.length && !!node.siblings.length)
     );
   }
 

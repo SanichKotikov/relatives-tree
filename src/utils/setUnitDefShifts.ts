@@ -7,8 +7,10 @@ const shiftUnits = (units: Unit[], shift: number): void => {
   ));
 };
 
-export default (family: Family): void => {
+function setUnitDefShifts(family: Family): void {
   const diff = family.cCount - family.pCount;
   shiftUnits(family.pUnits, diff > 0 ? Math.abs(diff) : 0);
   shiftUnits(family.cUnits, diff < 0 ? Math.abs(diff) : 0);
-};
+}
+
+export default setUnitDefShifts;

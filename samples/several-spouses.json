@@ -1,0 +1,45 @@
+[
+  {
+    "id": "js2RsE5sr",
+    "gender": "male",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "pdRwdtR54",
+        "type": "married"
+      },
+      {
+        "id": "tdRwdtR54",
+        "type": "divorced"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "pdRwdtR54",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "js2RsE5sr",
+        "type": "married"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "tdRwdtR54",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "js2RsE5sr",
+        "type": "divorced"
+      }
+    ],
+    "children": []
+  }
+]
