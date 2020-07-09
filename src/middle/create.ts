@@ -8,25 +8,26 @@ import Store from '../store';
 import Family from '../models/family';
 
 export default (store: Store): Store => {
+  const rootParents = store.root.parents;
   let families: Family[] = [];
 
-  if (!store.rootNode.parents.length) {
+  if (!rootParents.length) {
     const family = new Family(store.getNextId(), 'root', true);
-    getChildUnits(store, family.id, store.rootNode).forEach(unit => family.cUnits.push(unit));
+    getChildUnits(store, family.id, store.root).forEach(unit => family.cUnits.push(unit));
     setUnitDefShifts(family);
     families.push(family);
   }
   else {
     const createFamily = byParents(store);
 
-    if (hasDiffParents(store.rootNode)) {
+    if (hasDiffParents(store.root)) {
       // Show: parents, my spouses, my siblings (for both parents)
       // Hide: another spouses for parents, half-siblings (for both parents)
-      const bloodParentIDs = store.rootNode.parents
+      const bloodParentIDs = rootParents
         .filter(withType('blood'))
         .map(prop('id'));
 
-      const adoptedParentIDs = store.rootNode.parents
+      const adoptedParentIDs = rootParents
         .filter(withType('adopted'))
         .map(prop('id'));
 
@@ -38,7 +39,7 @@ export default (store: Store): Store => {
     }
     else {
       // Show: parents + their spouses, my siblings + half-siblings, my spouses
-      const parentIDs = store.rootNode.parents.map(prop('id'));
+      const parentIDs = rootParents.map(prop('id'));
       const mainFamily = createFamily(parentIDs, 'root', true);
 
       families.push(mainFamily);

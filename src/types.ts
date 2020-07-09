@@ -1,6 +1,8 @@
 import Family from './models/family';
 import Unit from './models/unit';
 
+type Id = string;
+
 export type Gender = 'male' | 'female';
 export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half';
 export type FamilyType = 'root' | 'child' | 'parent';
@@ -13,12 +15,12 @@ export interface ICanvasSize {
 }
 
 export interface IRelation {
-  id: string;
+  id: Id;
   type: RelationType;
 }
 
 export interface IFamilyNode {
-  id: string;
+  id: Id;
   gender: Gender;
   parents: ReadonlyArray<IRelation>;
   children: ReadonlyArray<IRelation>;
@@ -45,6 +47,6 @@ export interface IFamilyData {
 }
 
 export interface IOptions {
-  rootId: string;
+  rootId: Id;
   placeholders?: boolean;
 }

@@ -5,7 +5,7 @@ import { relToNode } from '../utils';
 const createRel = (id: string, type: RelationType = 'blood'): IRelation => ({ id, type });
 
 const createNode = (gender: Gender): IFamilyNode => ({
-  id: `${gender}-placeholder`,
+  id: `${gender}-ph`,
   placeholder: true,
   gender: gender,
   parents: [],
@@ -14,31 +14,34 @@ const createNode = (gender: Gender): IFamilyNode => ({
   children: [],
 });
 
-const createParents = (store: Store, root: IFamilyNode): IRelation[] => {
+const createParents = (store: Store): IRelation[] => {
   const father = createNode('male');
   const mother = createNode('female');
 
   father.spouses = [createRel(mother.id, 'married')];
   mother.spouses = [createRel(father.id, 'married')];
 
+  const { id, siblings } = store.root;
+
   return [father, mother].map(node => {
-    node.children = root.siblings.concat(createRel(root.id));
+    node.children = siblings.concat(createRel(id));
     store.nodes.set(node.id, node);
 
     return createRel(node.id);
   });
 };
 
-const setParents = (parents: IRelation[]) => (node: IFamilyNode) => node.parents = parents.slice();
+const setParents = (parents: IRelation[]) => {
+  return (node: IFamilyNode) => node.parents = parents.slice();
+};
 
 export default (store: Store): Store => {
-  if (store.rootNode.parents.length) return store;
-  const root = store.rootNode;
-  const setParentsTo = setParents(createParents(store, root));
+  if (store.root.parents.length) return store;
+  const setParentsTo = setParents(createParents(store));
 
-  setParentsTo(root);
+  setParentsTo(store.root);
 
-  root.siblings
+  store.root.siblings
     .map(relToNode(store))
     .forEach(setParentsTo);
 

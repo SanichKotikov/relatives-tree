@@ -8,10 +8,10 @@ class Unit {
   nodes: IFamilyNode[];
   shift: number;
 
-  constructor(familyId: number, nodes: IFamilyNode[], isChild: boolean = false) {
+  constructor(familyId: number, nodes: ReadonlyArray<IFamilyNode>, isChild = false) {
     this.familyId = familyId;
     this.isChild = isChild;
-    this.nodes = nodes;
+    this.nodes = [...nodes];
     this.shift = 0;
   }
 
@@ -23,7 +23,7 @@ class Unit {
     return this.shift + (this.size * 2);
   }
 
-  get ids(): string[] {
+  get ids(): ReadonlyArray<string> {
     return this.nodes.map(prop('id'));
   }
 

@@ -1,42 +1,43 @@
 import Family from './models/family';
-import { withId } from './utils';
-import { Gender, IFamilyNode } from './types';
-
-const ERROR_PREFIX = '[relatives-tree::store]:';
-
-const mapNode = (node: IFamilyNode): [string, IFamilyNode] => [node.id, { ...node }];
+import { toMap, withId } from './utils';
+import { IFamilyNode } from './types';
 
 class Store {
 
-  nextId: number;
+  private nextId: number;
+
   families: Map<number, Family>;
   nodes: Map<string, IFamilyNode>;
 
-  rootNode: IFamilyNode;
-  gender: Gender;
+  root: IFamilyNode;
 
   constructor(nodes: ReadonlyArray<Readonly<IFamilyNode>>, rootId: string) {
-    if (!nodes.find(withId(rootId))) {
-      throw new Error(`${ERROR_PREFIX} Can't find a root node with ID: ${rootId}`);
-    }
+    if (!nodes.find(withId(rootId))) throw new ReferenceError();
 
     this.nextId = 0;
     this.families = new Map();
-    this.nodes = new Map(nodes.map(mapNode));
+    this.nodes = toMap(nodes);
 
-    this.rootNode = (this.nodes.get(rootId) as IFamilyNode);
-    this.gender = this.rootNode.gender;
+    this.root = (this.nodes.get(rootId) as IFamilyNode);
   }
 
   getNextId(): number { return ++this.nextId; }
 
-  getNode(id: string): IFamilyNode { return this.nodes.get(id) as IFamilyNode; }
+  getNode(id: string): IFamilyNode {
+    return this.nodes.get(id) as IFamilyNode;
+  }
 
-  getNodes(ids: string[]): IFamilyNode[] { return ids.map(this.getNode.bind(this)); }
+  getNodes(ids: ReadonlyArray<string>): ReadonlyArray<IFamilyNode> {
+    return ids.map(id => this.getNode(id));
+  }
 
-  getFamily(id: number): Family { return this.families.get(id) as Family; }
+  getFamily(id: number): Family {
+    return this.families.get(id) as Family;
+  }
 
-  get familiesArray(): Family[] { return [...this.families.values()]; }
+  get familiesArray(): ReadonlyArray<Family> {
+    return [...this.families.values()];
+  }
 
 }
 

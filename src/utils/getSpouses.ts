@@ -3,36 +3,31 @@ import { prop, relToNode, withType } from './index';
 import { IFamilyNode } from '../types';
 
 interface ISpousesData {
-  left: IFamilyNode[];
-  middle: IFamilyNode[];
-  right: IFamilyNode[];
+  left: ReadonlyArray<IFamilyNode>;
+  middle: ReadonlyArray<IFamilyNode>;
+  right: ReadonlyArray<IFamilyNode>;
 }
 
-export default (store: Store, parents: IFamilyNode[]): ISpousesData => {
+// In descending order of the number of children
+const inDescChildren = (a: IFamilyNode, b: IFamilyNode) => {
+  return b.children.length - a.children.length;
+};
+
+export default (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData => {
   const middle = [...parents];
 
   if (middle.length === 1) {
+    const { gender, spouses } = middle[0];
+
     let spouse: IFamilyNode | undefined;
+    const married = spouses.find(withType('married'));
 
-    const parent = middle[0];
-    const married = parent.spouses.find(withType('married'));
-
-    if (married) {
-      spouse = store.getNode(married.id);
-    }
-    else if (parent.spouses.length === 1) {
-      spouse = store.getNode(parent.spouses[0].id);
-    }
-    else if (parent.spouses.length > 1) {
-      spouse = (
-        parent.spouses
-          .map(relToNode(store))
-          .sort((a, b) => b.children.length - a.children.length)
-      )[0];
-    }
+    if (married) spouse = store.getNode(married!.id);
+    else if (spouses.length === 1) spouse = store.getNode(spouses[0].id);
+    else if (spouses.length > 1) spouse = spouses.map(relToNode(store)).sort(inDescChildren)[0];
 
     if (spouse) {
-      parent.gender === store.gender
+      gender === store.root.gender
         ? middle.push(spouse)
         : middle.unshift(spouse);
     }

@@ -1,22 +1,22 @@
 import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
-import { relToNode, withId } from '../utils';
+import { byGender, relToNode, withId } from '../utils';
 import setUnitDefShifts from '../utils/setUnitDefShifts';
 import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store) => {
-  return function(parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family {
+  return (parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family => {
     const family = new Family(store.getNextId(), type, isMain);
 
-    const parents = parentIDs.map(store.getNode.bind(store));
-    if (family.main) parents.sort((a, b) => (b.gender !== store.gender) ? -1 : 0);
+    const parents = parentIDs.map(id => store.getNode(id));
+    if (family.main) parents.sort(byGender(store.root.gender));
 
     family.pUnits.push(new Unit(family.id, parents));
 
     // CHILDREN
-    let children: IFamilyNode[] = [];
+    let children: IFamilyNode[];
 
     if (parents.length === 1) {
       children = parents[0].children.map(relToNode(store));
