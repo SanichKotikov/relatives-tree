@@ -14,7 +14,7 @@ The nodes & the connectors are simple JS objects, so you can use any rendering l
 ## Usage
 
 🛠 [Canvas example](/docs)  
-🛠️ [React example](https://github.com/SanichKotikov/react-family-tree) (react-family-tree source code)
+🛠️ [React example](https://github.com/SanichKotikov/react-family-tree) (react-family-tree source code)   
 🛠️ [Solid example](https://github.com/SanichKotikov/solid-family-tree-example)
 
 📝 [JSON data examples](/samples)
