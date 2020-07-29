@@ -22,7 +22,7 @@ export default (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData
     let spouse: IFamilyNode | undefined;
     const married = spouses.find(withType('married'));
 
-    if (married) spouse = store.getNode(married!.id);
+    if (married) spouse = store.getNode(married.id);
     else if (spouses.length === 1) spouse = store.getNode(spouses[0].id);
     else if (spouses.length > 1) spouse = spouses.map(relToNode(store)).sort(inDescChildren)[0];
 
