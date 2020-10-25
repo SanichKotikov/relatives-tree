@@ -3,6 +3,7 @@ import Family from '../models/family';
 import Unit from '../models/unit';
 import arrangeMiddle from '../middle/arrange';
 import { withId, withSameIDs, withType } from '../utils';
+import { arrangeParentUnit } from '../utils/arrangeParentUnit';
 
 export default (store: Store) => {
   return function(family: Family): void {
@@ -12,7 +13,6 @@ export default (store: Store) => {
     while (family) {
       const fUnit = family.pUnits[0];
 
-      const shift = fUnit.shift;
       right = Math.max(right, family.right);
 
       const pFamily = store.getFamily(family.pID as number); // TODO
@@ -23,7 +23,7 @@ export default (store: Store) => {
       ));
 
       if (uIndex === 0) {
-        const left = family.left + shift - cUnit.shift;
+        const left = family.left + fUnit.shift - cUnit.shift;
         pFamily.left = Math.max(pFamily.left, left);
       }
       else {
@@ -40,12 +40,7 @@ export default (store: Store) => {
         }
       }
 
-      const ppUnit = pFamily.pUnits[0];
-
-      if (ppUnit) {
-        const size = pFamily.width;
-        ppUnit.shift = Math.floor((size - (2 * ppUnit.size)) / 2);
-      }
+      arrangeParentUnit(pFamily);
 
       if (pFamily.pID === null) {
         const rootFamily = store.familiesArray.filter(withType('root'));

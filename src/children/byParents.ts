@@ -2,7 +2,7 @@ import Store from '../store';
 import Family from '../models/family';
 import Unit from '../models/unit';
 import { byGender, relToNode, withId } from '../utils';
-import setUnitDefShifts from '../utils/setUnitDefShifts';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
 
@@ -37,7 +37,7 @@ export default (store: Store) => {
       });
     });
 
-    setUnitDefShifts(family);
+    setDefaultUnitShift(family);
     return family;
   };
 };

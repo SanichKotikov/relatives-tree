@@ -1,6 +1,6 @@
 import Family from '../models/family';
 import Unit from '../models/unit';
-import setUnitDefShifts from '../utils/setUnitDefShifts';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { prop, withId } from '../utils';
 import { IFamilyNode } from '../types';
 
@@ -32,5 +32,5 @@ export default (lFamily: Family, rFamily: Family) => {
     !!unit.nodes.find(node => ids.indexOf(node.id) === -1)
   ));
 
-  setUnitDefShifts(rFamily);
+  setDefaultUnitShift(rFamily);
 };

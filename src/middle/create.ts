@@ -2,7 +2,7 @@ import getChildUnits from '../children/getChildUnits';
 import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
-import setUnitDefShifts from '../utils/setUnitDefShifts';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withType } from '../utils';
 import Store from '../store';
 import Family from '../models/family';
@@ -14,7 +14,7 @@ export default (store: Store): Store => {
   if (!rootParents.length) {
     const family = new Family(store.getNextId(), 'root', true);
     getChildUnits(store, family.id, store.root).forEach(unit => family.cUnits.push(unit));
-    setUnitDefShifts(family);
+    setDefaultUnitShift(family);
     families.push(family);
   }
   else {

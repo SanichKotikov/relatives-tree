@@ -43,8 +43,8 @@ test('Family size & position', () => {
   expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
   expect(convert(average1.families)).toEqual([
     '1|4|0|18|18',
-    '2|2|5|13|8',
-    '3|0|3|11|8',
+    '2|2|4|12|8',
+    '3|0|2|10|8',
     '4|6|2|6|4',
     '5|6|6|14|8',
     '6|8|8|12|4',
@@ -61,8 +61,8 @@ test('Family size & position', () => {
   expect(convert(average4.families)).toEqual(['1|0|2|6|4', '2|0|0|8|8', '3|2|2|6|4']);
   expect(convert(average5.families)).toEqual(['1|6|3|7|4', '2|4|0|10|10', '3|2|4|12|8', '4|0|6|14|8']);
   expect(convert(average6.families)).toEqual([
-    '1|0|12|14|2',
-    '2|0|7|20|13',
+    '1|0|13|15|2',
+    '2|0|6|20|14',
     '3|2|0|18|18',
     '4|4|2|6|4',
     '5|4|6|14|8',
@@ -96,8 +96,8 @@ test('Node position', () => {
     'tdRwdtR54': '0|0',
   });
   expect(convert(average1.nodes)).toEqual({
-    '011jVS4rb': '4|7',
-    'PXACjDxmR': '4|9',
+    '011jVS4rb': '4|6',
+    'PXACjDxmR': '4|8',
     'HkqEDLvxE': '6|0',
     'kuVISwh7w': '6|2',
     'vRSjcaDGj': '6|4',
@@ -105,13 +105,13 @@ test('Node position', () => {
     'UIEjvLJMd': '6|10',
     'ZVi8fWDBx': '6|14',
     'wJ1EBvc5m': '6|16',
-    'ypu71w9_Q': '2|5',
-    'GEf8zF7A4': '2|7',
-    '2DlrR0fK8': '2|11',
-    'TsyAkbF89': '0|3',
-    'T54Km7uOC': '0|5',
-    'gsgwGS_Kw': '0|7',
-    'ZgTZx9uXQ': '0|9',
+    'ypu71w9_Q': '2|4',
+    'GEf8zF7A4': '2|6',
+    '2DlrR0fK8': '2|10',
+    'TsyAkbF89': '0|2',
+    'T54Km7uOC': '0|4',
+    'gsgwGS_Kw': '0|6',
+    'ZgTZx9uXQ': '0|8',
     'Fbc9iwnJl': '8|3',
     '6_OTJvbvS': '8|6',
     'ilad8NH6g': '8|8',
@@ -188,9 +188,9 @@ test('Node position', () => {
     'TsyAkbF89': '0|12',
   });
   expect(convert(average6.nodes)).toEqual({
-    '2DlrR0fK8': '0|12',
-    '011jVS4rb': '2|7',
-    'PXACjDxmR': '2|9',
+    '2DlrR0fK8': '0|13',
+    '011jVS4rb': '2|6',
+    'PXACjDxmR': '2|8',
     'H-06WvsfJ': '2|18',
     'HkqEDLvxE': '4|0',
     'kuVISwh7w': '4|2',
