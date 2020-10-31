@@ -8,18 +8,18 @@ import { Family, Unit } from '../types';
 
 export default (store: Store) => {
   return function(family: Family): void {
-    if (!family.pID) return;
+    if (!family.pid) return;
     let right = 0;
 
     while (family) {
-      const fUnit = family.pUnits[0];
+      const fUnit = family.parents[0];
 
       right = Math.max(right, fRight(family));
 
-      const pFamily = store.getFamily(family.pID as number); // TODO
+      const pFamily = store.getFamily(family.pid as number); // TODO
 
-      const cUnit = pFamily.cUnits.find(sameAs(fUnit)) as Unit; // TODO
-      const uIndex = pFamily.cUnits.findIndex(unit => (
+      const cUnit = pFamily.children.find(sameAs(fUnit)) as Unit; // TODO
+      const uIndex = pFamily.children.findIndex(unit => (
         unit.nodes[0].id === fUnit.nodes[0].id
       ));
 
@@ -31,19 +31,19 @@ export default (store: Store) => {
         cUnit.pos = family.left + fUnit.pos - pFamily.left;
       }
 
-      const next = pFamily.cUnits[uIndex + 1];
+      const next = pFamily.children[uIndex + 1];
 
       if (next) {
         const diff = right - (pFamily.left + next.pos);
 
-        for (let i = uIndex + 1; i < pFamily.cUnits.length; i++) {
-          pFamily.cUnits[i].pos += diff;
+        for (let i = uIndex + 1; i < pFamily.children.length; i++) {
+          pFamily.children[i].pos += diff;
         }
       }
 
       arrangeParentUnit(pFamily);
 
-      if (!pFamily.pID) {
+      if (!pFamily.pid) {
         const rootFamily = store.familiesArray.filter(withType('root'));
         const start = rootFamily.findIndex(withId(pFamily.id));
         arrangeMiddle(rootFamily, start + 1, fRight(family));

@@ -8,10 +8,10 @@ export default (families: Family[]): IConnector[] => {
 
   families.filter(withType('root', 'child')).forEach(family => {
     let pX = 0;
-    const mY = family.top + (family.pUnits.length ? SIZE : 0);
+    const mY = family.top + (family.parents.length ? SIZE : 0);
 
-    if (family.pUnits.length === 1) {
-      const pUnit = family.pUnits[0];
+    if (family.parents.length === 1) {
+      const pUnit = family.parents[0];
       pX = family.left + pUnit.pos + nodeCount(pUnit); // TODO
 
       // from parent(s) to child
@@ -21,13 +21,13 @@ export default (families: Family[]): IConnector[] => {
       }
     }
 
-    const parentIds = family.pUnits
+    const parentIds = family.parents
       .map(nodeIds)
       .reduce(flat, []);
 
     const cXs: number[] = [];
 
-    family.cUnits.forEach(cUnit => {
+    family.children.forEach(cUnit => {
       const cX = family.left + cUnit.pos + 1;
 
       // from child to parent(s)
@@ -48,7 +48,7 @@ export default (families: Family[]): IConnector[] => {
         });
       }
       else if (nodeCount(cUnit) === 1 && cUnit.nodes[0].spouses.length) {
-        family.cUnits.forEach(nUnit => {
+        family.children.forEach(nUnit => {
           if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
             const xX = [cX, family.left + nUnit.pos + 1].sort(inAscOrder);
             connectors.push({

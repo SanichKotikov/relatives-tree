@@ -9,11 +9,11 @@ export default (store: Store): Store => {
   if (vShift !== 0) families.forEach(family => family.top += vShift);
 
   const rootChild = families.find(f => f.main) as Family; // TODO
-  const rootParent = families.find(f => f.cID === rootChild.id);
+  const rootParent = families.find(f => f.cid === rootChild.id);
 
   if (rootParent) {
-    const cUnit = rootChild.pUnits[0];
-    const pUnit = rootParent.cUnits[0];
+    const cUnit = rootChild.parents[0];
+    const pUnit = rootParent.children[0];
 
     const diff = (rootParent.left + pUnit.pos) - (rootChild.left + cUnit.pos);
 

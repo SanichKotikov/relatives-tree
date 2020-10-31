@@ -72,7 +72,7 @@ export function draw(
       ctx.fillText(family.id.toString(10), x + uP, y + FONT_SIZE + uP);
 
       if (family.type === 'root' || family.type === 'parent') {
-        family.pUnits.forEach(unit => {
+        family.parents.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
             (left + unit.pos) * X + uP,
@@ -85,11 +85,11 @@ export function draw(
       }
 
       if (family.type === 'root' || family.type === 'child') {
-        family.cUnits.forEach(unit => {
+        family.children.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
             (left + unit.pos) * X + uP,
-            y + uP + (family.pUnits.length ? X * SIZE : 0),
+            y + uP + (family.parents.length ? X * SIZE : 0),
             ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
           );

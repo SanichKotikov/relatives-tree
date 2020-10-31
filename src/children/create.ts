@@ -20,7 +20,7 @@ export default (store: Store): Store => {
       const family = createFamily(familyUnit.nodes.map(prop('id')), FamilyType.child);
       const parentFamily = store.getFamily(familyUnit.fid);
 
-      family.pID = parentFamily.id;
+      family.pid = parentFamily.id;
       family.top = parentFamily.top + heightOf(parentFamily) - SIZE;
       family.left = parentFamily.left + familyUnit.pos;
 

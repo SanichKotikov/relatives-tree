@@ -18,15 +18,17 @@ export const enum FamilyType {
 }
 
 export interface Family {
-  id: number;
-  type: FamilyType;
-  main: boolean;
-  pID?: number;
-  cID?: number;
+  readonly id: number;
+  readonly type: FamilyType;
+  readonly main: boolean;
+  /** Parent family ID */
+  pid?: number;
+  /** Child family ID */
+  cid?: number;
   top: number;
   left: number;
-  pUnits: Unit[];
-  cUnits: Unit[];
+  parents: Unit[];
+  children: Unit[];
 }
 
 export interface Unit {

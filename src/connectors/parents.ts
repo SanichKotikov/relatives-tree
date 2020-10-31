@@ -6,7 +6,7 @@ export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
   families.filter(withType('parent')).forEach(family => {
-    family.pUnits.forEach(pUnit => {
+    family.parents.forEach(pUnit => {
       const pX = family.left + pUnit.pos + nodeCount(pUnit); // TODO
       const pY = family.top + 1;
       const mY = family.top + 2;
@@ -29,7 +29,7 @@ export default (families: Family[]): IConnector[] => {
         .map(prop('id'))
         .filter(unique);
 
-      family.cUnits.forEach(cUnit => {
+      family.children.forEach(cUnit => {
         const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);
         const cX = family.left + cUnit.pos + (cIndex * 2) + 1;
 

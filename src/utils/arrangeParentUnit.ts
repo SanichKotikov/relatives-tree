@@ -9,17 +9,17 @@ const middle = (values: ReadonlyArray<number>): number => {
 };
 
 export const arrangeParentUnit = (family: Family) => {
-  const pUnit = family.pUnits[0];
+  const pUnit = family.parents[0];
   if (!pUnit) return;
 
   // TODO: add note about nodes[0]
   const children: readonly string[] = pUnit.nodes[0].children.map(prop('id'));
 
-  const shifts = family.cUnits.reduce<number[]>((result, unit) => {
+  const shifts = family.children.reduce<number[]>((result, unit) => {
     const index = unit.nodes.findIndex(node => children.includes(node.id));
     if (index !== -1) result.push(unit.pos + (index * SIZE));
     return result;
   }, []);
 
-  pUnit.pos = Math.floor(middle(shifts) - (countUnits(family.pUnits) - 1));
+  pUnit.pos = Math.floor(middle(shifts) - (countUnits(family.parents) - 1));
 };

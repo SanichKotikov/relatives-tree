@@ -9,7 +9,7 @@ function extendNode(family: Family) {
   return (unit: Unit) => (
     unit.nodes.map((node: IFamilyNode, idx: number) => ({
       ...node,
-      top: family.top + (unit.child && !!family.pUnits.length ? 2 : 0),
+      top: family.top + (unit.child && !!family.parents.length ? 2 : 0),
       left: family.left + unit.pos + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))
@@ -17,11 +17,11 @@ function extendNode(family: Family) {
 }
 
 function getParentNodes(family: Family) {
-  return (PARENTS.includes(family.type) ? family.pUnits : []).map(extendNode(family));
+  return (PARENTS.includes(family.type) ? family.parents : []).map(extendNode(family));
 }
 
 function getChildNodes(family: Family) {
-  return (CHILDREN.includes(family.type) ? family.cUnits : []).map(extendNode(family));
+  return (CHILDREN.includes(family.type) ? family.children : []).map(extendNode(family));
 }
 
 function mapFamily(family: Family) {

@@ -14,19 +14,19 @@ const correctShift = (value: number) => {
 };
 
 export const setDefaultUnitShift = (family: Family): void => {
-  arrangeInOrder(family.pUnits);
-  arrangeInOrder(family.cUnits);
+  arrangeInOrder(family.parents);
+  arrangeInOrder(family.children);
 
   arrangeParentUnit(family);
 
   const start = min([
-    ...family.pUnits.map(prop('pos')),
-    ...family.cUnits.map(prop('pos')),
+    ...family.parents.map(prop('pos')),
+    ...family.children.map(prop('pos')),
   ]);
 
   if (start !== 0) {
     const corrector = correctShift(start);
-    family.pUnits.forEach(corrector);
-    family.cUnits.forEach(corrector);
+    family.parents.forEach(corrector);
+    family.children.forEach(corrector);
   }
 };

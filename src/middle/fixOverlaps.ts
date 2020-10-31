@@ -4,16 +4,16 @@ import { Family, IFamilyNode, Unit } from '../types';
 
 // left is blood, right is adopted
 export default (lFamily: Family, rFamily: Family) => {
-  const lChildren: IFamilyNode[] = lFamily.cUnits
+  const lChildren: IFamilyNode[] = lFamily.children
     .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
-  const rChildren: IFamilyNode[] = rFamily.cUnits
+  const rChildren: IFamilyNode[] = rFamily.children
     .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
 
   const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(prop('id'));
-  const shifts = lFamily.cUnits.map(prop('pos'));
+  const shifts = lFamily.children.map(prop('pos'));
 
   // TODO:
-  lFamily.cUnits = lFamily.cUnits.sort((a, b) => {
+  lFamily.children = lFamily.children.sort((a, b) => {
     const foundA = !!a.nodes.find(node => ids.indexOf(node.id) !== -1);
     const foundB = !!b.nodes.find(node => ids.indexOf(node.id) !== -1);
 
@@ -23,10 +23,10 @@ export default (lFamily: Family, rFamily: Family) => {
   });
 
   // reapply shifts
-  lFamily.cUnits.forEach((unit, idx) => unit.pos = shifts[idx]);
+  lFamily.children.forEach((unit, idx) => unit.pos = shifts[idx]);
 
   // remove
-  rFamily.cUnits = rFamily.cUnits.filter(unit => (
+  rFamily.children = rFamily.children.filter(unit => (
     !!unit.nodes.find(node => ids.indexOf(node.id) === -1)
   ));
 
