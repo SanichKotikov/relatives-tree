@@ -14,7 +14,9 @@ export default (store: Store): Store => {
 
   if (!rootParents.length) {
     const family = newFamily(store.getNextId(), FamilyType.root, true);
-    getChildUnits(store, family.id, store.root).forEach(unit => family.children.push(unit));
+    getChildUnits(store, family.id, store.root).forEach(unit => (
+      family.children = family.children.concat(unit)
+    ));
     setDefaultUnitShift(family);
     families.push(family);
   }

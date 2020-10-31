@@ -13,7 +13,7 @@ export default (store: Store) => {
     const parents = parentIDs.map(id => store.getNode(id));
     if (family.main) parents.sort(byGender(store.root.gender));
 
-    family.parents.push(newUnit(family.id, parents));
+    family.parents = family.parents.concat(newUnit(family.id, parents));
 
     // CHILDREN
     let children: IFamilyNode[];
@@ -33,7 +33,7 @@ export default (store: Store) => {
     // CHILDREN's SPOUSES
     children.forEach(child => {
       getChildUnits(store, family.id, child).forEach(unit => {
-        family.children.push(unit);
+        family.children = family.children.concat(unit);
       });
     });
 

@@ -12,8 +12,7 @@ export default (lFamily: Family, rFamily: Family) => {
   const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(prop('id'));
   const shifts = lFamily.children.map(prop('pos'));
 
-  // TODO:
-  lFamily.children = lFamily.children.sort((a, b) => {
+  lFamily.children = [...lFamily.children].sort((a, b) => {
     const foundA = !!a.nodes.find(node => ids.indexOf(node.id) !== -1);
     const foundB = !!b.nodes.find(node => ids.indexOf(node.id) !== -1);
 

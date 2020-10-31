@@ -27,8 +27,8 @@ export interface Family {
   cid?: number;
   top: number;
   left: number;
-  parents: Unit[];
-  children: Unit[];
+  parents: readonly Unit[];
+  children: readonly Unit[];
 }
 
 export interface Unit {

@@ -20,11 +20,11 @@ export default (store: Store) => {
           ? cUnit.pos += 2
           : pUnit.pos = cUnit.pos + idx * 2;
 
-        family.parents.push(pUnit);
+        family.parents = family.parents.concat(pUnit);
       }
     });
 
-    family.children.push(cUnit);
+    family.children = family.children.concat(cUnit);
     return family;
   };
 }
