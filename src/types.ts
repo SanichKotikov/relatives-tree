@@ -1,7 +1,5 @@
 import Family from './models/family';
 
-type Id = string;
-
 export const enum Gender {
   male = 'male',
   female = 'female',
@@ -38,17 +36,17 @@ export interface ICanvasSize {
 }
 
 export interface IRelation {
-  id: Id;
+  id: string;
   type: RelationType;
 }
 
 export interface IFamilyNode {
-  id: Id;
+  id: string;
   gender: Gender;
-  parents: ReadonlyArray<IRelation>;
-  children: ReadonlyArray<IRelation>;
-  siblings: ReadonlyArray<IRelation>;
-  spouses: ReadonlyArray<IRelation>;
+  parents: readonly IRelation[];
+  children: readonly IRelation[];
+  siblings: readonly IRelation[];
+  spouses: readonly IRelation[];
   placeholder?: boolean;
 }
 
@@ -64,12 +62,12 @@ export interface IConnector {
 
 export interface IFamilyData {
   canvas: ICanvasSize;
-  families: ReadonlyArray<Family>;
-  nodes: ReadonlyArray<IFamilyExtNode>;
-  connectors: ReadonlyArray<IConnector>;
+  families: readonly Family[];
+  nodes: readonly IFamilyExtNode[];
+  connectors: readonly IConnector[];
 }
 
 export interface IOptions {
-  rootId: Id;
+  rootId: string;
   placeholders?: boolean;
 }
