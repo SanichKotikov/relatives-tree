@@ -1,4 +1,5 @@
 import { SIZE } from '../../src/constants';
+import { heightOf, widthOf } from '../../src/utils/family';
 import { ICanvasSize, IFamilyData } from '../../src/types';
 
 const X = 40;
@@ -56,7 +57,7 @@ export function draw(
 
   if (options.debug) {
     tree.families.forEach(family => {
-      const { left, top, width, height } = family;
+      const { left, top } = family;
       const x = left * X;
       const y = top * X;
       const color = getRandomColor();
@@ -64,7 +65,7 @@ export function draw(
       ctx.beginPath();
       ctx.globalAlpha = 0.2;
       ctx.strokeStyle = color;
-      ctx.rect(x, y, width * X, height * X);
+      ctx.rect(x, y, widthOf(family) * X, heightOf(family) * X);
       ctx.fill();
 
       ctx.globalAlpha = 1;
