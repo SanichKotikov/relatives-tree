@@ -1,4 +1,4 @@
-import Family from '../models/family';
+import { Family } from '../types';
 
 export default (families: Family[], start: number = 1, left: number = 0): void => {
   if (families.length >= start + 1) {

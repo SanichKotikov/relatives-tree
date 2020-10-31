@@ -1,6 +1,5 @@
-import Family from './models/family';
 import { toMap, withId } from './utils';
-import { IFamilyNode } from './types';
+import { Family, IFamilyNode } from './types';
 
 class Store {
 

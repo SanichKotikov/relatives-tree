@@ -1,8 +1,7 @@
-import Family from '../models/family';
 import { min, prop } from './index';
 import { arrangeParentUnit } from './arrangeParentUnit';
 import { rightSide } from './units';
-import { Unit } from '../types';
+import { Family, Unit } from '../types';
 
 const arrangeInOrder = (units: readonly Unit[]): void => {
   units.forEach((unit, idx, self) => (

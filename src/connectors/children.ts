@@ -1,8 +1,7 @@
-import Family from '../models/family';
 import { nodeCount, nodeIds } from '../utils/units';
 import { flat, inAscOrder, max, min, withId, withType } from '../utils';
 import { SIZE } from '../constants';
-import { IConnector } from '../types';
+import { Family, IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];

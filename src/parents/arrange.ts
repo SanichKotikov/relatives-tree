@@ -1,28 +1,28 @@
 import Store from '../store';
-import Family from '../models/family';
 import { nodeCount, sameAs } from '../utils/units';
-import { Unit } from '../types';
+import { countUnits, fRight, widthOf } from '../utils/family';
+import { Family, Unit } from '../types';
 
 export default (store: Store) => {
   return function(family: Family): void {
-    if (family.cID === null) return;
+    if (!family.cID) return;
     let right = 0;
 
     while (family) {
       const fUnit = family.cUnits[0];
 
-      if (family.pUnits.length === 2 && family.pCount > 2) {
+      if (family.pUnits.length === 2 && countUnits(family.pUnits) > 2) {
         fUnit.pos = Math.floor(family.pUnits[1].pos / 2);
       }
 
       const shift = fUnit.pos;
-      right = Math.max(right, family.right);
+      right = Math.max(right, fRight(family));
 
       const cFamily = store.getFamily(family.cID as number); // TODO
 
       // root family
-      if (cFamily.cID === null) {
-        fUnit.pos = (family.width - nodeCount(fUnit) * 2) / 2;
+      if (!cFamily.cID) {
+        fUnit.pos = (widthOf(family) - nodeCount(fUnit) * 2) / 2;
         break;
       }
 

@@ -1,6 +1,7 @@
 import byChildren from './byChildren';
 import arrange from './arrange';
 import { prop, withType } from '../utils';
+import { pUnitsWithParents } from '../utils/family';
 import Store from '../store';
 import { Unit } from '../types';
 
@@ -11,7 +12,7 @@ export default (store: Store): Store => {
 
   for (const rootFamily of root) {
     if (!rootFamily.main) continue;
-    let stack = rootFamily.pUnitsWithParents.reverse();
+    let stack = pUnitsWithParents(rootFamily).reverse();
 
     while (stack.length) {
       const familyUnit: Unit = stack.pop() as Unit;
@@ -26,7 +27,7 @@ export default (store: Store): Store => {
       arrangeFamily(family);
       store.families.set(family.id, family);
 
-      const nextUnits = family.pUnitsWithParents;
+      const nextUnits = pUnitsWithParents(family);
       if (nextUnits.length) stack = [...stack, ...nextUnits.reverse()];
     }
   }

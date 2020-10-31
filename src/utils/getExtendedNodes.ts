@@ -1,7 +1,6 @@
 import hasHiddenRelatives from './hasHiddenRelatives';
 import { flat } from './index';
-import Family from '../models/family';
-import { IFamilyExtNode, IFamilyNode, Unit } from '../types';
+import { Family, IFamilyExtNode, IFamilyNode, Unit } from '../types';
 
 const PARENTS = ['root', 'parent'];
 const CHILDREN = ['root', 'child'];

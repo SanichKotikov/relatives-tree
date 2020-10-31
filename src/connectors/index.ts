@@ -2,8 +2,7 @@ import parents from './parents';
 import middle from './middle';
 import children from './children';
 import { flat } from '../utils';
-import Family from '../models/family';
-import { IConnector } from '../types';
+import { Family, IConnector } from '../types';
 
 const sequence = [parents, middle, children];
 

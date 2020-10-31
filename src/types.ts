@@ -1,5 +1,3 @@
-import Family from './models/family';
-
 export const enum Gender {
   male = 'male',
   female = 'female',
@@ -19,7 +17,17 @@ export const enum FamilyType {
   parent = 'parent',
 }
 
-export { Family };
+export interface Family {
+  id: number;
+  type: FamilyType;
+  main: boolean;
+  pID?: number;
+  cID?: number;
+  top: number;
+  left: number;
+  pUnits: Unit[];
+  cUnits: Unit[];
+}
 
 export interface Unit {
   /** Family ID */

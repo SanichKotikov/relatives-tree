@@ -1,5 +1,4 @@
-import Family from '../models/family';
-import { IFamilyNode, Unit } from '../types';
+import { Family, IFamilyNode, Unit } from '../types';
 import { withId } from './index';
 import { nodeIds } from './units';
 

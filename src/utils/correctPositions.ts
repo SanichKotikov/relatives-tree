@@ -1,5 +1,5 @@
 import Store from '../store';
-import Family from '../models/family';
+import { Family } from '../types';
 import { min, prop, withType } from './index';
 
 export default (store: Store): Store => {

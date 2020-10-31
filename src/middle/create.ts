@@ -4,16 +4,16 @@ import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withType } from '../utils';
+import { fRight, newFamily } from '../utils/family';
 import Store from '../store';
-import { FamilyType } from '../types';
-import Family from '../models/family';
+import { Family, FamilyType } from '../types';
 
 export default (store: Store): Store => {
   const rootParents = store.root.parents;
   let families: Family[] = [];
 
   if (!rootParents.length) {
-    const family = new Family(store.getNextId(), FamilyType.root, true);
+    const family = newFamily(store.getNextId(), FamilyType.root, true);
     getChildUnits(store, family.id, store.root).forEach(unit => family.cUnits.push(unit));
     setDefaultUnitShift(family);
     families.push(family);
@@ -62,7 +62,7 @@ export default (store: Store): Store => {
 
   if (families.length > 1) {
     for (let i = 1; i < families.length; i++) {
-      families[i].left = families[i - 1].right;
+      families[i].left = fRight(families[i - 1]);
     }
   }
 
