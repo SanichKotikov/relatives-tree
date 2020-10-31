@@ -4,6 +4,8 @@ import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';
 import simple from '../samples/simple-family.json';
 import spouses from '../samples/several-spouses.json';
+import testTree1 from '../samples/test-tree-n1.json';
+import testTree2 from '../samples/test-tree-n2.json';
 import average from '../samples/average-tree.json';
 
 type ResultObj = { [id: string]: boolean | string };
@@ -12,6 +14,8 @@ const emptyTree = calcTree(empty as any, { rootId: 'gRstruEr4' });
 const coupleTree = calcTree(couple as any, { rootId: 'jsyRsE5sr' });
 const simpleTree = calcTree(simple as any, { rootId: 'dyTpfj6sr' });
 const spousesTree = calcTree(spouses as any, { rootId: 'js2RsE5sr' });
+const testTreeN1 = calcTree(testTree1 as any, { rootId: 'aeqW' });
+const testTreeN2 = calcTree(testTree2 as any, { rootId: 'uJK9' });
 const average1 = calcTree(average as any, { rootId: 'kuVISwh7w' });
 const average2 = calcTree(average as any, { rootId: 'PXACjDxmR' });
 const average3 = calcTree(average as any, { rootId: 'UIEjvLJMd' });
@@ -24,6 +28,8 @@ test('Canvas size', () => {
   expect(coupleTree.canvas).toEqual({ width: 4, height: 2 });
   expect(simpleTree.canvas).toEqual({ width: 4, height: 4 });
   expect(spousesTree.canvas).toEqual({ width: 6, height: 2 });
+  expect(testTreeN1.canvas).toEqual({ width: 16, height: 8 });
+  expect(testTreeN2.canvas).toEqual({ width: 6, height: 4 });
   expect(average1.canvas).toEqual({ width: 18, height: 12 });
   expect(average2.canvas).toEqual({ width: 20, height: 10 });
   expect(average3.canvas).toEqual({ width: 18, height: 12 });
@@ -41,6 +47,8 @@ test('Family size & position', () => {
   expect(convert(coupleTree.families)).toEqual(['1|0|0|4|4']);
   expect(convert(simpleTree.families)).toEqual(['1|0|1|3|2', '2|0|0|4|4']);
   expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
+  expect(convert(testTreeN1.families)).toEqual(['1|0|0|15|15', '2|0|0|4|4', '3|0|8|16|8', '4|2|6|14|8', '5|4|4|8|4']);
+  expect(convert(testTreeN2.families)).toEqual(['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
   expect(convert(average1.families)).toEqual([
     '1|4|0|18|18',
     '2|2|4|12|8',
@@ -95,6 +103,23 @@ test('Node position', () => {
     'pdRwdtR54': '0|4',
     'tdRwdtR54': '0|0',
   });
+  expect(convert(testTreeN1.nodes)).toEqual({
+    aCZW: '0|0',
+    aeqW: '0|11',
+    wIFr: '0|13',
+    s9HE: '2|0',
+    l8un: '2|2',
+    '5ejU': '2|8',
+    YzLf: '2|10',
+    uJK9: '2|14',
+    c3EI: '4|6',
+    MEHb: '4|8',
+    lhDs: '4|10',
+    '13Uo': '4|12',
+    _qhe: '6|4',
+    yZwk: '6|6',
+  });
+  expect(convert(testTreeN2.nodes)).toEqual({ aCZW: '0|0', uJK9: '0|2', wIFr: '0|4', s9HE: '2|0' });
   expect(convert(average1.nodes)).toEqual({
     '011jVS4rb': '4|6',
     'PXACjDxmR': '4|8',
@@ -233,6 +258,23 @@ test('Node sub tree', () => {
     'pdRwdtR54': false,
     'tdRwdtR54': false,
   });
+  expect(convert(testTreeN1.nodes)).toEqual({
+    aCZW: false,
+    aeqW: false,
+    wIFr: false,
+    s9HE: false,
+    l8un: false,
+    '5ejU': false,
+    YzLf: false,
+    uJK9: false,
+    c3EI: false,
+    MEHb: false,
+    lhDs: false,
+    '13Uo': false,
+    _qhe: false,
+    yZwk: false,
+  });
+  expect(convert(testTreeN2.nodes)).toEqual({ aCZW: false, uJK9: false, wIFr: false, s9HE: false });
   expect(convert(average1.nodes)).toEqual({
     '011jVS4rb': false,
     'PXACjDxmR': false,

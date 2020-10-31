@@ -4,6 +4,8 @@ import empty from '../../samples/empty.json';
 import couple from '../../samples/couple.json';
 import simple from '../../samples/simple-family.json';
 import spouses from '../../samples/several-spouses.json';
+import testTree1 from '../../samples/test-tree-n1.json';
+import testTree2 from '../../samples/test-tree-n2.json';
 import average from '../../samples/average-tree.json';
 import { draw } from './render';
 
@@ -15,6 +17,8 @@ const data: { [key: string]: any[] } = {
   'jsyRsE5sr': couple,
   'dyTpfj6sr': simple,
   'js2RsE5sr': spouses,
+  'aeqW': testTree1,
+  'uJK9': testTree2,
   'kuVISwh7w': average,
   'PXACjDxmR': average,
   'UIEjvLJMd': average,
