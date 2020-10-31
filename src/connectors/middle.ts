@@ -8,8 +8,8 @@ export default (families: Family[]): IConnector[] => {
   families.filter(withType('root')).forEach(family => {
     // between parents
     family.parents.forEach(pUnit => {
-      const pX = family.left + pUnit.pos + 1;
-      const pY = family.top + 1;
+      const pX = family.X + pUnit.pos + 1;
+      const pY = family.Y + 1;
 
       if (nodeCount(pUnit) === 2) {
         connectors.push({
@@ -23,7 +23,7 @@ export default (families: Family[]): IConnector[] => {
           .forEach(rFamily => {
             rFamily.parents.forEach(unit => {
               if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
-                const xX = [pX, rFamily.left + unit.pos + 1].sort(inAscOrder);
+                const xX = [pX, rFamily.X + unit.pos + 1].sort(inAscOrder);
                 connectors.push({
                   points: [xX[0], pY, xX[1], pY],
                 });

@@ -25,8 +25,10 @@ export interface Family {
   pid?: number;
   /** Child family ID */
   cid?: number;
-  top: number;
-  left: number;
+  /** Family's left coordinate */
+  X: number;
+  /** Family's top coordinate */
+  Y: number;
   parents: readonly Unit[];
   children: readonly Unit[];
 }

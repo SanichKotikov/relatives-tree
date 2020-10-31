@@ -21,8 +21,8 @@ export default (store: Store): Store => {
       const childFamily = store.getFamily(familyUnit.fid);
 
       family.cid = childFamily.id;
-      family.top = childFamily.top - 2;
-      family.left = childFamily.left + familyUnit.pos;
+      family.Y = childFamily.Y - 2;
+      family.X = childFamily.X + familyUnit.pos;
 
       arrangeFamily(family);
       store.families.set(family.id, family);

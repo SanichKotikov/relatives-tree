@@ -32,17 +32,17 @@ export default (store: Store) => {
       ));
 
       if (uIndex === 0 && pUnit.pos === 0) {
-        const left = family.left + shift;
-        cFamily.left = Math.max(cFamily.left, left);
+        const left = family.X + shift;
+        cFamily.X = Math.max(cFamily.X, left);
       }
       else {
-        pUnit.pos = family.left + fUnit.pos - cFamily.left;
+        pUnit.pos = family.X + fUnit.pos - cFamily.X;
       }
 
       const next = cFamily.parents[uIndex + 1];
 
       if (next) {
-        const diff = right - (cFamily.left + next.pos);
+        const diff = right - (cFamily.X + next.pos);
 
         if (diff > 0) {
           for (let i = uIndex + 1; i < cFamily.parents.length; i++) {

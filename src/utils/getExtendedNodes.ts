@@ -9,8 +9,8 @@ function extendNode(family: Family) {
   return (unit: Unit) => (
     unit.nodes.map((node: IFamilyNode, idx: number) => ({
       ...node,
-      top: family.top + (unit.child && !!family.parents.length ? 2 : 0),
-      left: family.left + unit.pos + (idx * 2),
+      top: family.Y + (unit.child && !!family.parents.length ? 2 : 0),
+      left: family.X + unit.pos + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))
   );

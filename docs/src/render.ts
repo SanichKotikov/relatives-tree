@@ -57,9 +57,8 @@ export function draw(
 
   if (options.debug) {
     tree.families.forEach(family => {
-      const { left, top } = family;
-      const x = left * X;
-      const y = top * X;
+      const x = family.X * X;
+      const y = family.Y * X;
       const color = getRandomColor();
 
       ctx.beginPath();
@@ -76,7 +75,7 @@ export function draw(
         family.parents.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.pos) * X + uP,
+            (family.X + unit.pos) * X + uP,
             y + uP,
             ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
@@ -89,7 +88,7 @@ export function draw(
         family.children.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.pos) * X + uP,
+            (family.X + unit.pos) * X + uP,
             y + uP + (family.parents.length ? X * SIZE : 0),
             ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),

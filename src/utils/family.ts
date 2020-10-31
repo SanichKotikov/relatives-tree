@@ -7,8 +7,8 @@ export const newFamily = (id: number, type: FamilyType, main = false): Family =>
   id,
   type,
   main,
-  top: 0,
-  left: 0,
+  Y: 0,
+  X: 0,
   parents: [],
   children: [],
 });
@@ -18,7 +18,7 @@ export const heightOf = (family: Family): number => [
   family.parents.length,
   family.children.length,
 ].filter(Boolean).length * SIZE;
-export const fRight = (family: Family): number => family.left + widthOf(family);
+export const fRight = (family: Family): number => family.X + widthOf(family);
 export const countUnits = (units: readonly Unit[]): number => units.reduce((a, b) => a + nodeCount(b), 0);
 
 export const pUnitsWithParents = (family: Family) => (

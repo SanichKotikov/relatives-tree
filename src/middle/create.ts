@@ -64,7 +64,7 @@ export default (store: Store): Store => {
 
   if (families.length > 1) {
     for (let i = 1; i < families.length; i++) {
-      families[i].left = fRight(families[i - 1]);
+      families[i].X = fRight(families[i - 1]);
     }
   }
 

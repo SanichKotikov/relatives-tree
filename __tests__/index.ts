@@ -41,7 +41,7 @@ test('Canvas size', () => {
 
 test('Family size & position', () => {
   function convert(families: ReadonlyArray<Family>) {
-    return families.map(f => [f.id, f.top, f.left, fRight(f), widthOf(f)].join('|'));
+    return families.map(f => [f.id, f.Y, f.X, fRight(f), widthOf(f)].join('|'));
   }
 
   expect(convert(emptyTree.families)).toEqual(['1|0|0|2|2']);

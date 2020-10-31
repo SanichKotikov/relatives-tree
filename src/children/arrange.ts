@@ -24,17 +24,17 @@ export default (store: Store) => {
       ));
 
       if (uIndex === 0) {
-        const left = family.left + fUnit.pos - cUnit.pos;
-        pFamily.left = Math.max(pFamily.left, left);
+        const left = family.X + fUnit.pos - cUnit.pos;
+        pFamily.X = Math.max(pFamily.X, left);
       }
       else {
-        cUnit.pos = family.left + fUnit.pos - pFamily.left;
+        cUnit.pos = family.X + fUnit.pos - pFamily.X;
       }
 
       const next = pFamily.children[uIndex + 1];
 
       if (next) {
-        const diff = right - (pFamily.left + next.pos);
+        const diff = right - (pFamily.X + next.pos);
 
         for (let i = uIndex + 1; i < pFamily.children.length; i++) {
           pFamily.children[i].pos += diff;

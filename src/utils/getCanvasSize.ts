@@ -5,6 +5,6 @@ import { fRight, heightOf } from './family';
 export default (families: ReadonlyArray<Family>): ICanvasSize => {
   return {
     width: max(families.map(fRight)),
-    height: max(families.map(family => family.top + heightOf(family))),
+    height: max(families.map(family => family.Y + heightOf(family))),
   };
 };
