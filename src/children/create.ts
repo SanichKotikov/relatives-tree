@@ -3,7 +3,7 @@ import { prop, withType } from '../utils';
 import Store from '../store';
 import byParents from './byParents';
 import arrange from './arrange';
-import { Unit } from '../types';
+import { FamilyType, Unit } from '../types';
 
 export default (store: Store): Store => {
   const createFamily = byParents(store);
@@ -16,7 +16,7 @@ export default (store: Store): Store => {
     while (stack.length) {
       const familyUnit = stack.pop() as Unit; // TODO
 
-      const family = createFamily(familyUnit.nodes.map(prop('id')), 'child');
+      const family = createFamily(familyUnit.nodes.map(prop('id')), FamilyType.child);
       const parentFamily = store.getFamily(familyUnit.fid);
 
       family.pID = parentFamily.id;

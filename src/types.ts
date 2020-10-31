@@ -2,9 +2,24 @@ import Family from './models/family';
 
 type Id = string;
 
-export type Gender = 'male' | 'female';
-export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half';
-export type FamilyType = 'root' | 'child' | 'parent';
+export const enum Gender {
+  male = 'male',
+  female = 'female',
+}
+
+export const enum RelationType {
+  blood = 'blood',
+  married = 'married',
+  divorced = 'divorced',
+  adopted = 'adopted',
+  half = 'half',
+}
+
+export const enum FamilyType {
+  root = 'root',
+  child = 'child',
+  parent = 'parent',
+}
 
 export { Family };
 

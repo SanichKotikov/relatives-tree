@@ -1,11 +1,12 @@
 import { byGender, prop } from '../utils';
 import { newUnit, nodeCount } from '../utils/units';
 import Store from '../store';
+import { FamilyType } from '../types';
 import Family from '../models/family';
 
 export default (store: Store) => {
   return (childIDs: ReadonlyArray<string>): Family => {
-    const family = new Family(store.getNextId(), 'parent');
+    const family = new Family(store.getNextId(), FamilyType.parent);
     const cUnit = newUnit(family.id, store.getNodes(childIDs), true);
 
     cUnit.nodes.forEach((child, idx) => {

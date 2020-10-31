@@ -7,7 +7,7 @@ import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
 
 export default (store: Store) => {
-  return (parentIDs: string[], type: FamilyType = 'root', isMain: boolean = false): Family => {
+  return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = new Family(store.getNextId(), type, isMain);
 
     const parents = parentIDs.map(id => store.getNode(id));

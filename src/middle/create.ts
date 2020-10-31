@@ -5,6 +5,7 @@ import fixOverlaps from './fixOverlaps';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withType } from '../utils';
 import Store from '../store';
+import { FamilyType } from '../types';
 import Family from '../models/family';
 
 export default (store: Store): Store => {
@@ -12,7 +13,7 @@ export default (store: Store): Store => {
   let families: Family[] = [];
 
   if (!rootParents.length) {
-    const family = new Family(store.getNextId(), 'root', true);
+    const family = new Family(store.getNextId(), FamilyType.root, true);
     getChildUnits(store, family.id, store.root).forEach(unit => family.cUnits.push(unit));
     setDefaultUnitShift(family);
     families.push(family);
@@ -31,7 +32,7 @@ export default (store: Store): Store => {
         .filter(withType('adopted'))
         .map(prop('id'));
 
-      const bloodFamily = createFamily(bloodParentIDs, 'root', true);
+      const bloodFamily = createFamily(bloodParentIDs, FamilyType.root, true);
       const adoptedFamily = createFamily(adoptedParentIDs);
 
       fixOverlaps(bloodFamily, adoptedFamily);
@@ -40,7 +41,7 @@ export default (store: Store): Store => {
     else {
       // Show: parents + their spouses, my siblings + half-siblings, my spouses
       const parentIDs = rootParents.map(prop('id'));
-      const mainFamily = createFamily(parentIDs, 'root', true);
+      const mainFamily = createFamily(parentIDs, FamilyType.root, true);
 
       families.push(mainFamily);
 

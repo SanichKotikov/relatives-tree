@@ -2,7 +2,7 @@ import Store from '../store';
 import { Gender, IFamilyNode, IRelation, RelationType } from '../types';
 import { relToNode } from '../utils';
 
-const createRel = (id: string, type: RelationType = 'blood'): IRelation => ({ id, type });
+const createRel = (id: string, type = RelationType.blood): IRelation => ({ id, type });
 
 const createNode = (gender: Gender): IFamilyNode => ({
   id: `${gender}-ph`,
@@ -15,11 +15,11 @@ const createNode = (gender: Gender): IFamilyNode => ({
 });
 
 const createParents = (store: Store): IRelation[] => {
-  const father = createNode('male');
-  const mother = createNode('female');
+  const father = createNode(Gender.male);
+  const mother = createNode(Gender.female);
 
-  father.spouses = [createRel(mother.id, 'married')];
-  mother.spouses = [createRel(father.id, 'married')];
+  father.spouses = [createRel(mother.id, RelationType.married)];
+  mother.spouses = [createRel(father.id, RelationType.married)];
 
   const { id, siblings } = store.root;
 
