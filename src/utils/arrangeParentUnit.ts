@@ -3,7 +3,8 @@ import Family from '../models/family';
 import { prop } from './index';
 
 const middle = (values: ReadonlyArray<number>): number => {
-  return (values[0] + values[values.length - 1]) / 2;
+  const result = (values[0] + values[values.length - 1]) / 2;
+  return Number.isNaN(result) ? 0 : result;
 };
 
 export const arrangeParentUnit = (family: Family) => {
