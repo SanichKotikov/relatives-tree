@@ -9,6 +9,7 @@
     "start": "parcel docs/index.html --open",
     "build": "tsc",
     "size": "npm run build && size-limit",
+    "size:why": "npm run build && size-limit --why",
     "test:dev": "jest --watchAll",
     "test": "jest"
   },

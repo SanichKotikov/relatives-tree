@@ -1,9 +1,10 @@
 import Store from '../store';
 import Family from '../models/family';
-import Unit from '../models/unit';
 import arrangeMiddle from '../middle/arrange';
-import { withId, withSameIDs, withType } from '../utils';
+import { sameAs } from '../utils/units';
+import { withId, withType } from '../utils';
 import { arrangeParentUnit } from '../utils/arrangeParentUnit';
+import { Unit } from '../types';
 
 export default (store: Store) => {
   return function(family: Family): void {
@@ -17,7 +18,7 @@ export default (store: Store) => {
 
       const pFamily = store.getFamily(family.pID as number); // TODO
 
-      const cUnit = pFamily.cUnits.find(withSameIDs(fUnit)) as Unit; // TODO
+      const cUnit = pFamily.cUnits.find(sameAs(fUnit)) as Unit; // TODO
       const uIndex = pFamily.cUnits.findIndex(unit => (
         unit.nodes[0].id === fUnit.nodes[0].id
       ));

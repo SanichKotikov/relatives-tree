@@ -1,16 +1,16 @@
 import Store from '../store';
-import Unit from '../models/unit';
 import getSpouses from '../utils/getSpouses';
-import { IFamilyNode } from '../types';
+import { newUnit } from '../utils/units';
+import { IFamilyNode, Unit } from '../types';
 
 function getChildUnits(store: Store, familyId: number, child: IFamilyNode): ReadonlyArray<Unit> {
   if (child.spouses.length) {
     const { left, middle, right } = getSpouses(store, [child]);
     return [...left.map(node => [node]), middle, ...right.map(node => [node])]
-      .map(nodes => new Unit(familyId, nodes, true));
+      .map(nodes => newUnit(familyId, nodes, true));
   }
 
-  return [new Unit(familyId, [child], true)];
+  return [newUnit(familyId, [child], true)];
 }
 
 export default getChildUnits;

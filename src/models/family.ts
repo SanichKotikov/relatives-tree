@@ -1,7 +1,7 @@
 import { SIZE } from '../constants';
-import { max, prop } from '../utils';
-import { FamilyType } from '../types';
-import Unit from './unit';
+import { max } from '../utils';
+import { nodeCount, rightSide } from '../utils/units';
+import { FamilyType, Unit } from '../types';
 
 class Family {
 
@@ -31,7 +31,7 @@ class Family {
   }
 
   get width(): number {
-    return max([...this.pUnits, ...this.cUnits].map(prop('right')));
+    return max([...this.pUnits, ...this.cUnits].map(rightSide));
   }
 
   get height(): number {
@@ -43,11 +43,11 @@ class Family {
   }
 
   get pCount(): number {
-    return this.pUnits.reduce((a, b) => a + b.size, 0);
+    return this.pUnits.reduce((a, b) => a + nodeCount(b), 0);
   }
 
   get cCount(): number {
-    return this.cUnits.reduce((a, b) => a + b.size, 0);
+    return this.cUnits.reduce((a, b) => a + nodeCount(b), 0);
   }
 
   get pUnitsWithParents() {

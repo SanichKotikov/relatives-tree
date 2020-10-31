@@ -1,11 +1,9 @@
 import Store from '../store';
-import Unit from '../models/unit';
 import { Gender, IFamilyNode, IRelation } from '../types';
 
 export const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
 export const withId = <T extends { id: any; }, K extends keyof { id: any; }>(id: T[K]) => (item: T) => item.id === id;
 export const withType = <T extends { type: string; }>(...types: string[]) => (item: T) => types.includes(item.type);
-export const withSameIDs = (target: Unit) => (unit: Unit) => target.ids.join('') === unit.ids.join('');
 export const flat = <T>(items: ReadonlyArray<T>, item: ReadonlyArray<T>) => items.concat(item);
 export const unique = <T>(item: T, index: number, arr: T[]): boolean => arr.indexOf(item) === index;
 export const inAscOrder = (v1: number, v2: number) => v1 - v2;

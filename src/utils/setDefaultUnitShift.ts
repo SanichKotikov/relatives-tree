@@ -1,11 +1,12 @@
 import Family from '../models/family';
-import Unit from '../models/unit';
 import { min, prop } from './index';
 import { arrangeParentUnit } from './arrangeParentUnit';
+import { rightSide } from './units';
+import { Unit } from '../types';
 
 const arrangeInOrder = (units: readonly Unit[]): void => {
   units.forEach((unit, idx, self) => (
-    unit.shift = idx === 0 ? 0 : self[idx - 1].right
+    unit.shift = idx === 0 ? 0 : rightSide(self[idx - 1])
   ));
 };
 

@@ -1,8 +1,7 @@
 import hasHiddenRelatives from './hasHiddenRelatives';
 import { flat } from './index';
 import Family from '../models/family';
-import Unit from '../models/unit';
-import { IFamilyExtNode, IFamilyNode } from '../types';
+import { IFamilyExtNode, IFamilyNode, Unit } from '../types';
 
 const PARENTS = ['root', 'parent'];
 const CHILDREN = ['root', 'child'];
@@ -11,7 +10,7 @@ function extendNode(family: Family) {
   return (unit: Unit) => (
     unit.nodes.map((node: IFamilyNode, idx: number) => ({
       ...node,
-      top: family.top + (unit.isChild && !!family.pUnits.length ? 2 : 0),
+      top: family.top + (unit.child && !!family.pUnits.length ? 2 : 0),
       left: family.left + unit.shift + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))

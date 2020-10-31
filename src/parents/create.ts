@@ -2,7 +2,7 @@ import byChildren from './byChildren';
 import arrange from './arrange';
 import { prop, withType } from '../utils';
 import Store from '../store';
-import Unit from '../models/unit';
+import { Unit } from '../types';
 
 export default (store: Store): Store => {
   const createFamily = byChildren(store);
@@ -17,7 +17,7 @@ export default (store: Store): Store => {
       const familyUnit: Unit = stack.pop() as Unit;
 
       const family = createFamily(familyUnit.nodes.map(prop('id')));
-      const childFamily = store.getFamily(familyUnit.familyId);
+      const childFamily = store.getFamily(familyUnit.fid);
 
       family.cID = childFamily.id;
       family.top = childFamily.top - 2;

@@ -1,4 +1,5 @@
 import { flat, prop, unique, withType } from '../utils';
+import { nodeCount } from '../utils/units';
 import Family from '../models/family';
 import { IConnector } from '../types';
 
@@ -7,12 +8,12 @@ export default (families: Family[]): IConnector[] => {
 
   families.filter(withType('parent')).forEach(family => {
     family.pUnits.forEach(pUnit => {
-      const pX = family.left + pUnit.shift + (pUnit.size); // TODO
+      const pX = family.left + pUnit.shift + nodeCount(pUnit); // TODO
       const pY = family.top + 1;
       const mY = family.top + 2;
 
       // between parents
-      if (pUnit.size === 2) {
+      if (nodeCount(pUnit) === 2) {
         connectors.push({
           points: [pX - 1, pY, pX - 1 + 2, pY],
         });

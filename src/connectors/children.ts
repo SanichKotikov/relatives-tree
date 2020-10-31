@@ -1,5 +1,6 @@
 import Family from '../models/family';
-import { flat, inAscOrder, max, min, prop, withId, withType } from '../utils';
+import { nodeCount, nodeIds } from '../utils/units';
+import { flat, inAscOrder, max, min, withId, withType } from '../utils';
 import { SIZE } from '../constants';
 import { IConnector } from '../types';
 
@@ -12,7 +13,7 @@ export default (families: Family[]): IConnector[] => {
 
     if (family.pUnits.length === 1) {
       const pUnit = family.pUnits[0];
-      pX = family.left + pUnit.shift + (pUnit.size); // TODO
+      pX = family.left + pUnit.shift + nodeCount(pUnit); // TODO
 
       // from parent(s) to child
       if (pUnit.nodes.every(node => !!node.children.length)) {
@@ -22,7 +23,7 @@ export default (families: Family[]): IConnector[] => {
     }
 
     const parentIds = family.pUnits
-      .map(prop('ids'))
+      .map(nodeIds)
       .reduce(flat, []);
 
     const cXs: number[] = [];
@@ -42,12 +43,12 @@ export default (families: Family[]): IConnector[] => {
       });
 
       // between child and child's spouse
-      if (cUnit.size === 2) {
+      if (nodeCount(cUnit) === 2) {
         connectors.push({
           points: [cX, mY + 1, cX + 2, mY + 1],
         });
       }
-      else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
+      else if (nodeCount(cUnit) === 1 && cUnit.nodes[0].spouses.length) {
         family.cUnits.forEach(nUnit => {
           if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
             const xX = [cX, family.left + nUnit.shift + 1].sort(inAscOrder);

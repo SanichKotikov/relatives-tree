@@ -1,7 +1,7 @@
 import Store from '../store';
 import Family from '../models/family';
-import Unit from '../models/unit';
 import { byGender, relToNode, withId } from '../utils';
+import { newUnit } from '../utils/units';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import getChildUnits from './getChildUnits';
 import { FamilyType, IFamilyNode } from '../types';
@@ -13,7 +13,7 @@ export default (store: Store) => {
     const parents = parentIDs.map(id => store.getNode(id));
     if (family.main) parents.sort(byGender(store.root.gender));
 
-    family.pUnits.push(new Unit(family.id, parents));
+    family.pUnits.push(newUnit(family.id, parents));
 
     // CHILDREN
     let children: IFamilyNode[];

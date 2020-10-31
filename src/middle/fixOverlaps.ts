@@ -1,8 +1,7 @@
 import Family from '../models/family';
-import Unit from '../models/unit';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { prop, withId } from '../utils';
-import { IFamilyNode } from '../types';
+import { IFamilyNode, Unit } from '../types';
 
 // left is blood, right is adopted
 export default (lFamily: Family, rFamily: Family) => {

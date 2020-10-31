@@ -1,7 +1,7 @@
 import Store from '../store';
 import Family from '../models/family';
-import Unit from '../models/unit';
-import { withSameIDs } from '../utils';
+import { nodeCount, sameAs } from '../utils/units';
+import { Unit } from '../types';
 
 export default (store: Store) => {
   return function(family: Family): void {
@@ -22,11 +22,11 @@ export default (store: Store) => {
 
       // root family
       if (cFamily.cID === null) {
-        fUnit.shift = (family.width - fUnit.size * 2) / 2;
+        fUnit.shift = (family.width - nodeCount(fUnit) * 2) / 2;
         break;
       }
 
-      const pUnit = cFamily.pUnits.find(withSameIDs(fUnit)) as Unit; // TODO
+      const pUnit = cFamily.pUnits.find(sameAs(fUnit)) as Unit; // TODO
       const uIndex = cFamily.pUnits.findIndex(unit => (
         unit.nodes[0].id === fUnit.nodes[0].id
       ));
