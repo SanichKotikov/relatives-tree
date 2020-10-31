@@ -16,8 +16,8 @@ export default (store: Store) => {
         const pUnit = newUnit(family.id, parents);
 
         nodeCount(pUnit) > 1 && nodeCount(cUnit) > 1 && store.root.gender === child.gender
-          ? cUnit.shift += 2
-          : pUnit.shift = cUnit.shift + idx * 2;
+          ? cUnit.pos += 2
+          : pUnit.pos = cUnit.pos + idx * 2;
 
         family.pUnits.push(pUnit);
       }

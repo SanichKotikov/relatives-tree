@@ -24,20 +24,20 @@ export default (store: Store) => {
       ));
 
       if (uIndex === 0) {
-        const left = family.left + fUnit.shift - cUnit.shift;
+        const left = family.left + fUnit.pos - cUnit.pos;
         pFamily.left = Math.max(pFamily.left, left);
       }
       else {
-        cUnit.shift = family.left + fUnit.shift - pFamily.left;
+        cUnit.pos = family.left + fUnit.pos - pFamily.left;
       }
 
       const next = pFamily.cUnits[uIndex + 1];
 
       if (next) {
-        const diff = right - (pFamily.left + next.shift);
+        const diff = right - (pFamily.left + next.pos);
 
         for (let i = uIndex + 1; i < pFamily.cUnits.length; i++) {
-          pFamily.cUnits[i].shift += diff;
+          pFamily.cUnits[i].pos += diff;
         }
       }
 

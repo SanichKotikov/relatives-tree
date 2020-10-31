@@ -16,9 +16,9 @@ export const arrangeParentUnit = (family: Family) => {
 
   const shifts = family.cUnits.reduce<number[]>((result, unit) => {
     const index = unit.nodes.findIndex(node => children.includes(node.id));
-    if (index !== -1) result.push(unit.shift + (index * SIZE));
+    if (index !== -1) result.push(unit.pos + (index * SIZE));
     return result;
   }, []);
 
-  pUnit.shift = Math.floor(middle(shifts) - (family.pCount - 1));
+  pUnit.pos = Math.floor(middle(shifts) - (family.pCount - 1));
 };

@@ -12,17 +12,17 @@ export default (store: Store) => {
       const fUnit = family.cUnits[0];
 
       if (family.pUnits.length === 2 && family.pCount > 2) {
-        fUnit.shift = Math.floor(family.pUnits[1].shift / 2);
+        fUnit.pos = Math.floor(family.pUnits[1].pos / 2);
       }
 
-      const shift = fUnit.shift;
+      const shift = fUnit.pos;
       right = Math.max(right, family.right);
 
       const cFamily = store.getFamily(family.cID as number); // TODO
 
       // root family
       if (cFamily.cID === null) {
-        fUnit.shift = (family.width - nodeCount(fUnit) * 2) / 2;
+        fUnit.pos = (family.width - nodeCount(fUnit) * 2) / 2;
         break;
       }
 
@@ -31,22 +31,22 @@ export default (store: Store) => {
         unit.nodes[0].id === fUnit.nodes[0].id
       ));
 
-      if (uIndex === 0 && pUnit.shift === 0) {
+      if (uIndex === 0 && pUnit.pos === 0) {
         const left = family.left + shift;
         cFamily.left = Math.max(cFamily.left, left);
       }
       else {
-        pUnit.shift = family.left + fUnit.shift - cFamily.left;
+        pUnit.pos = family.left + fUnit.pos - cFamily.left;
       }
 
       const next = cFamily.pUnits[uIndex + 1];
 
       if (next) {
-        const diff = right - (cFamily.left + next.shift);
+        const diff = right - (cFamily.left + next.pos);
 
         if (diff > 0) {
           for (let i = uIndex + 1; i < cFamily.pUnits.length; i++) {
-            cFamily.pUnits[i].shift += diff;
+            cFamily.pUnits[i].pos += diff;
           }
         }
       }

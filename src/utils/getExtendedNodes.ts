@@ -11,7 +11,7 @@ function extendNode(family: Family) {
     unit.nodes.map((node: IFamilyNode, idx: number) => ({
       ...node,
       top: family.top + (unit.child && !!family.pUnits.length ? 2 : 0),
-      left: family.left + unit.shift + (idx * 2),
+      left: family.left + unit.pos + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))
   );

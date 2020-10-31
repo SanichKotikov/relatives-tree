@@ -75,9 +75,9 @@ export function draw(
         family.pUnits.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.shift) * X + uP,
+            (left + unit.pos) * X + uP,
             y + uP,
-            ((unit.size * SIZE) * X) - (uP * 2),
+            ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
           );
           ctx.stroke();
@@ -88,9 +88,9 @@ export function draw(
         family.cUnits.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.shift) * X + uP,
+            (left + unit.pos) * X + uP,
             y + uP + (family.pUnits.length ? X * SIZE : 0),
-            ((unit.size * SIZE) * X) - (uP * 2),
+            ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
           );
           ctx.stroke();

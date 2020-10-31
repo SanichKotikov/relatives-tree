@@ -8,7 +8,7 @@ export default (families: Family[]): IConnector[] => {
 
   families.filter(withType('parent')).forEach(family => {
     family.pUnits.forEach(pUnit => {
-      const pX = family.left + pUnit.shift + nodeCount(pUnit); // TODO
+      const pX = family.left + pUnit.pos + nodeCount(pUnit); // TODO
       const pY = family.top + 1;
       const mY = family.top + 2;
 
@@ -32,7 +32,7 @@ export default (families: Family[]): IConnector[] => {
 
       family.cUnits.forEach(cUnit => {
         const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);
-        const cX = family.left + cUnit.shift + (cIndex * 2) + 1;
+        const cX = family.left + cUnit.pos + (cIndex * 2) + 1;
 
         // from child to parent(s)
         connectors.push({

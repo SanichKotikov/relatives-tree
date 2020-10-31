@@ -21,7 +21,7 @@ export default (store: Store): Store => {
 
       family.pID = parentFamily.id;
       family.top = parentFamily.top + parentFamily.height - SIZE;
-      family.left = parentFamily.left + familyUnit.shift;
+      family.left = parentFamily.left + familyUnit.pos;
 
       arrangeFamily(family);
       store.families.set(family.id, family);

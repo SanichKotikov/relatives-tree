@@ -11,7 +11,7 @@ export default (lFamily: Family, rFamily: Family) => {
     .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
 
   const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(prop('id'));
-  const shifts = lFamily.cUnits.map(prop('shift'));
+  const shifts = lFamily.cUnits.map(prop('pos'));
 
   // TODO:
   lFamily.cUnits = lFamily.cUnits.sort((a, b) => {
@@ -24,7 +24,7 @@ export default (lFamily: Family, rFamily: Family) => {
   });
 
   // reapply shifts
-  lFamily.cUnits.forEach((unit, idx) => unit.shift = shifts[idx]);
+  lFamily.cUnits.forEach((unit, idx) => unit.pos = shifts[idx]);
 
   // remove
   rFamily.cUnits = rFamily.cUnits.filter(unit => (

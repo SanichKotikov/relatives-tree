@@ -6,12 +6,12 @@ import { Unit } from '../types';
 
 const arrangeInOrder = (units: readonly Unit[]): void => {
   units.forEach((unit, idx, self) => (
-    unit.shift = idx === 0 ? 0 : rightSide(self[idx - 1])
+    unit.pos = idx === 0 ? 0 : rightSide(self[idx - 1])
   ));
 };
 
 const correctShift = (value: number) => {
-  return (unit: Unit) => unit.shift += value * -1;
+  return (unit: Unit) => unit.pos += value * -1;
 };
 
 export const setDefaultUnitShift = (family: Family): void => {
@@ -21,8 +21,8 @@ export const setDefaultUnitShift = (family: Family): void => {
   arrangeParentUnit(family);
 
   const start = min([
-    ...family.pUnits.map(prop('shift')),
-    ...family.cUnits.map(prop('shift')),
+    ...family.pUnits.map(prop('pos')),
+    ...family.cUnits.map(prop('pos')),
   ]);
 
   if (start !== 0) {

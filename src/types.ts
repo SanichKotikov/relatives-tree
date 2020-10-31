@@ -14,7 +14,7 @@ export interface Unit {
   /** Is child unit */
   readonly child: boolean;
   readonly nodes: readonly IFamilyNode[];
-  shift: number;
+  pos: number;
 }
 
 export interface ICanvasSize {
