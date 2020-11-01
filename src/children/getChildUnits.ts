@@ -1,9 +1,13 @@
 import Store from '../store';
-import getSpouses from '../utils/getSpouses';
+import { getSpouses } from '../utils/getSpouses';
 import { newUnit } from '../utils/units';
 import { IFamilyNode, Unit } from '../types';
 
-function getChildUnits(store: Store, familyId: number, child: IFamilyNode): ReadonlyArray<Unit> {
+export const getChildUnits = (
+  store: Store,
+  familyId: number,
+  child: IFamilyNode,
+): ReadonlyArray<Unit> => {
   if (child.spouses.length) {
     const { left, middle, right } = getSpouses(store, [child]);
     return [...left.map(node => [node]), middle, ...right.map(node => [node])]
@@ -11,6 +15,4 @@ function getChildUnits(store: Store, familyId: number, child: IFamilyNode): Read
   }
 
   return [newUnit(familyId, [child], true)];
-}
-
-export default getChildUnits;
+};

@@ -1,13 +1,13 @@
 import Store from '../store';
-import arrangeMiddle from '../middle/arrange';
 import { sameAs } from '../utils/units';
 import { rightOf, withType } from '../utils/family';
 import { withId } from '../utils';
 import { arrangeParentUnit } from '../utils/arrangeParentUnit';
 import { Family, FamilyType, Unit } from '../types';
+import { arrangeMiddle } from './arrangeMiddle';
 
-export default (store: Store) => {
-  return function(family: Family): void {
+export const arrange = (store: Store) => (
+  (family: Family): void => {
     if (!family.pid) return;
     let right = 0;
 
@@ -52,5 +52,5 @@ export default (store: Store) => {
 
       family = pFamily;
     }
-  };
-};
+  }
+);

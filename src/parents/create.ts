@@ -1,9 +1,9 @@
+import Store from '../store';
 import { prop } from '../utils';
 import { withType } from '../utils/family';
-import Store from '../store';
 import { Family, FamilyType, Unit } from '../types';
-import byChildren from './byChildren';
-import arrange from './arrange';
+import { byChildren } from './byChildren';
+import { arrange } from './arrange';
 
 const getParentUnitsWithParents = (family: Family): Unit[] => (
   family.parents.filter(unit => (
@@ -11,7 +11,7 @@ const getParentUnitsWithParents = (family: Family): Unit[] => (
   ))
 );
 
-export default (store: Store): Store => {
+export const parents = (store: Store): Store => {
   const createFamily = byChildren(store);
   const arrangeFamily = arrange(store);
   const root = store.familiesArray.filter(withType(FamilyType.root));

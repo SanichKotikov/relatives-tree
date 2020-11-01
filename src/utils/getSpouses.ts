@@ -13,7 +13,7 @@ const inDescChildren = (a: IFamilyNode, b: IFamilyNode) => {
   return b.children.length - a.children.length;
 };
 
-export default (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData => {
+export const getSpouses = (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData => {
   const middle = [...parents];
 
   if (middle.length === 1) {

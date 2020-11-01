@@ -4,7 +4,7 @@ import { flat, inAscOrder, max, min, withId } from '../utils';
 import { SIZE } from '../constants';
 import { Family, FamilyType, IConnector } from '../types';
 
-export default (families: Family[]): IConnector[] => {
+export const children = (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
   families.filter(withType(FamilyType.root, FamilyType.child)).forEach(family => {

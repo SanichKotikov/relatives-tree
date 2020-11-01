@@ -3,7 +3,7 @@ import { Family, FamilyType } from '../types';
 import { min, prop } from './index';
 import { withType } from './family';
 
-export default (store: Store): Store => {
+export const correctPositions = (store: Store): Store => {
   const families = store.familiesArray;
 
   const vShift = min(families.map(prop('Y'))) * -1;

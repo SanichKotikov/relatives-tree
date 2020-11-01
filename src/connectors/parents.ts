@@ -3,7 +3,7 @@ import { nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
 import { Family, FamilyType, IConnector } from '../types';
 
-export default (families: Family[]): IConnector[] => {
+export const parents = (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
   families.filter(withType(FamilyType.parent)).forEach(family => {

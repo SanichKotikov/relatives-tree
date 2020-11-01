@@ -3,8 +3,8 @@ import { nodeCount, sameAs } from '../utils/units';
 import { rightOf, unitCount, widthOf } from '../utils/family';
 import { Family, Unit } from '../types';
 
-export default (store: Store) => {
-  return function(family: Family): void {
+export const arrange = (store: Store) => (
+  (family: Family): void => {
     if (!family.cid) return;
     let right = 0;
 
@@ -53,5 +53,5 @@ export default (store: Store) => {
 
       family = cFamily;
     }
-  };
-};
+  }
+);

@@ -1,9 +1,9 @@
-import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { prop, withId } from '../utils';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { Family, IFamilyNode, Unit } from '../types';
 
 // left is blood, right is adopted
-export default (lFamily: Family, rFamily: Family) => {
+export const fixOverlaps = (lFamily: Family, rFamily: Family) => {
   const lChildren: IFamilyNode[] = lFamily.children
     .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
   const rChildren: IFamilyNode[] = rFamily.children

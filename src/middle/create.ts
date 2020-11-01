@@ -1,14 +1,14 @@
-import getChildUnits from '../children/getChildUnits';
-import byParents from '../children/byParents';
-import getSpouses from '../utils/getSpouses';
-import fixOverlaps from './fixOverlaps';
+import Store from '../store';
+import { getChildUnits } from '../children/getChildUnits';
+import { byParents } from '../children/byParents';
+import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
 import { newFamily, rightOf } from '../utils/family';
-import Store from '../store';
 import { Family, FamilyType, RelationType } from '../types';
+import { fixOverlaps } from './fixOverlaps';
 
-export default (store: Store): Store => {
+export const middle = (store: Store): Store => {
   const rootParents = store.root.parents;
   let families: Family[] = [];
 

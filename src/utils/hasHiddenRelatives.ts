@@ -2,11 +2,11 @@ import { Family, FamilyType, IFamilyNode, Unit } from '../types';
 import { withId } from './index';
 import { nodeIds } from './units';
 
-function inUnits(units: ReadonlyArray<Unit>, nodeId: string) {
-  return !!units.find(unit => !!unit.nodes.find(withId(nodeId)));
-}
+const inUnits = (units: ReadonlyArray<Unit>, nodeId: string) => (
+  !!units.find(unit => !!unit.nodes.find(withId(nodeId)))
+);
 
-export default (family: Family, node: IFamilyNode): boolean => {
+export const hasHiddenRelatives = (family: Family, node: IFamilyNode): boolean => {
   if (family.type !== FamilyType.child && inUnits(family.parents, node.id)) {
     return (
       (family.type === FamilyType.parent && (node.children.length > 1 || node.spouses.length > 1)) ||

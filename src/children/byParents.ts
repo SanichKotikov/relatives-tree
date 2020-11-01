@@ -3,10 +3,10 @@ import { byGender, relToNode, withId } from '../utils';
 import { newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import getChildUnits from './getChildUnits';
+import { getChildUnits } from './getChildUnits';
 import { Family, FamilyType, IFamilyNode } from '../types';
 
-export default (store: Store) => {
+export const byParents = (store: Store) => {
   return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 

@@ -35,7 +35,7 @@ const setParents = (parents: IRelation[]) => {
   return (node: IFamilyNode) => node.parents = parents.slice();
 };
 
-export default (store: Store): Store => {
+export const placeholders = (store: Store): Store => {
   if (store.root.parents.length) return store;
   const setParentsTo = setParents(createParents(store));
 
