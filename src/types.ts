@@ -43,8 +43,8 @@ export interface Unit {
 }
 
 export interface ICanvasSize {
-  width: number;
-  height: number;
+  readonly width: number;
+  readonly height: number;
 }
 
 export interface IRelation {
