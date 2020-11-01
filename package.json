@@ -8,6 +8,7 @@
     "benchmarks": "tsc --project ./benchmarks/tsconfig.json && node ./benchmarks/index.js",
     "start": "parcel docs/index.html --open",
     "build": "tsc",
+    "build:info": "tsc --extendedDiagnostics",
     "size": "npm run build && size-limit",
     "size:why": "npm run build && size-limit --why",
     "test:dev": "jest --watchAll",
