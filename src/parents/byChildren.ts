@@ -5,7 +5,7 @@ import { newFamily } from '../utils/family';
 import { Family, FamilyType } from '../types';
 
 export const byChildren = (store: Store) => {
-  return (childIDs: ReadonlyArray<string>): Family => {
+  return (childIDs: readonly string[]): Family => {
     const family = newFamily(store.getNextId(), FamilyType.parent);
     const cUnit = newUnit(family.id, store.getNodes(childIDs), true);
 

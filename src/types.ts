@@ -1,9 +1,13 @@
+export type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
 export const enum Gender {
   male = 'male',
   female = 'female',
 }
 
-export const enum RelationType {
+export const enum RelType {
   blood = 'blood',
   married = 'married',
   divorced = 'divorced',
@@ -17,7 +21,7 @@ export const enum FamilyType {
   parent = 'parent',
 }
 
-export interface Family {
+export type Family = {
   readonly id: number;
   readonly type: FamilyType;
   readonly main: boolean;
@@ -33,53 +37,53 @@ export interface Family {
   children: readonly Unit[];
 }
 
-export interface Unit {
+export type Unit = {
   /** Family ID */
   readonly fid: number;
   /** Is child unit */
   readonly child: boolean;
-  readonly nodes: readonly IFamilyNode[];
+  readonly nodes: readonly Node[];
   pos: number;
 }
 
-export interface ICanvasSize {
-  readonly width: number;
-  readonly height: number;
-}
+export type Size = Readonly<{
+  width: number;
+  height: number;
+}>
 
-export interface IRelation {
+export type Relation = Readonly<{
   id: string;
-  type: RelationType;
-}
+  type: RelType;
+}>
 
-export interface IFamilyNode {
+export type Node = Readonly<{
   id: string;
   gender: Gender;
-  parents: readonly IRelation[];
-  children: readonly IRelation[];
-  siblings: readonly IRelation[];
-  spouses: readonly IRelation[];
+  parents: readonly Relation[];
+  children: readonly Relation[];
+  siblings: readonly Relation[];
+  spouses: readonly Relation[];
   placeholder?: boolean;
-}
+}>
 
-export interface IFamilyExtNode extends IFamilyNode {
+export type ExtNode = Node & Readonly<{
   top: number;
   left: number;
   hasSubTree: boolean;
-}
+}>
 
-export interface IConnector {
-  points: [number, number, number, number];
-}
+export type Connector = Readonly<{
+  points: readonly [x1: number, y1: number, x2: number, y2: number];
+}>
 
-export interface IFamilyData {
-  canvas: ICanvasSize;
+export type RelData = Readonly<{
+  canvas: Size;
   families: readonly Family[];
-  nodes: readonly IFamilyExtNode[];
-  connectors: readonly IConnector[];
-}
+  nodes: readonly ExtNode[];
+  connectors: readonly Connector[];
+}>
 
-export interface IOptions {
+export type Options = Readonly<{
   rootId: string;
   placeholders?: boolean;
-}
+}>

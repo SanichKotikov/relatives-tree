@@ -5,7 +5,7 @@ import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
 import { newFamily, rightOf } from '../utils/family';
-import { Family, FamilyType, RelationType } from '../types';
+import { Family, FamilyType, RelType } from '../types';
 import { fixOverlaps } from './fixOverlaps';
 
 export const middle = (store: Store): Store => {
@@ -27,11 +27,11 @@ export const middle = (store: Store): Store => {
       // Show: parents, my spouses, my siblings (for both parents)
       // Hide: another spouses for parents, half-siblings (for both parents)
       const bloodParentIDs = rootParents
-        .filter(withRelType(RelationType.blood))
+        .filter(withRelType(RelType.blood))
         .map(prop('id'));
 
       const adoptedParentIDs = rootParents
-        .filter(withRelType(RelationType.adopted))
+        .filter(withRelType(RelType.adopted))
         .map(prop('id'));
 
       const bloodFamily = createFamily(bloodParentIDs, FamilyType.root, true);

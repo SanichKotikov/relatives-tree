@@ -4,7 +4,7 @@ import { newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { getChildUnits } from './getChildUnits';
-import { Family, FamilyType, IFamilyNode } from '../types';
+import { Family, FamilyType, Node } from '../types';
 
 export const byParents = (store: Store) => {
   return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
@@ -16,7 +16,7 @@ export const byParents = (store: Store) => {
     family.parents = family.parents.concat(newUnit(family.id, parents));
 
     // CHILDREN
-    let children: IFamilyNode[];
+    let children: Node[];
 
     if (parents.length === 1) {
       children = parents[0].children.map(relToNode(store));

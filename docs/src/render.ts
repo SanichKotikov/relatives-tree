@@ -1,6 +1,6 @@
 import { SIZE } from '../../src/constants';
 import { heightOf, widthOf } from '../../src/utils/family';
-import { ICanvasSize, IFamilyData } from '../../src/types';
+import { RelData, Size } from '../../src/types';
 
 const X = 40;
 const uP = 4; // unit padding
@@ -16,7 +16,7 @@ function getRandomColor() {
   return '#' + ((1 << 24) * Math.random() | 0).toString(16);
 }
 
-function setupCanvas(canvas: HTMLCanvasElement, size: ICanvasSize) {
+function setupCanvas(canvas: HTMLCanvasElement, size: Size) {
   const ratio = window.devicePixelRatio || 1;
 
   const width = size.width * X;
@@ -37,7 +37,7 @@ function setupCanvas(canvas: HTMLCanvasElement, size: ICanvasSize) {
 
 export function draw(
   canvas: HTMLCanvasElement,
-  tree: Readonly<IFamilyData>,
+  tree: Readonly<RelData>,
   options: Partial<Readonly<IRenderOptions>> = {},
 ) {
   const ctx = setupCanvas(canvas, tree.canvas);

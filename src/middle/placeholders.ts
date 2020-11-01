@@ -1,10 +1,10 @@
 import Store from '../store';
-import { Gender, IFamilyNode, IRelation, RelationType } from '../types';
+import { Gender, Mutable, Node, Relation, RelType } from '../types';
 import { relToNode } from '../utils';
 
-const createRel = (id: string, type = RelationType.blood): IRelation => ({ id, type });
+const createRel = (id: string, type = RelType.blood): Relation => ({ id, type });
 
-const createNode = (gender: Gender): IFamilyNode => ({
+const createNode = (gender: Gender): Mutable<Node> => ({
   id: `${gender}-ph`,
   placeholder: true,
   gender: gender,
@@ -14,12 +14,12 @@ const createNode = (gender: Gender): IFamilyNode => ({
   children: [],
 });
 
-const createParents = (store: Store): IRelation[] => {
+const createParents = (store: Store): Relation[] => {
   const father = createNode(Gender.male);
   const mother = createNode(Gender.female);
 
-  father.spouses = [createRel(mother.id, RelationType.married)];
-  mother.spouses = [createRel(father.id, RelationType.married)];
+  father.spouses = [createRel(mother.id, RelType.married)];
+  mother.spouses = [createRel(father.id, RelType.married)];
 
   const { id, siblings } = store.root;
 
@@ -31,9 +31,9 @@ const createParents = (store: Store): IRelation[] => {
   });
 };
 
-const setParents = (parents: IRelation[]) => {
-  return (node: IFamilyNode) => node.parents = parents.slice();
-};
+const setParents = (parents: readonly Relation[]) => (
+  (node: Mutable<Node>) => node.parents = parents.slice()
+);
 
 export const placeholders = (store: Store): Store => {
   if (store.root.parents.length) return store;

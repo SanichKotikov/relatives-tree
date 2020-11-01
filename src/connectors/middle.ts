@@ -1,10 +1,10 @@
 import { inAscOrder, withId } from '../utils';
 import { nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
-import { Family, FamilyType, IConnector } from '../types';
+import { Connector, Family, FamilyType } from '../types';
 
-export const middle = (families: Family[]): IConnector[] => {
-  const connectors: IConnector[] = [];
+export const middle = (families: Family[]): Connector[] => {
+  const connectors: Connector[] = [];
 
   families.filter(withType(FamilyType.root)).forEach(family => {
     // between parents

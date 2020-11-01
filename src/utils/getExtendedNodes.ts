@@ -1,10 +1,10 @@
 import { flat } from './index';
 import { hasHiddenRelatives } from './hasHiddenRelatives';
-import { Family, FamilyType, IFamilyExtNode, IFamilyNode, Unit } from '../types';
+import { ExtNode, Family, FamilyType, Node, Unit } from '../types';
 
 const extendNode = (family: Family) => (
   (unit: Unit) => (
-    unit.nodes.map((node: IFamilyNode, idx: number) => ({
+    unit.nodes.map((node: Node, idx: number) => ({
       ...node,
       top: family.Y + (unit.child && !!family.parents.length ? 2 : 0),
       left: family.X + unit.pos + (idx * 2),
@@ -23,6 +23,6 @@ const getChildNodes = (family: Family) => (
 
 const mapFamily = (family: Family) => [...getParentNodes(family), ...getChildNodes(family)].reduce(flat, []);
 
-export const getExtendedNodes = (families: ReadonlyArray<Family>): ReadonlyArray<IFamilyExtNode> => (
+export const getExtendedNodes = (families: readonly Family[]): readonly ExtNode[] => (
   families.map(mapFamily).reduce(flat)
 );

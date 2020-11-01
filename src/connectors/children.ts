@@ -2,10 +2,10 @@ import { nodeCount, nodeIds } from '../utils/units';
 import { withType } from '../utils/family';
 import { flat, inAscOrder, max, min, withId } from '../utils';
 import { SIZE } from '../constants';
-import { Family, FamilyType, IConnector } from '../types';
+import { Connector, Family, FamilyType } from '../types';
 
-export const children = (families: Family[]): IConnector[] => {
-  const connectors: IConnector[] = [];
+export const children = (families: Family[]): Connector[] => {
+  const connectors: Connector[] = [];
 
   families.filter(withType(FamilyType.root, FamilyType.child)).forEach(family => {
     let pX = 0;

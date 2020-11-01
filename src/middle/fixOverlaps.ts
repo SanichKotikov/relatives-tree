@@ -1,13 +1,13 @@
 import { prop, withId } from '../utils';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import { Family, IFamilyNode, Unit } from '../types';
+import { Family, Node, Unit } from '../types';
 
 // left is blood, right is adopted
 export const fixOverlaps = (lFamily: Family, rFamily: Family) => {
-  const lChildren: IFamilyNode[] = lFamily.children
-    .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
-  const rChildren: IFamilyNode[] = rFamily.children
-    .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
+  const lChildren: Node[] = lFamily.children
+    .reduce((a: Node[], b: Unit) => a.concat(b.nodes), []);
+  const rChildren: Node[] = rFamily.children
+    .reduce((a: Node[], b: Unit) => a.concat(b.nodes), []);
 
   const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(prop('id'));
   const shifts = lFamily.children.map(prop('pos'));

@@ -1,26 +1,26 @@
 import Store from '../store';
 import { prop, relToNode, withRelType } from './index';
-import { IFamilyNode, RelationType } from '../types';
+import { Node, RelType } from '../types';
 
-interface ISpousesData {
-  left: ReadonlyArray<IFamilyNode>;
-  middle: ReadonlyArray<IFamilyNode>;
-  right: ReadonlyArray<IFamilyNode>;
+type ISpousesData = {
+  left: readonly Node[];
+  middle: readonly Node[];
+  right: readonly Node[];
 }
 
 // In descending order of the number of children
-const inDescChildren = (a: IFamilyNode, b: IFamilyNode) => {
+const inDescChildren = (a: Node, b: Node) => {
   return b.children.length - a.children.length;
 };
 
-export const getSpouses = (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData => {
+export const getSpouses = (store: Store, parents: readonly Node[]): ISpousesData => {
   const middle = [...parents];
 
   if (middle.length === 1) {
     const { gender, spouses } = middle[0];
 
-    let spouse: IFamilyNode | undefined;
-    const married = spouses.find(withRelType(RelationType.married));
+    let spouse: Node | undefined;
+    const married = spouses.find(withRelType(RelType.married));
 
     if (married) spouse = store.getNode(married.id);
     else if (spouses.length === 1) spouse = store.getNode(spouses[0].id);
@@ -40,12 +40,12 @@ export const getSpouses = (store: Store, parents: ReadonlyArray<IFamilyNode>): I
 
     result.left = middle[0].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
-      .sort((a) => a.type === RelationType.married ? 1 : 0)
+      .sort((a) => a.type === RelType.married ? 1 : 0)
       .map(relToNode(store));
 
     result.right = middle[1].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
-      .sort((a) => a.type === RelationType.married ? -1 : 0)
+      .sort((a) => a.type === RelType.married ? -1 : 0)
       .map(relToNode(store));
   }
 

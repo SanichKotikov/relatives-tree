@@ -3,7 +3,7 @@ import { Family } from '../types';
 import { prop } from './index';
 import { unitCount } from './family';
 
-const middle = (values: ReadonlyArray<number>): number => {
+const middle = (values: readonly number[]): number => {
   const result = (values[0] + values[values.length - 1]) / 2;
   return Number.isNaN(result) ? 0 : result;
 };
