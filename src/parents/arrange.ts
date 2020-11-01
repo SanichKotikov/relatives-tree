@@ -1,6 +1,6 @@
 import Store from '../store';
 import { nodeCount, sameAs } from '../utils/units';
-import { countUnits, fRight, widthOf } from '../utils/family';
+import { rightOf, unitCount, widthOf } from '../utils/family';
 import { Family, Unit } from '../types';
 
 export default (store: Store) => {
@@ -11,12 +11,12 @@ export default (store: Store) => {
     while (family) {
       const fUnit = family.children[0];
 
-      if (family.parents.length === 2 && countUnits(family.parents) > 2) {
+      if (family.parents.length === 2 && unitCount(family.parents) > 2) {
         fUnit.pos = Math.floor(family.parents[1].pos / 2);
       }
 
       const shift = fUnit.pos;
-      right = Math.max(right, fRight(family));
+      right = Math.max(right, rightOf(family));
 
       const cFamily = store.getFamily(family.cid as number); // TODO
 

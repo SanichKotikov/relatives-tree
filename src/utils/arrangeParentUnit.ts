@@ -1,7 +1,7 @@
 import { SIZE } from '../constants';
 import { Family } from '../types';
 import { prop } from './index';
-import { countUnits } from './family';
+import { unitCount } from './family';
 
 const middle = (values: ReadonlyArray<number>): number => {
   const result = (values[0] + values[values.length - 1]) / 2;
@@ -21,5 +21,5 @@ export const arrangeParentUnit = (family: Family) => {
     return result;
   }, []);
 
-  pUnit.pos = Math.floor(middle(shifts) - (countUnits(family.parents) - 1));
+  pUnit.pos = Math.floor(middle(shifts) - (unitCount(family.parents) - 1));
 };

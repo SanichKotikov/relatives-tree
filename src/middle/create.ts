@@ -4,7 +4,7 @@ import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
-import { fRight, newFamily } from '../utils/family';
+import { newFamily, rightOf } from '../utils/family';
 import Store from '../store';
 import { Family, FamilyType, RelationType } from '../types';
 
@@ -64,7 +64,7 @@ export default (store: Store): Store => {
 
   if (families.length > 1) {
     for (let i = 1; i < families.length; i++) {
-      families[i].X = fRight(families[i - 1]);
+      families[i].X = rightOf(families[i - 1]);
     }
   }
 

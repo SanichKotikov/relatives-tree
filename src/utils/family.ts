@@ -13,26 +13,12 @@ export const newFamily = (id: number, type: FamilyType, main = false): Family =>
   children: [],
 });
 
-export const withType = <T extends { type: FamilyType; }>(...types: readonly FamilyType[]) => (
-  (item: T) => types.includes(item.type)
-);
+export const withType = (...types: readonly Family['type'][]) => (item: Family) => types.includes(item.type);
 
 export const widthOf = (family: Family): number => max([...family.parents, ...family.children].map(rightSide));
 export const heightOf = (family: Family): number => [
   family.parents.length,
   family.children.length,
 ].filter(Boolean).length * SIZE;
-export const fRight = (family: Family): number => family.X + widthOf(family);
-export const countUnits = (units: readonly Unit[]): number => units.reduce((a, b) => a + nodeCount(b), 0);
-
-export const pUnitsWithParents = (family: Family) => (
-  family.parents.filter(unit => (
-    !!unit.nodes.find(node => !!node.parents.length)
-  ))
-);
-
-export const cUnitsWithChildren = (family: Family) => (
-  family.children.filter(unit => (
-    !!unit.nodes.find(node => !!node.children.length)
-  ))
-);
+export const rightOf = (family: Family): number => family.X + widthOf(family);
+export const unitCount = (units: readonly Unit[]): number => units.reduce((a, b) => a + nodeCount(b), 0);

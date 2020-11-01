@@ -1,9 +1,15 @@
+import { prop } from '../utils';
+import { withType } from '../utils/family';
+import Store from '../store';
+import { Family, FamilyType, Unit } from '../types';
 import byChildren from './byChildren';
 import arrange from './arrange';
-import { prop } from '../utils';
-import { pUnitsWithParents, withType } from '../utils/family';
-import Store from '../store';
-import { FamilyType, Unit } from '../types';
+
+const getParentUnitsWithParents = (family: Family): Unit[] => (
+  family.parents.filter(unit => (
+    !!unit.nodes.find(node => !!node.parents.length)
+  ))
+);
 
 export default (store: Store): Store => {
   const createFamily = byChildren(store);
@@ -12,7 +18,7 @@ export default (store: Store): Store => {
 
   for (const rootFamily of root) {
     if (!rootFamily.main) continue;
-    let stack = pUnitsWithParents(rootFamily).reverse();
+    let stack = getParentUnitsWithParents(rootFamily).reverse();
 
     while (stack.length) {
       const familyUnit: Unit = stack.pop() as Unit;
@@ -27,7 +33,7 @@ export default (store: Store): Store => {
       arrangeFamily(family);
       store.families.set(family.id, family);
 
-      const nextUnits = pUnitsWithParents(family);
+      const nextUnits = getParentUnitsWithParents(family);
       if (nextUnits.length) stack = [...stack, ...nextUnits.reverse()];
     }
   }

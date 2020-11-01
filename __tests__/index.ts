@@ -1,6 +1,6 @@
 import calcTree from '../src';
 import { Family, IFamilyExtNode } from '../src/types';
-import { fRight, widthOf } from '../src/utils/family';
+import { rightOf, widthOf } from '../src/utils/family';
 import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';
 import simple from '../samples/simple-family.json';
@@ -41,7 +41,7 @@ test('Canvas size', () => {
 
 test('Family size & position', () => {
   function convert(families: ReadonlyArray<Family>) {
-    return families.map(f => [f.id, f.Y, f.X, fRight(f), widthOf(f)].join('|'));
+    return families.map(f => [f.id, f.Y, f.X, rightOf(f), widthOf(f)].join('|'));
   }
 
   expect(convert(emptyTree.families)).toEqual(['1|0|0|2|2']);
