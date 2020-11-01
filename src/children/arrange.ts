@@ -1,10 +1,10 @@
 import Store from '../store';
 import arrangeMiddle from '../middle/arrange';
 import { sameAs } from '../utils/units';
-import { fRight } from '../utils/family';
-import { withId, withType } from '../utils';
+import { fRight, withType } from '../utils/family';
+import { withId } from '../utils';
 import { arrangeParentUnit } from '../utils/arrangeParentUnit';
-import { Family, Unit } from '../types';
+import { Family, FamilyType, Unit } from '../types';
 
 export default (store: Store) => {
   return function(family: Family): void {
@@ -44,7 +44,7 @@ export default (store: Store) => {
       arrangeParentUnit(pFamily);
 
       if (!pFamily.pid) {
-        const rootFamily = store.familiesArray.filter(withType('root'));
+        const rootFamily = store.familiesArray.filter(withType(FamilyType.root));
         const start = rootFamily.findIndex(withId(pFamily.id));
         arrangeMiddle(rootFamily, start + 1, fRight(family));
         break;

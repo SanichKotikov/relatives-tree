@@ -1,11 +1,12 @@
-import { inAscOrder, withId, withType } from '../utils';
+import { inAscOrder, withId } from '../utils';
 import { nodeCount } from '../utils/units';
-import { Family, IConnector } from '../types';
+import { withType } from '../utils/family';
+import { Family, FamilyType, IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
-  families.filter(withType('root')).forEach(family => {
+  families.filter(withType(FamilyType.root)).forEach(family => {
     // between parents
     family.parents.forEach(pUnit => {
       const pX = family.X + pUnit.pos + 1;

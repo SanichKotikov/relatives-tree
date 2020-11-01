@@ -1,14 +1,14 @@
 import byChildren from './byChildren';
 import arrange from './arrange';
-import { prop, withType } from '../utils';
-import { pUnitsWithParents } from '../utils/family';
+import { prop } from '../utils';
+import { pUnitsWithParents, withType } from '../utils/family';
 import Store from '../store';
-import { Unit } from '../types';
+import { FamilyType, Unit } from '../types';
 
 export default (store: Store): Store => {
   const createFamily = byChildren(store);
   const arrangeFamily = arrange(store);
-  const root = store.familiesArray.filter(withType('root'));
+  const root = store.familiesArray.filter(withType(FamilyType.root));
 
   for (const rootFamily of root) {
     if (!rootFamily.main) continue;

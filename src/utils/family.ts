@@ -13,6 +13,10 @@ export const newFamily = (id: number, type: FamilyType, main = false): Family =>
   children: [],
 });
 
+export const withType = <T extends { type: FamilyType; }>(...types: readonly FamilyType[]) => (
+  (item: T) => types.includes(item.type)
+);
+
 export const widthOf = (family: Family): number => max([...family.parents, ...family.children].map(rightSide));
 export const heightOf = (family: Family): number => [
   family.parents.length,

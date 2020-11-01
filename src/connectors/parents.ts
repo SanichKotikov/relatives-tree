@@ -1,11 +1,12 @@
-import { flat, prop, unique, withType } from '../utils';
+import { flat, prop, unique } from '../utils';
 import { nodeCount } from '../utils/units';
-import { Family, IConnector } from '../types';
+import { withType } from '../utils/family';
+import { Family, FamilyType, IConnector } from '../types';
 
 export default (families: Family[]): IConnector[] => {
   const connectors: IConnector[] = [];
 
-  families.filter(withType('parent')).forEach(family => {
+  families.filter(withType(FamilyType.parent)).forEach(family => {
     family.parents.forEach(pUnit => {
       const pX = family.X + pUnit.pos + nodeCount(pUnit); // TODO
       const pY = family.Y + 1;

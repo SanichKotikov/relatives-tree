@@ -3,10 +3,10 @@ import byParents from '../children/byParents';
 import getSpouses from '../utils/getSpouses';
 import fixOverlaps from './fixOverlaps';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import { flat, hasDiffParents, prop, withType } from '../utils';
+import { flat, hasDiffParents, prop, withRelType } from '../utils';
 import { fRight, newFamily } from '../utils/family';
 import Store from '../store';
-import { Family, FamilyType } from '../types';
+import { Family, FamilyType, RelationType } from '../types';
 
 export default (store: Store): Store => {
   const rootParents = store.root.parents;
@@ -27,11 +27,11 @@ export default (store: Store): Store => {
       // Show: parents, my spouses, my siblings (for both parents)
       // Hide: another spouses for parents, half-siblings (for both parents)
       const bloodParentIDs = rootParents
-        .filter(withType('blood'))
+        .filter(withRelType(RelationType.blood))
         .map(prop('id'));
 
       const adoptedParentIDs = rootParents
-        .filter(withType('adopted'))
+        .filter(withRelType(RelationType.adopted))
         .map(prop('id'));
 
       const bloodFamily = createFamily(bloodParentIDs, FamilyType.root, true);

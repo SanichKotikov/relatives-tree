@@ -1,6 +1,7 @@
 import Store from '../store';
-import { Family } from '../types';
-import { min, prop, withType } from './index';
+import { Family, FamilyType } from '../types';
+import { min, prop } from './index';
+import { withType } from './family';
 
 export default (store: Store): Store => {
   const families = store.familiesArray;
@@ -18,10 +19,10 @@ export default (store: Store): Store => {
     const diff = (rootParent.X + pUnit.pos) - (rootChild.X + cUnit.pos);
 
     if (diff > 0) families
-      .filter(withType('child', 'root'))
+      .filter(withType(FamilyType.child, FamilyType.root))
       .forEach(family => family.X += diff);
     else if (diff < 0) families
-      .filter(withType('parent'))
+      .filter(withType(FamilyType.parent))
       .forEach(family => family.X += diff * -1);
 
     const hShift = min(families.map(prop('X')));

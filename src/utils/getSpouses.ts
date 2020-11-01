@@ -1,6 +1,6 @@
 import Store from '../store';
-import { prop, relToNode, withType } from './index';
-import { IFamilyNode } from '../types';
+import { prop, relToNode, withRelType } from './index';
+import { IFamilyNode, RelationType } from '../types';
 
 interface ISpousesData {
   left: ReadonlyArray<IFamilyNode>;
@@ -20,7 +20,7 @@ export default (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData
     const { gender, spouses } = middle[0];
 
     let spouse: IFamilyNode | undefined;
-    const married = spouses.find(withType('married'));
+    const married = spouses.find(withRelType(RelationType.married));
 
     if (married) spouse = store.getNode(married.id);
     else if (spouses.length === 1) spouse = store.getNode(spouses[0].id);
@@ -40,12 +40,12 @@ export default (store: Store, parents: ReadonlyArray<IFamilyNode>): ISpousesData
 
     result.left = middle[0].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
-      .sort((a) => a.type === 'married' ? 1 : 0)
+      .sort((a) => a.type === RelationType.married ? 1 : 0)
       .map(relToNode(store));
 
     result.right = middle[1].spouses
       .filter(rel => middleIds.indexOf(rel.id) === -1)
-      .sort((a) => a.type === 'married' ? -1 : 0)
+      .sort((a) => a.type === RelationType.married ? -1 : 0)
       .map(relToNode(store));
   }
 

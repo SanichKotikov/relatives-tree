@@ -1,9 +1,6 @@
 import hasHiddenRelatives from './hasHiddenRelatives';
 import { flat } from './index';
-import { Family, IFamilyExtNode, IFamilyNode, Unit } from '../types';
-
-const PARENTS = ['root', 'parent'];
-const CHILDREN = ['root', 'child'];
+import { Family, FamilyType, IFamilyExtNode, IFamilyNode, Unit } from '../types';
 
 function extendNode(family: Family) {
   return (unit: Unit) => (
@@ -17,11 +14,15 @@ function extendNode(family: Family) {
 }
 
 function getParentNodes(family: Family) {
-  return (PARENTS.includes(family.type) ? family.parents : []).map(extendNode(family));
+  return (
+    [FamilyType.root, FamilyType.parent].includes(family.type) ? family.parents : []
+  ).map(extendNode(family));
 }
 
 function getChildNodes(family: Family) {
-  return (CHILDREN.includes(family.type) ? family.children : []).map(extendNode(family));
+  return (
+    [FamilyType.root, FamilyType.child].includes(family.type) ? family.children : []
+  ).map(extendNode(family));
 }
 
 function mapFamily(family: Family) {
