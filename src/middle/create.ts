@@ -1,7 +1,7 @@
 import Store from '../store';
 import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
 import { createFamilyFunc } from '../children/create';
-import { getSpouses } from '../utils/getSpouses';
+import { getSpouseNodesFunc } from '../utils/getSpouseNodesFunc';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
 import { newFamily, rightOf } from '../utils/family';
@@ -50,7 +50,7 @@ export const middle = (store: Store): Store => {
         .reduce(flat);
 
       if (parents.length === 2) {
-        const { left, right } = getSpouses(store, parents);
+        const { left, right } = getSpouseNodesFunc(store, parents);
         families = [
           ...left.map(node => createFamily([node.id])),
           ...families,
