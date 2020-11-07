@@ -1,24 +1,14 @@
 import Store from '../store';
-import { SIZE } from '../constants';
 import { prop } from '../utils';
-import { heightOf, withType } from '../utils/family';
+import { withType } from '../utils/family';
 import { hasChildren } from '../utils/units';
 import { Family, FamilyType, Unit } from '../types';
 import { createFamilyFunc } from './createFamilyFunc';
+import { updateFamilyFunc } from './updateFamilyFunc';
 import { arrangeFamiliesFunc } from './arrangeFamiliesFunc';
 
 const getUnitsWithChildren = (family: Family): Unit[] => (
   family.children.filter(hasChildren).reverse()
-);
-
-const updateFamilyFunc = (store: Store) => (
-  (family: Family, parentUnit: Unit): void => {
-    const parentFamily = store.getFamily(parentUnit.fid);
-
-    family.pid = parentFamily.id;
-    family.Y = parentFamily.Y + heightOf(parentFamily) - SIZE;
-    family.X = parentFamily.X + parentUnit.pos;
-  }
 );
 
 export const inChildDirection = (store: Store): Store => {
