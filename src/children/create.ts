@@ -4,40 +4,37 @@ import { newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { getChildUnits } from '../utils/getChildUnits';
-import { Family, FamilyType, Node } from '../types';
+import { Family, FamilyType, Node, Relation, Unit } from '../types';
 
-export const createFamilyFunc = (store: Store) => (
-  (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
+const hasSameRelation = (node: Node | undefined) => (
+  (rel: Relation): boolean => !node || node.children.some(withId(rel.id))
+);
+
+const getChildNodesFunc = (store: Store) => {
+  const toNode = relToNode(store);
+
+  return (familyId: number, parents: readonly Node[]): readonly Unit[] => {
+    const [first, second] = parents as [Node, Node | undefined];
+
+    return first.children
+      .filter(hasSameRelation(second))
+      .flatMap((rel) => getChildUnits(store, familyId, toNode(rel)));
+  };
+};
+
+export const createFamilyFunc = (store: Store) => {
+  const getChildNodes = getChildNodesFunc(store);
+
+  return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 
-    const parents = parentIDs.map(id => store.getNode(id));
-    if (family.main) parents.sort(byGender(store.root.gender));
+    const parents: Node[] = parentIDs.map(id => store.getNode(id));
+    if (isMain && parents.length > 1) parents.sort(byGender(store.root.gender));
 
-    family.parents = family.parents.concat(newUnit(family.id, parents));
-
-    // CHILDREN
-    let children: Node[];
-
-    if (parents.length === 1) {
-      children = parents[0].children.map(relToNode(store));
-    }
-    else {
-      const firstParent = parents[0];
-      const secondParent = parents[1];
-
-      children = firstParent.children
-        .filter(rel => secondParent.children.find(withId(rel.id)))
-        .map(relToNode(store));
-    }
-
-    // CHILDREN's SPOUSES
-    children.forEach(child => {
-      getChildUnits(store, family.id, child).forEach(unit => {
-        family.children = family.children.concat(unit);
-      });
-    });
+    family.parents = [newUnit(family.id, parents)];
+    family.children = getChildNodes(family.id, parents);
 
     setDefaultUnitShift(family);
     return family;
-  }
-);
+  };
+};

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es6"],
+    "lib": ["esnext"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "downlevelIteration": true,

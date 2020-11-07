@@ -4,7 +4,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["es2017"],
+    "lib": ["esnext"],
     "outDir": "lib",
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
