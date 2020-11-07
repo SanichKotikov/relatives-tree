@@ -3,9 +3,9 @@ import { prop } from '../utils';
 import { withType } from '../utils/family';
 import { hasChildren } from '../utils/units';
 import { Family, FamilyType, Unit } from '../types';
-import { createFamilyFunc } from './createFamilyFunc';
-import { updateFamilyFunc } from './updateFamilyFunc';
-import { arrangeFamiliesFunc } from './arrangeFamiliesFunc';
+import { createFamilyFunc } from './create';
+import { updateFamilyFunc } from './update';
+import { arrangeFamiliesFunc } from './arrange';
 
 const getUnitsWithChildren = (family: Family): Unit[] => (
   family.children.filter(hasChildren).reverse()

@@ -1,6 +1,6 @@
 import Store from '../store';
 import { getChildUnits } from '../utils/getChildUnits';
-import { createFamilyFunc } from '../children/createFamilyFunc';
+import { createFamilyFunc } from '../children/create';
 import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
