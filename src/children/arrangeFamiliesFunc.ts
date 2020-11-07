@@ -6,7 +6,7 @@ import { arrangeParentUnit } from '../utils/arrangeParentUnit';
 import { Family, FamilyType, Unit } from '../types';
 import { arrangeMiddle } from './arrangeMiddle';
 
-export const arrange = (store: Store) => (
+export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {
     if (!family.pid) return;
     let right = 0;

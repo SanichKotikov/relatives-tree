@@ -6,8 +6,8 @@ import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { getChildUnits } from './getChildUnits';
 import { Family, FamilyType, Node } from '../types';
 
-export const byParents = (store: Store) => {
-  return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
+export const createFamilyFunc = (store: Store) => (
+  (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 
     const parents = parentIDs.map(id => store.getNode(id));
@@ -39,5 +39,5 @@ export const byParents = (store: Store) => {
 
     setDefaultUnitShift(family);
     return family;
-  };
-};
+  }
+);

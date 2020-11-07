@@ -1,6 +1,6 @@
 import Store from '../store';
 import { getChildUnits } from '../children/getChildUnits';
-import { byParents } from '../children/byParents';
+import { createFamilyFunc } from '../children/createFamilyFunc';
 import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { flat, hasDiffParents, prop, withRelType } from '../utils';
@@ -21,7 +21,7 @@ export const middle = (store: Store): Store => {
     families.push(family);
   }
   else {
-    const createFamily = byParents(store);
+    const createFamily = createFamilyFunc(store);
 
     if (hasDiffParents(store.root)) {
       // Show: parents, my spouses, my siblings (for both parents)

@@ -15,5 +15,6 @@ export const newUnit = (
 
 export const nodeIds = (unit: Unit): readonly string[] => unit.nodes.map(prop('id'));
 export const nodeCount = (unit: Unit): number => unit.nodes.length;
+export const hasChildren = (unit: Unit): boolean => unit.nodes.some(node => node.children.length);
 export const rightSide = (unit: Unit): number => unit.pos + nodeCount(unit) * SIZE;
 export const sameAs = (target: Unit) => (unit: Unit) => nodeIds(target).join('') === nodeIds(unit).join('');
