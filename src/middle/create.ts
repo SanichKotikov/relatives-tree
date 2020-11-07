@@ -10,13 +10,13 @@ import { fixOverlaps } from './fixOverlaps';
 
 export const middle = (store: Store): Store => {
   const rootParents = store.root.parents;
-  let families: Family[] = [];
+  let families: readonly Family[] = [];
 
   if (!rootParents.length) {
     const family = newFamily(store.getNextId(), FamilyType.root, true);
     family.children = createChildUnitsFunc(store)(family.id, store.root);
     setDefaultUnitShift(family);
-    families.push(family);
+    families = [family];
   }
   else {
     const createFamily = createFamilyFunc(store);
@@ -43,7 +43,7 @@ export const middle = (store: Store): Store => {
       const parentIDs = rootParents.map(prop('id'));
       const mainFamily = createFamily(parentIDs, FamilyType.root, true);
 
-      families.push(mainFamily);
+      families = [mainFamily];
 
       const parents = mainFamily.parents
         .map(prop('nodes'))
