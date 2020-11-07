@@ -16,24 +16,26 @@ export const inChildDirection = (store: Store): Store => {
   const updateFamily = updateFamilyFunc(store);
   const arrangeFamilies = arrangeFamiliesFunc(store);
 
-  for (const rootFamily of store.familiesArray.filter(withType(FamilyType.root))) {
-    let stack: Unit[] = getUnitsWithChildren(rootFamily);
+  store.familiesArray
+    .filter(withType(FamilyType.root))
+    .forEach((rootFamily) => {
+      let stack: Unit[] = getUnitsWithChildren(rootFamily);
 
-    while (stack.length) {
-      const parentUnit = stack.pop()!;
+      while (stack.length) {
+        const parentUnit = stack.pop()!;
 
-      const family = createFamily(
-        parentUnit.nodes.map(prop('id')),
-        FamilyType.child,
-      );
+        const family = createFamily(
+          parentUnit.nodes.map(prop('id')),
+          FamilyType.child,
+        );
 
-      updateFamily(family, parentUnit);
-      arrangeFamilies(family);
+        updateFamily(family, parentUnit);
+        arrangeFamilies(family);
 
-      store.families.set(family.id, family);
-      stack = stack.concat(getUnitsWithChildren(family));
-    }
-  }
+        store.families.set(family.id, family);
+        stack = stack.concat(getUnitsWithChildren(family));
+      }
+    });
 
   return store;
 };
