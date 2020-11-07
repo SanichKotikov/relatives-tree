@@ -1,5 +1,5 @@
 import Store from '../store';
-import { getChildUnits } from '../children/getChildUnits';
+import { getChildUnits } from '../utils/getChildUnits';
 import { createFamilyFunc } from '../children/createFamilyFunc';
 import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';

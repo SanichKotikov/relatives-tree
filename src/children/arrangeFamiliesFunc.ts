@@ -4,7 +4,16 @@ import { rightOf, withType } from '../utils/family';
 import { withId } from '../utils';
 import { arrangeParentUnit } from '../utils/arrangeParentUnit';
 import { Family, FamilyType, Unit } from '../types';
-import { arrangeMiddle } from './arrangeMiddle';
+
+const arrangeMiddle = (families: Family[], start: number = 1, left: number = 0): void => {
+  if (families.length >= start + 1) {
+    const shift = left - families[start].X;
+
+    for (let i = start; i < families.length; i++) {
+      families[i].X += shift;
+    }
+  }
+};
 
 export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {

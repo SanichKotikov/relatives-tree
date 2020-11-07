@@ -1,7 +1,7 @@
 import Store from '../store';
-import { getSpouses } from '../utils/getSpouses';
-import { newUnit } from '../utils/units';
 import { Node, Unit } from '../types';
+import { getSpouses } from './getSpouses';
+import { newUnit } from './units';
 
 export const getChildUnits = (
   store: Store,

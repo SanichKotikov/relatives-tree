@@ -3,7 +3,7 @@ import { byGender, relToNode, withId } from '../utils';
 import { newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import { getChildUnits } from './getChildUnits';
+import { getChildUnits } from '../utils/getChildUnits';
 import { Family, FamilyType, Node } from '../types';
 
 export const createFamilyFunc = (store: Store) => (
