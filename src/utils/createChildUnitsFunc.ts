@@ -3,16 +3,13 @@ import { Node, Unit } from '../types';
 import { getSpouses } from './getSpouses';
 import { newUnit } from './units';
 
-export const createChildUnitsFunc = (
-  store: Store,
-  familyId: number,
-  child: Node,
-): readonly Unit[] => {
-  if (child.spouses.length) {
-    const { left, middle, right } = getSpouses(store, [child]);
-    return [...left.map(node => [node]), middle, ...right.map(node => [node])]
-      .map(nodes => newUnit(familyId, nodes, true));
-  }
+const toArray = <T>(item: T): readonly T[] => Array.of(item);
 
-  return [newUnit(familyId, [child], true)];
-};
+export const createChildUnitsFunc = (store: Store) => (
+  (familyId: number, child: Node): readonly Unit[] => {
+    const { left, middle, right } = getSpouses(store, [child]);
+
+    return [...left.map(toArray), middle, ...right.map(toArray)]
+      .map((nodes) => newUnit(familyId, nodes, true));
+  }
+);

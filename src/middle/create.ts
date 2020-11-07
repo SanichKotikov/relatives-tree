@@ -14,9 +14,7 @@ export const middle = (store: Store): Store => {
 
   if (!rootParents.length) {
     const family = newFamily(store.getNextId(), FamilyType.root, true);
-    createChildUnitsFunc(store, family.id, store.root).forEach(unit => (
-      family.children = family.children.concat(unit)
-    ));
+    family.children = createChildUnitsFunc(store)(family.id, store.root);
     setDefaultUnitShift(family);
     families.push(family);
   }

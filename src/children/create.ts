@@ -12,13 +12,14 @@ const hasSameRelation = (node: Node | undefined) => (
 
 const getChildNodesFunc = (store: Store) => {
   const toNode = relToNode(store);
+  const createChildUnits = createChildUnitsFunc(store);
 
   return (familyId: number, parents: readonly Node[]): readonly Unit[] => {
     const [first, second] = parents as [Node, Node | undefined];
 
     return first.children
       .filter(hasSameRelation(second))
-      .flatMap((rel) => createChildUnitsFunc(store, familyId, toNode(rel)));
+      .flatMap((rel) => createChildUnits(familyId, toNode(rel)));
   };
 };
 
