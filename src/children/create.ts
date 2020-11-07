@@ -3,7 +3,7 @@ import { byGender, relToNode, withId } from '../utils';
 import { newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import { getChildUnits } from '../utils/getChildUnits';
+import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
 import { Family, FamilyType, Node, Relation, Unit } from '../types';
 
 const hasSameRelation = (node: Node | undefined) => (
@@ -18,7 +18,7 @@ const getChildNodesFunc = (store: Store) => {
 
     return first.children
       .filter(hasSameRelation(second))
-      .flatMap((rel) => getChildUnits(store, familyId, toNode(rel)));
+      .flatMap((rel) => createChildUnitsFunc(store, familyId, toNode(rel)));
   };
 };
 

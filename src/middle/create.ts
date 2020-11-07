@@ -1,5 +1,5 @@
 import Store from '../store';
-import { getChildUnits } from '../utils/getChildUnits';
+import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
 import { createFamilyFunc } from '../children/create';
 import { getSpouses } from '../utils/getSpouses';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
@@ -14,7 +14,7 @@ export const middle = (store: Store): Store => {
 
   if (!rootParents.length) {
     const family = newFamily(store.getNextId(), FamilyType.root, true);
-    getChildUnits(store, family.id, store.root).forEach(unit => (
+    createChildUnitsFunc(store, family.id, store.root).forEach(unit => (
       family.children = family.children.concat(unit)
     ));
     setDefaultUnitShift(family);

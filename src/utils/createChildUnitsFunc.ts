@@ -3,7 +3,7 @@ import { Node, Unit } from '../types';
 import { getSpouses } from './getSpouses';
 import { newUnit } from './units';
 
-export const getChildUnits = (
+export const createChildUnitsFunc = (
   store: Store,
   familyId: number,
   child: Node,
