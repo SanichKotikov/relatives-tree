@@ -50,7 +50,7 @@ export const middle = (store: Store): Store => {
         .reduce(flat);
 
       if (parents.length === 2) {
-        const { left, right } = getSpouseNodesFunc(store, parents);
+        const { left, right } = getSpouseNodesFunc(store)(parents);
         families = [
           ...left.map(node => createFamily([node.id])),
           ...families,
