@@ -10,7 +10,7 @@ const hasSameRelation = (node: Node | undefined) => (
   (rel: Relation): boolean => !node || node.children.some(withId(rel.id))
 );
 
-const getChildNodesFunc = (store: Store) => {
+const getChildUnitsFunc = (store: Store) => {
   const toNode = relToNode(store);
   const createChildUnits = createChildUnitsFunc(store);
 
@@ -24,7 +24,7 @@ const getChildNodesFunc = (store: Store) => {
 };
 
 export const createFamilyFunc = (store: Store) => {
-  const getChildNodes = getChildNodesFunc(store);
+  const getChildUnits = getChildUnitsFunc(store);
 
   return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
@@ -33,7 +33,7 @@ export const createFamilyFunc = (store: Store) => {
     if (isMain && parents.length > 1) parents.sort(byGender(store.root.gender));
 
     family.parents = [newUnit(family.id, parents)];
-    family.children = getChildNodes(family.id, parents);
+    family.children = getChildUnits(family.id, parents);
 
     setDefaultUnitShift(family);
     return family;

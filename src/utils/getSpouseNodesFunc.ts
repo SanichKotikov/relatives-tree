@@ -4,7 +4,7 @@ import { byGender, relToNode, withRelType } from './index';
 
 const NODES_IN_COUPLE = 2;
 
-type ISpousesData = {
+type SpousesNodes = {
   left: readonly Node[];
   middle: readonly Node[];
   right: readonly Node[];
@@ -15,12 +15,10 @@ const inDescOrderOfChildCount = (a: Node, b: Node): number => (
 );
 
 const getSpouse = (store: Store, spouses: readonly Relation[]): Node | undefined => {
+  const toNode = relToNode(store);
   const married = spouses.find(withRelType(RelType.married));
-  if (married) return store.getNode(married.id);
-  if (spouses.length >= 1)
-    return spouses
-      .map(relToNode(store))
-      .sort(inDescOrderOfChildCount)[0];
+  if (married) return toNode(married);
+  if (spouses.length >= 1) return spouses.map(toNode).sort(inDescOrderOfChildCount)[0];
   return;
 };
 
@@ -35,13 +33,13 @@ const excludeRel = (target: Node) => (rel: Relation): boolean => rel.id !== targ
 export const getSpouseNodesFunc = (store: Store) => {
   const toNode = relToNode(store);
 
-  return (parents: readonly Node[]): ISpousesData => {
+  return (parents: readonly Node[]): SpousesNodes => {
     let middle: readonly Node[] = parents;
 
     if (middle.length !== NODES_IN_COUPLE)
       middle = getCoupleNodes(store, middle[0]);
 
-    const result: ISpousesData = { left: [], middle, right: [] };
+    const result: SpousesNodes = { left: [], middle, right: [] };
 
     if (middle.length === NODES_IN_COUPLE) {
       const [first, second] = middle;
