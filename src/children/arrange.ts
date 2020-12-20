@@ -1,5 +1,5 @@
 import Store from '../store';
-import { getUnitX, sameAs, updateUnitPos } from '../utils/units';
+import { getUnitX, sameAs } from '../utils/units';
 import { rightOf } from '../utils/family';
 import { nextIndex, withId } from '../utils';
 import { arrangeParentsIn } from '../utils/arrangeParentsIn';
@@ -16,11 +16,8 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.children[nextIdx]) {
-    updateUnitPos(
-      nextFamily.children,
-      nextIdx,
-      rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]),
-    );
+    const shift = rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]);
+    nextFamily.children.slice(nextIdx).forEach(unit => unit.pos += shift);
   }
 };
 

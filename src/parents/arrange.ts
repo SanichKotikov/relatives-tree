@@ -1,6 +1,6 @@
 import Store from '../store';
 import { SIZE } from '../constants';
-import { getUnitX, nodeCount, sameAs, updateUnitPos } from '../utils/units';
+import { getUnitX, nodeCount, sameAs } from '../utils/units';
 import { rightOf, unitCount, widthOf } from '../utils/family';
 import { nextIndex } from '../utils';
 import { Family, Unit } from '../types';
@@ -15,11 +15,8 @@ const arrangeNextFamily = (family: Family, nextFamily: Family, unit: Unit) => {
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.parents[nextIdx]) {
-    updateUnitPos(
-      nextFamily.parents,
-      nextIdx,
-      rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]),
-    );
+    const shift = rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]);
+    nextFamily.parents.slice(nextIdx).forEach(unit => unit.pos += shift);
   }
 };
 
