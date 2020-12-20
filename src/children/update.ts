@@ -1,6 +1,7 @@
 import Store from '../store';
 import { SIZE } from '../constants';
 import { heightOf } from '../utils/family';
+import { getUnitX } from '../utils/units';
 import { Family, Unit } from '../types';
 
 export const updateFamilyFunc = (store: Store) => (
@@ -9,6 +10,6 @@ export const updateFamilyFunc = (store: Store) => (
 
     family.pid = parentFamily.id;
     family.Y = parentFamily.Y + heightOf(parentFamily) - SIZE;
-    family.X = parentFamily.X + parentUnit.pos;
+    family.X = getUnitX(parentFamily, parentUnit);
   }
 );

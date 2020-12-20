@@ -1,5 +1,6 @@
 import { toMap, withId } from './utils';
-import { Family, Node } from './types';
+import { withType } from './utils/family';
+import { Family, FamilyType, Node } from './types';
 
 class Store {
 
@@ -17,13 +18,13 @@ class Store {
     this.families = new Map();
     this.nodes = toMap(nodes);
 
-    this.root = (this.nodes.get(rootId) as Node);
+    this.root = (this.nodes.get(rootId)!);
   }
 
   getNextId(): number { return ++this.nextId; }
 
   getNode(id: string): Node {
-    return this.nodes.get(id) as Node;
+    return this.nodes.get(id)!;
   }
 
   getNodes(ids: readonly string[]): readonly Node[] {
@@ -31,11 +32,15 @@ class Store {
   }
 
   getFamily(id: number): Family {
-    return this.families.get(id) as Family;
+    return this.families.get(id)!;
   }
 
   get familiesArray(): readonly Family[] {
     return [...this.families.values()];
+  }
+
+  get rootFamilies(): readonly Family[] {
+    return this.familiesArray.filter(withType(FamilyType.root));
   }
 
 }

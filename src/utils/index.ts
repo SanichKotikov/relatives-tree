@@ -1,6 +1,7 @@
 import Store from '../store';
 import { Gender, Node, Relation } from '../types';
 
+export const nextIndex = (index: number) => index + 1;
 export const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
 export const withId = <T extends { id: any; }, K extends keyof { id: any; }>(id: T[K]) => (item: T) => item.id === id;
 export const flat = <T>(items: readonly T[], item: readonly T[]) => items.concat(item);

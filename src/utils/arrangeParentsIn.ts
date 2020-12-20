@@ -8,7 +8,7 @@ const middle = (values: readonly number[]): number => {
   return Number.isNaN(result) ? 0 : result;
 };
 
-export const arrangeParentUnit = (family: Family) => {
+export const arrangeParentsIn = (family: Family) => {
   const pUnit = family.parents[0];
   if (!pUnit) return;
 

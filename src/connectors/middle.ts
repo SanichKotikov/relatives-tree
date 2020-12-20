@@ -1,5 +1,5 @@
 import { inAscOrder, withId } from '../utils';
-import { nodeCount } from '../utils/units';
+import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
 import { Connector, Family, FamilyType } from '../types';
 
@@ -9,7 +9,7 @@ export const middle = (families: Family[]): Connector[] => {
   families.filter(withType(FamilyType.root)).forEach(family => {
     // between parents
     family.parents.forEach(pUnit => {
-      const pX = family.X + pUnit.pos + 1;
+      const pX = getUnitX(family, pUnit) + 1;
       const pY = family.Y + 1;
 
       if (nodeCount(pUnit) === 2) {
@@ -24,7 +24,7 @@ export const middle = (families: Family[]): Connector[] => {
           .forEach(rFamily => {
             rFamily.parents.forEach(unit => {
               if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
-                const xX = [pX, rFamily.X + unit.pos + 1].sort(inAscOrder);
+                const xX = [pX, getUnitX(rFamily, unit) + 1].sort(inAscOrder);
                 connectors.push({
                   points: [xX[0], pY, xX[1], pY],
                 });

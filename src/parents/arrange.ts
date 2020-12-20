@@ -1,6 +1,7 @@
 import Store from '../store';
-import { nodeCount, sameAs } from '../utils/units';
+import { getUnitX, nodeCount, sameAs, updateUnitPos } from '../utils/units';
 import { rightOf, unitCount, widthOf } from '../utils/family';
+import { nextIndex } from '../utils';
 import { Family, Unit } from '../types';
 
 export const arrange = (store: Store) => (
@@ -27,28 +28,21 @@ export const arrange = (store: Store) => (
       }
 
       const pUnit = cFamily.parents.find(sameAs(fUnit)) as Unit; // TODO
-      const uIndex = cFamily.parents.findIndex(unit => (
-        unit.nodes[0].id === fUnit.nodes[0].id
-      ));
+      const uIndex = cFamily.parents.findIndex(sameAs(fUnit));
 
       if (uIndex === 0 && pUnit.pos === 0) {
         const left = family.X + shift;
         cFamily.X = Math.max(cFamily.X, left);
       }
       else {
-        pUnit.pos = family.X + fUnit.pos - cFamily.X;
+        pUnit.pos = getUnitX(family, fUnit) - cFamily.X;
       }
 
-      const next = cFamily.parents[uIndex + 1];
+      const next = cFamily.parents[nextIndex(uIndex)];
 
       if (next) {
-        const diff = right - (cFamily.X + next.pos);
-
-        if (diff > 0) {
-          for (let i = uIndex + 1; i < cFamily.parents.length; i++) {
-            cFamily.parents[i].pos += diff;
-          }
-        }
+        const diff = right - getUnitX(cFamily, next);
+        updateUnitPos(cFamily.parents, nextIndex(uIndex), diff);
       }
 
       family = cFamily;

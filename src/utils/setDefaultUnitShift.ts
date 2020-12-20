@@ -1,5 +1,5 @@
 import { min, prop } from './index';
-import { arrangeParentUnit } from './arrangeParentUnit';
+import { arrangeParentsIn } from './arrangeParentsIn';
 import { rightSide } from './units';
 import { Family, Unit } from '../types';
 
@@ -17,7 +17,7 @@ export const setDefaultUnitShift = (family: Family): void => {
   arrangeInOrder(family.parents);
   arrangeInOrder(family.children);
 
-  arrangeParentUnit(family);
+  arrangeParentsIn(family);
 
   const start = min([
     ...family.parents.map(prop('pos')),

@@ -1,4 +1,5 @@
 import { flat } from './index';
+import { getUnitX } from './units';
 import { hasHiddenRelatives } from './hasHiddenRelatives';
 import { ExtNode, Family, FamilyType, Node, Unit } from '../types';
 
@@ -7,7 +8,7 @@ const extendNode = (family: Family) => (
     unit.nodes.map((node: Node, idx: number) => ({
       ...node,
       top: family.Y + (unit.child && !!family.parents.length ? 2 : 0),
-      left: family.X + unit.pos + (idx * 2),
+      left: getUnitX(family, unit) + (idx * 2),
       hasSubTree: hasHiddenRelatives(family, node),
     }))
   )

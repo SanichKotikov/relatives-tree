@@ -2,6 +2,7 @@ import Store from '../store';
 import { Family, FamilyType } from '../types';
 import { min, prop } from './index';
 import { withType } from './family';
+import { getUnitX } from './units';
 
 export const correctPositions = (store: Store): Store => {
   const families = store.familiesArray;
@@ -16,7 +17,7 @@ export const correctPositions = (store: Store): Store => {
     const cUnit = rootChild.parents[0];
     const pUnit = rootParent.children[0];
 
-    const diff = (rootParent.X + pUnit.pos) - (rootChild.X + cUnit.pos);
+    const diff = getUnitX(rootParent, pUnit) - getUnitX(rootChild, cUnit);
 
     if (diff > 0) families
       .filter(withType(FamilyType.child, FamilyType.root))

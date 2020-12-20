@@ -1,65 +1,49 @@
 import Store from '../store';
-import { sameAs } from '../utils/units';
-import { rightOf, withType } from '../utils/family';
-import { withId } from '../utils';
-import { arrangeParentUnit } from '../utils/arrangeParentUnit';
-import { Family, FamilyType, Unit } from '../types';
+import { getUnitX, sameAs, updateUnitPos } from '../utils/units';
+import { rightOf } from '../utils/family';
+import { nextIndex, withId } from '../utils';
+import { arrangeParentsIn } from '../utils/arrangeParentsIn';
+import { Family, Unit } from '../types';
 
-const arrangeMiddle = (families: Family[], start: number = 1, left: number = 0): void => {
-  if (families.length >= start + 1) {
-    const shift = left - families[start].X;
+const arrangeNextUnits = (family: Family, startIndex: number, startFrom: number): void => {
+  const nextUnit: Unit | undefined = family.children[startIndex];
+  if (nextUnit) updateUnitPos(family.children, startIndex, startFrom - getUnitX(family, nextUnit));
+};
 
-    for (let i = start; i < families.length; i++) {
-      families[i].X += shift;
-    }
+const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
+  const unit = family.parents[0];
+  const index = nextFamily.children.findIndex(sameAs(unit));
+
+  index === 0
+    ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index].pos
+    : nextFamily.children[index].pos = getUnitX(family, unit) - nextFamily.X;
+
+  arrangeNextUnits(nextFamily, nextIndex(index), rightOf(family));
+};
+
+const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFrom: number): void => {
+  const start = nextIndex(families.findIndex(withId(fid)));
+  const family: Family | undefined = families[start];
+
+  if (family) {
+    const shift: number = startFrom - family.X;
+    for (let i = start; i < families.length; i++) families[i].X += shift;
   }
 };
 
 export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {
-    if (!family.pid) return;
-    let right = 0;
+    while (family.pid) {
+      const nextFamily = store.getFamily(family.pid);
 
-    while (family) {
-      const fUnit = family.parents[0];
+      arrangeNextFamily(family, nextFamily);
+      arrangeParentsIn(nextFamily);
 
-      right = Math.max(right, rightOf(family));
-
-      const pFamily = store.getFamily(family.pid as number); // TODO
-
-      const cUnit = pFamily.children.find(sameAs(fUnit)) as Unit; // TODO
-      const uIndex = pFamily.children.findIndex(unit => (
-        unit.nodes[0].id === fUnit.nodes[0].id
-      ));
-
-      if (uIndex === 0) {
-        const left = family.X + fUnit.pos - cUnit.pos;
-        pFamily.X = Math.max(pFamily.X, left);
-      }
-      else {
-        cUnit.pos = family.X + fUnit.pos - pFamily.X;
+      if (!nextFamily.pid) {
+        arrangeMiddleFamilies(store.rootFamilies, nextFamily.id, rightOf(family));
       }
 
-      const next = pFamily.children[uIndex + 1];
-
-      if (next) {
-        const diff = right - (pFamily.X + next.pos);
-
-        for (let i = uIndex + 1; i < pFamily.children.length; i++) {
-          pFamily.children[i].pos += diff;
-        }
-      }
-
-      arrangeParentUnit(pFamily);
-
-      if (!pFamily.pid) {
-        const rootFamily = store.familiesArray.filter(withType(FamilyType.root));
-        const start = rootFamily.findIndex(withId(pFamily.id));
-        arrangeMiddle(rootFamily, start + 1, rightOf(family));
-        break;
-      }
-
-      family = pFamily;
+      family = nextFamily;
     }
   }
 );

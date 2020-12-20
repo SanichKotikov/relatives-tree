@@ -1,5 +1,5 @@
 import { flat, prop, unique } from '../utils';
-import { nodeCount } from '../utils/units';
+import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
 import { Connector, Family, FamilyType } from '../types';
 
@@ -8,7 +8,7 @@ export const parents = (families: Family[]): Connector[] => {
 
   families.filter(withType(FamilyType.parent)).forEach(family => {
     family.parents.forEach(pUnit => {
-      const pX = family.X + pUnit.pos + nodeCount(pUnit); // TODO
+      const pX = getUnitX(family, pUnit) + nodeCount(pUnit); // TODO
       const pY = family.Y + 1;
       const mY = family.Y + 2;
 
@@ -32,7 +32,7 @@ export const parents = (families: Family[]): Connector[] => {
 
       family.children.forEach(cUnit => {
         const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);
-        const cX = family.X + cUnit.pos + (cIndex * 2) + 1;
+        const cX = getUnitX(family, cUnit) + (cIndex * 2) + 1;
 
         // from child to parent(s)
         connectors.push({

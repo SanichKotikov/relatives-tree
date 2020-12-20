@@ -1,7 +1,7 @@
 import Store from '../store';
 import { prop } from '../utils';
-import { withType } from '../utils/family';
-import { Family, FamilyType, Unit } from '../types';
+import { getUnitX } from '../utils/units';
+import { Family, Unit } from '../types';
 import { byChildren } from './byChildren';
 import { arrange } from './arrange';
 
@@ -14,9 +14,8 @@ const getParentUnitsWithParents = (family: Family): Unit[] => (
 export const parents = (store: Store): Store => {
   const createFamily = byChildren(store);
   const arrangeFamily = arrange(store);
-  const root = store.familiesArray.filter(withType(FamilyType.root));
 
-  for (const rootFamily of root) {
+  for (const rootFamily of store.rootFamilies) {
     if (!rootFamily.main) continue;
     let stack = getParentUnitsWithParents(rootFamily).reverse();
 
@@ -28,7 +27,7 @@ export const parents = (store: Store): Store => {
 
       family.cid = childFamily.id;
       family.Y = childFamily.Y - 2;
-      family.X = childFamily.X + familyUnit.pos;
+      family.X = getUnitX(childFamily, familyUnit);
 
       arrangeFamily(family);
       store.families.set(family.id, family);

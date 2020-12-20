@@ -29,8 +29,9 @@ export const createFamilyFunc = (store: Store) => {
   return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 
-    const parents: Node[] = parentIDs.map(id => store.getNode(id));
-    if (isMain && parents.length > 1) parents.sort(byGender(store.root.gender));
+    const parents: Node[] = parentIDs
+      .map(id => store.getNode(id))
+      .sort(byGender(store.root.gender));
 
     family.parents = [newUnit(family.id, parents)];
     family.children = getChildUnits(family.id, parents);
