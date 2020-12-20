@@ -5,11 +5,6 @@ import { nextIndex, withId } from '../utils';
 import { arrangeParentsIn } from '../utils/arrangeParentsIn';
 import { Family, Unit } from '../types';
 
-const arrangeNextUnits = (family: Family, startIndex: number, startFrom: number): void => {
-  const nextUnit: Unit | undefined = family.children[startIndex];
-  if (nextUnit) updateUnitPos(family.children, startIndex, startFrom - getUnitX(family, nextUnit));
-};
-
 const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   const unit = family.parents[0];
   const index = nextFamily.children.findIndex(sameAs(unit));
@@ -18,7 +13,14 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
     ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index].pos
     : nextFamily.children[index].pos = getUnitX(family, unit) - nextFamily.X;
 
-  arrangeNextUnits(nextFamily, nextIndex(index), rightOf(family));
+  const nextUnit: Unit | undefined = nextFamily.children[nextIndex(index)];
+  if (!nextUnit) return;
+
+  updateUnitPos(
+    nextFamily.children,
+    nextIndex(index),
+    rightOf(family) - getUnitX(nextFamily, nextUnit),
+  );
 };
 
 const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFrom: number): void => {
