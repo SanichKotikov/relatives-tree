@@ -1,51 +1,44 @@
 import Store from '../store';
+import { SIZE } from '../constants';
 import { getUnitX, nodeCount, sameAs, updateUnitPos } from '../utils/units';
 import { rightOf, unitCount, widthOf } from '../utils/family';
 import { nextIndex } from '../utils';
 import { Family, Unit } from '../types';
 
-export const arrange = (store: Store) => (
+const arrangeNextFamily = (family: Family, nextFamily: Family, unit: Unit) => {
+  const index = nextFamily.parents.findIndex(sameAs(unit));
+
+  index === 0 && nextFamily.parents[index].pos === 0
+    ? nextFamily.X = getUnitX(family, unit)
+    : nextFamily.parents[index].pos = getUnitX(family, unit) - nextFamily.X;
+
+  const nextIdx: number = nextIndex(index);
+
+  if (nextFamily.parents[nextIdx]) {
+    updateUnitPos(
+      nextFamily.parents,
+      nextIdx,
+      rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]),
+    );
+  }
+};
+
+export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {
-    if (!family.cid) return;
-    let right = 0;
+    while (family.cid) {
+      const unit = family.children[0];
+      const nextFamily = store.getFamily(family.cid);
 
-    while (family) {
-      const fUnit = family.children[0];
-
-      if (family.parents.length === 2 && unitCount(family.parents) > 2) {
-        fUnit.pos = Math.floor(family.parents[1].pos / 2);
-      }
-
-      const shift = fUnit.pos;
-      right = Math.max(right, rightOf(family));
-
-      const cFamily = store.getFamily(family.cid as number); // TODO
-
-      // root family
-      if (!cFamily.cid) {
-        fUnit.pos = (widthOf(family) - nodeCount(fUnit) * 2) / 2;
-        break;
-      }
-
-      const pUnit = cFamily.parents.find(sameAs(fUnit)) as Unit; // TODO
-      const uIndex = cFamily.parents.findIndex(sameAs(fUnit));
-
-      if (uIndex === 0 && pUnit.pos === 0) {
-        const left = family.X + shift;
-        cFamily.X = Math.max(cFamily.X, left);
-      }
+      if (/* is middle (root) family */ !nextFamily.cid)
+        unit.pos = (widthOf(family) - nodeCount(unit) * SIZE) / 2;
       else {
-        pUnit.pos = getUnitX(family, fUnit) - cFamily.X;
+        if (family.parents.length === 2 && unitCount(family.parents) > 2)
+          unit.pos = Math.floor(family.parents[1].pos / 2);
+
+        arrangeNextFamily(family, nextFamily, unit);
       }
 
-      const next = cFamily.parents[nextIndex(uIndex)];
-
-      if (next) {
-        const diff = right - getUnitX(cFamily, next);
-        updateUnitPos(cFamily.parents, nextIndex(uIndex), diff);
-      }
-
-      family = cFamily;
+      family = nextFamily;
     }
   }
 );

@@ -3,7 +3,7 @@ import { getUnitX, sameAs, updateUnitPos } from '../utils/units';
 import { rightOf } from '../utils/family';
 import { nextIndex, withId } from '../utils';
 import { arrangeParentsIn } from '../utils/arrangeParentsIn';
-import { Family, Unit } from '../types';
+import { Family } from '../types';
 
 const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   const unit = family.parents[0];
@@ -13,14 +13,15 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
     ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index].pos
     : nextFamily.children[index].pos = getUnitX(family, unit) - nextFamily.X;
 
-  const nextUnit: Unit | undefined = nextFamily.children[nextIndex(index)];
-  if (!nextUnit) return;
+  const nextIdx: number = nextIndex(index);
 
-  updateUnitPos(
-    nextFamily.children,
-    nextIndex(index),
-    rightOf(family) - getUnitX(nextFamily, nextUnit),
-  );
+  if (nextFamily.children[nextIdx]) {
+    updateUnitPos(
+      nextFamily.children,
+      nextIdx,
+      rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]),
+    );
+  }
 };
 
 const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFrom: number): void => {
@@ -41,9 +42,8 @@ export const arrangeFamiliesFunc = (store: Store) => (
       arrangeNextFamily(family, nextFamily);
       arrangeParentsIn(nextFamily);
 
-      if (!nextFamily.pid) {
+      if (/* is middle (root) family */ !nextFamily.pid)
         arrangeMiddleFamilies(store.rootFamilies, nextFamily.id, rightOf(family));
-      }
 
       family = nextFamily;
     }

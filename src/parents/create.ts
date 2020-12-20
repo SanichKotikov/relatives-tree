@@ -3,7 +3,7 @@ import { prop } from '../utils';
 import { getUnitX } from '../utils/units';
 import { Family, Unit } from '../types';
 import { byChildren } from './byChildren';
-import { arrange } from './arrange';
+import { arrangeFamiliesFunc } from './arrange';
 
 const getParentUnitsWithParents = (family: Family): Unit[] => (
   family.parents.filter(unit => (
@@ -13,7 +13,7 @@ const getParentUnitsWithParents = (family: Family): Unit[] => (
 
 export const parents = (store: Store): Store => {
   const createFamily = byChildren(store);
-  const arrangeFamily = arrange(store);
+  const arrangeFamily = arrangeFamiliesFunc(store);
 
   for (const rootFamily of store.rootFamilies) {
     if (!rootFamily.main) continue;
