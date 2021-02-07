@@ -1,18 +1,19 @@
-import { flat, prop, unique, withType } from '../utils';
-import Family from '../models/family';
-import { IConnector } from '../types';
+import { flat, prop, unique } from '../utils';
+import { getUnitX, nodeCount } from '../utils/units';
+import { withType } from '../utils/family';
+import { Connector, Family, FamilyType } from '../types';
 
-export default (families: Family[]): IConnector[] => {
-  const connectors: IConnector[] = [];
+export const parents = (families: Family[]): Connector[] => {
+  const connectors: Connector[] = [];
 
-  families.filter(withType('parent')).forEach(family => {
-    family.pUnits.forEach(pUnit => {
-      const pX = family.left + pUnit.shift + (pUnit.size); // TODO
-      const pY = family.top + 1;
-      const mY = family.top + 2;
+  families.filter(withType(FamilyType.parent)).forEach(family => {
+    family.parents.forEach(pUnit => {
+      const pX = getUnitX(family, pUnit) + nodeCount(pUnit); // TODO
+      const pY = family.Y + 1;
+      const mY = family.Y + 2;
 
       // between parents
-      if (pUnit.size === 2) {
+      if (nodeCount(pUnit) === 2) {
         connectors.push({
           points: [pX - 1, pY, pX - 1 + 2, pY],
         });
@@ -29,9 +30,9 @@ export default (families: Family[]): IConnector[] => {
         .map(prop('id'))
         .filter(unique);
 
-      family.cUnits.forEach(cUnit => {
+      family.children.forEach(cUnit => {
         const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);
-        const cX = family.left + cUnit.shift + (cIndex * 2) + 1;
+        const cX = getUnitX(family, cUnit) + (cIndex * 2) + 1;
 
         // from child to parent(s)
         connectors.push({

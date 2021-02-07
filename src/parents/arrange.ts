@@ -1,57 +1,41 @@
 import Store from '../store';
-import Family from '../models/family';
-import Unit from '../models/unit';
-import { withSameIDs } from '../utils';
+import { SIZE } from '../constants';
+import { getUnitX, nodeCount, sameAs } from '../utils/units';
+import { rightOf, unitCount, widthOf } from '../utils/family';
+import { nextIndex } from '../utils';
+import { Family, Unit } from '../types';
 
-export default (store: Store) => {
-  return function(family: Family): void {
-    if (family.cID === null) return;
-    let right = 0;
+const arrangeNextFamily = (family: Family, nextFamily: Family, unit: Unit) => {
+  const index = nextFamily.parents.findIndex(sameAs(unit));
 
-    while (family) {
-      const fUnit = family.cUnits[0];
+  index === 0 && nextFamily.parents[index].pos === 0
+    ? nextFamily.X = getUnitX(family, unit)
+    : nextFamily.parents[index].pos = getUnitX(family, unit) - nextFamily.X;
 
-      if (family.pUnits.length === 2 && family.pCount > 2) {
-        fUnit.shift = Math.floor(family.pUnits[1].shift / 2);
-      }
+  const nextIdx: number = nextIndex(index);
 
-      const shift = fUnit.shift;
-      right = Math.max(right, family.right);
-
-      const cFamily = store.getFamily(family.cID as number); // TODO
-
-      // root family
-      if (cFamily.cID === null) {
-        fUnit.shift = (family.width - fUnit.size * 2) / 2;
-        break;
-      }
-
-      const pUnit = cFamily.pUnits.find(withSameIDs(fUnit)) as Unit; // TODO
-      const uIndex = cFamily.pUnits.findIndex(unit => (
-        unit.nodes[0].id === fUnit.nodes[0].id
-      ));
-
-      if (uIndex === 0 && pUnit.shift === 0) {
-        const left = family.left + shift;
-        cFamily.left = Math.max(cFamily.left, left);
-      }
-      else {
-        pUnit.shift = family.left + fUnit.shift - cFamily.left;
-      }
-
-      const next = cFamily.pUnits[uIndex + 1];
-
-      if (next) {
-        const diff = right - (cFamily.left + next.shift);
-
-        if (diff > 0) {
-          for (let i = uIndex + 1; i < cFamily.pUnits.length; i++) {
-            cFamily.pUnits[i].shift += diff;
-          }
-        }
-      }
-
-      family = cFamily;
-    }
-  };
+  if (nextFamily.parents[nextIdx]) {
+    const shift = rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]);
+    nextFamily.parents.slice(nextIdx).forEach(unit => unit.pos += shift);
+  }
 };
+
+export const arrangeFamiliesFunc = (store: Store) => (
+  (family: Family): void => {
+    while (family.cid) {
+      const unit = family.children[0];
+      const nextFamily = store.getFamily(family.cid);
+
+      if (/* is middle (root) family */ !nextFamily.cid)
+        unit.pos = (widthOf(family) - nodeCount(unit) * SIZE) / 2;
+      else {
+        if (family.parents.length === 2 && unitCount(family.parents) > 2)
+          unit.pos = Math.floor(family.parents[1].pos / 2);
+
+        arrangeNextFamily(family, nextFamily, unit);
+      }
+
+      family = nextFamily;
+    }
+  }
+);

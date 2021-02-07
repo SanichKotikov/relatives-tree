@@ -1,5 +1,5 @@
 import calcTree from '../../src';
-import { IFamilyNode } from '../../src/types';
+import { Node } from '../../src/types';
 import empty from '../../samples/empty.json';
 import couple from '../../samples/couple.json';
 import simple from '../../samples/simple-family.json';
@@ -27,7 +27,7 @@ const data: { [key: string]: any[] } = {
   '2DlrR0fK8': average,
 };
 
-function drawTree(el: HTMLElement, nodes: IFamilyNode[], rootId: string) {
+function drawTree(el: HTMLElement, nodes: Node[], rootId: string) {
   const canvas = document.createElement('canvas');
   const tree = calcTree(nodes, { rootId });
 

@@ -1,29 +1,30 @@
-import { byGender, prop } from '../utils';
 import Store from '../store';
-import Family from '../models/family';
-import Unit from '../models/unit';
+import { byGender, prop } from '../utils';
+import { newUnit, nodeCount } from '../utils/units';
+import { newFamily } from '../utils/family';
+import { Family, FamilyType } from '../types';
 
-export default (store: Store) => {
-  return (childIDs: ReadonlyArray<string>): Family => {
-    const family = new Family(store.getNextId(), 'parent');
-    const cUnit = new Unit(family.id, store.getNodes(childIDs), true);
+export const byChildren = (store: Store) => {
+  return (childIDs: readonly string[]): Family => {
+    const family = newFamily(store.getNextId(), FamilyType.parent);
+    const cUnit = newUnit(family.id, store.getNodes(childIDs), true);
 
     cUnit.nodes.forEach((child, idx) => {
       const parents = [...store.getNodes(child.parents.map(prop('id')))]
         .sort(byGender(store.root.gender));
 
       if (parents.length) {
-        const pUnit = new Unit(family.id, parents);
+        const pUnit = newUnit(family.id, parents);
 
-        pUnit.size > 1 && cUnit.size > 1 && store.root.gender === child.gender
-          ? cUnit.shift += 2
-          : pUnit.shift = cUnit.shift + idx * 2;
+        nodeCount(pUnit) > 1 && nodeCount(cUnit) > 1 && store.root.gender === child.gender
+          ? cUnit.pos += 2
+          : pUnit.pos = cUnit.pos + idx * 2;
 
-        family.pUnits.push(pUnit);
+        family.parents = family.parents.concat(pUnit);
       }
     });
 
-    family.cUnits.push(cUnit);
+    family.children = family.children.concat(cUnit);
     return family;
   };
-}
+};

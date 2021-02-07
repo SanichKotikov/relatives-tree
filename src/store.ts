@@ -1,42 +1,46 @@
-import Family from './models/family';
 import { toMap, withId } from './utils';
-import { IFamilyNode } from './types';
+import { withType } from './utils/family';
+import { Family, FamilyType, Node } from './types';
 
 class Store {
 
   private nextId: number;
 
   families: Map<number, Family>;
-  nodes: Map<string, IFamilyNode>;
+  nodes: Map<string, Node>;
 
-  root: IFamilyNode;
+  root: Node;
 
-  constructor(nodes: ReadonlyArray<Readonly<IFamilyNode>>, rootId: string) {
+  constructor(nodes: readonly Node[], rootId: string) {
     if (!nodes.find(withId(rootId))) throw new ReferenceError();
 
     this.nextId = 0;
     this.families = new Map();
     this.nodes = toMap(nodes);
 
-    this.root = (this.nodes.get(rootId) as IFamilyNode);
+    this.root = (this.nodes.get(rootId)!);
   }
 
   getNextId(): number { return ++this.nextId; }
 
-  getNode(id: string): IFamilyNode {
-    return this.nodes.get(id) as IFamilyNode;
+  getNode(id: string): Node {
+    return this.nodes.get(id)!;
   }
 
-  getNodes(ids: ReadonlyArray<string>): ReadonlyArray<IFamilyNode> {
+  getNodes(ids: readonly string[]): readonly Node[] {
     return ids.map(id => this.getNode(id));
   }
 
   getFamily(id: number): Family {
-    return this.families.get(id) as Family;
+    return this.families.get(id)!;
   }
 
-  get familiesArray(): ReadonlyArray<Family> {
+  get familiesArray(): readonly Family[] {
     return [...this.families.values()];
+  }
+
+  get rootFamilies(): readonly Family[] {
+    return this.familiesArray.filter(withType(FamilyType.root));
   }
 
 }

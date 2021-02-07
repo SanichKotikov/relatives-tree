@@ -1,10 +1,8 @@
-import Family from '../models/family';
-import { ICanvasSize } from '../types';
-import { max, prop } from './index';
+import { Family, Size } from '../types';
+import { max } from './index';
+import { bottomOf, rightOf } from './family';
 
-export default (families: ReadonlyArray<Family>): ICanvasSize => {
-  return {
-    width: max(families.map(prop('right'))),
-    height: max(families.map(family => family.top + family.height)),
-  };
-};
+export const getCanvasSize = (families: readonly Family[]): Size => ({
+  width: max(families.map(rightOf)),
+  height: max(families.map(bottomOf)),
+});

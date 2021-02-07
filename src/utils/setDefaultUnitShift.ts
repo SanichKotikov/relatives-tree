@@ -1,32 +1,32 @@
-import Family from '../models/family';
-import Unit from '../models/unit';
 import { min, prop } from './index';
-import { arrangeParentUnit } from './arrangeParentUnit';
+import { arrangeParentsIn } from './arrangeParentsIn';
+import { rightSide } from './units';
+import { Family, Unit } from '../types';
 
 const arrangeInOrder = (units: readonly Unit[]): void => {
   units.forEach((unit, idx, self) => (
-    unit.shift = idx === 0 ? 0 : self[idx - 1].right
+    unit.pos = idx === 0 ? 0 : rightSide(self[idx - 1])
   ));
 };
 
 const correctShift = (value: number) => {
-  return (unit: Unit) => unit.shift += value * -1;
+  return (unit: Unit) => unit.pos += value * -1;
 };
 
 export const setDefaultUnitShift = (family: Family): void => {
-  arrangeInOrder(family.pUnits);
-  arrangeInOrder(family.cUnits);
+  arrangeInOrder(family.parents);
+  arrangeInOrder(family.children);
 
-  arrangeParentUnit(family);
+  arrangeParentsIn(family);
 
   const start = min([
-    ...family.pUnits.map(prop('shift')),
-    ...family.cUnits.map(prop('shift')),
+    ...family.parents.map(prop('pos')),
+    ...family.children.map(prop('pos')),
   ]);
 
   if (start !== 0) {
     const corrector = correctShift(start);
-    family.pUnits.forEach(corrector);
-    family.cUnits.forEach(corrector);
+    family.parents.forEach(corrector);
+    family.children.forEach(corrector);
   }
 };

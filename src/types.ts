@@ -1,52 +1,89 @@
-import Family from './models/family';
-import Unit from './models/unit';
+export type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
 
-type Id = string;
+export const enum Gender {
+  male = 'male',
+  female = 'female',
+}
 
-export type Gender = 'male' | 'female';
-export type RelationType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half';
-export type FamilyType = 'root' | 'child' | 'parent';
+export const enum RelType {
+  blood = 'blood',
+  married = 'married',
+  divorced = 'divorced',
+  adopted = 'adopted',
+  half = 'half',
+}
 
-export { Family, Unit };
+export const enum FamilyType {
+  root = 'root',
+  child = 'child',
+  parent = 'parent',
+}
 
-export interface ICanvasSize {
+export type Family = {
+  readonly id: number;
+  readonly type: FamilyType;
+  readonly main: boolean;
+  /** Parent family ID */
+  pid?: number;
+  /** Child family ID */
+  cid?: number;
+  /** Family's left coordinate */
+  X: number;
+  /** Family's top coordinate */
+  Y: number;
+  parents: readonly Unit[];
+  children: readonly Unit[];
+}
+
+export type Unit = {
+  /** Family ID */
+  readonly fid: number;
+  /** Is child unit */
+  readonly child: boolean;
+  readonly nodes: readonly Node[];
+  pos: number;
+}
+
+export type Size = Readonly<{
   width: number;
   height: number;
-}
+}>
 
-export interface IRelation {
-  id: Id;
-  type: RelationType;
-}
+export type Relation = Readonly<{
+  id: string;
+  type: RelType;
+}>
 
-export interface IFamilyNode {
-  id: Id;
+export type Node = Readonly<{
+  id: string;
   gender: Gender;
-  parents: ReadonlyArray<IRelation>;
-  children: ReadonlyArray<IRelation>;
-  siblings: ReadonlyArray<IRelation>;
-  spouses: ReadonlyArray<IRelation>;
+  parents: readonly Relation[];
+  children: readonly Relation[];
+  siblings: readonly Relation[];
+  spouses: readonly Relation[];
   placeholder?: boolean;
-}
+}>
 
-export interface IFamilyExtNode extends IFamilyNode {
+export type ExtNode = Node & Readonly<{
   top: number;
   left: number;
   hasSubTree: boolean;
-}
+}>
 
-export interface IConnector {
-  points: [number, number, number, number];
-}
+export type Connector = Readonly<{
+  points: readonly [x1: number, y1: number, x2: number, y2: number];
+}>
 
-export interface IFamilyData {
-  canvas: ICanvasSize;
-  families: ReadonlyArray<Family>;
-  nodes: ReadonlyArray<IFamilyExtNode>;
-  connectors: ReadonlyArray<IConnector>;
-}
+export type RelData = Readonly<{
+  canvas: Size;
+  families: readonly Family[];
+  nodes: readonly ExtNode[];
+  connectors: readonly Connector[];
+}>
 
-export interface IOptions {
-  rootId: Id;
+export type Options = Readonly<{
+  rootId: string;
   placeholders?: boolean;
-}
+}>

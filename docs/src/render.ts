@@ -1,5 +1,6 @@
 import { SIZE } from '../../src/constants';
-import { ICanvasSize, IFamilyData } from '../../src/types';
+import { heightOf, widthOf } from '../../src/utils/family';
+import { RelData, Size } from '../../src/types';
 
 const X = 40;
 const uP = 4; // unit padding
@@ -15,7 +16,7 @@ function getRandomColor() {
   return '#' + ((1 << 24) * Math.random() | 0).toString(16);
 }
 
-function setupCanvas(canvas: HTMLCanvasElement, size: ICanvasSize) {
+function setupCanvas(canvas: HTMLCanvasElement, size: Size) {
   const ratio = window.devicePixelRatio || 1;
 
   const width = size.width * X;
@@ -36,7 +37,7 @@ function setupCanvas(canvas: HTMLCanvasElement, size: ICanvasSize) {
 
 export function draw(
   canvas: HTMLCanvasElement,
-  tree: Readonly<IFamilyData>,
+  tree: Readonly<RelData>,
   options: Partial<Readonly<IRenderOptions>> = {},
 ) {
   const ctx = setupCanvas(canvas, tree.canvas);
@@ -56,15 +57,14 @@ export function draw(
 
   if (options.debug) {
     tree.families.forEach(family => {
-      const { left, top, width, height } = family;
-      const x = left * X;
-      const y = top * X;
+      const x = family.X * X;
+      const y = family.Y * X;
       const color = getRandomColor();
 
       ctx.beginPath();
       ctx.globalAlpha = 0.2;
       ctx.strokeStyle = color;
-      ctx.rect(x, y, width * X, height * X);
+      ctx.rect(x, y, widthOf(family) * X, heightOf(family) * X);
       ctx.fill();
 
       ctx.globalAlpha = 1;
@@ -72,12 +72,12 @@ export function draw(
       ctx.fillText(family.id.toString(10), x + uP, y + FONT_SIZE + uP);
 
       if (family.type === 'root' || family.type === 'parent') {
-        family.pUnits.forEach(unit => {
+        family.parents.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.shift) * X + uP,
+            (family.X + unit.pos) * X + uP,
             y + uP,
-            ((unit.size * SIZE) * X) - (uP * 2),
+            ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
           );
           ctx.stroke();
@@ -85,12 +85,12 @@ export function draw(
       }
 
       if (family.type === 'root' || family.type === 'child') {
-        family.cUnits.forEach(unit => {
+        family.children.forEach(unit => {
           ctx.beginPath();
           ctx.rect(
-            (left + unit.shift) * X + uP,
-            y + uP + (family.pUnits.length ? X * SIZE : 0),
-            ((unit.size * SIZE) * X) - (uP * 2),
+            (family.X + unit.pos) * X + uP,
+            y + uP + (family.parents.length ? X * SIZE : 0),
+            ((unit.nodes.length * SIZE) * X) - (uP * 2),
             (X * SIZE) - (uP * 2),
           );
           ctx.stroke();

@@ -1,5 +1,6 @@
 import calcTree from '../src';
-import { Family, IFamilyExtNode } from '../src/types';
+import { ExtNode, Family } from '../src/types';
+import { rightOf, widthOf } from '../src/utils/family';
 import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';
 import simple from '../samples/simple-family.json';
@@ -40,7 +41,7 @@ test('Canvas size', () => {
 
 test('Family size & position', () => {
   function convert(families: ReadonlyArray<Family>) {
-    return families.map(f => [f.id, f.top, f.left, f.right, f.width].join('|'));
+    return families.map(f => [f.id, f.Y, f.X, rightOf(f), widthOf(f)].join('|'));
   }
 
   expect(convert(emptyTree.families)).toEqual(['1|0|0|2|2']);
@@ -79,7 +80,7 @@ test('Family size & position', () => {
 });
 
 test('Node position', () => {
-  function convert(nodes: ReadonlyArray<IFamilyExtNode>) {
+  function convert(nodes: ReadonlyArray<ExtNode>) {
     return nodes.reduce((res: ResultObj, n) => {
       res[n.id] = [n.top, n.left].join('|');
       return res;
@@ -234,7 +235,7 @@ test('Node position', () => {
 });
 
 test('Node sub tree', () => {
-  function convert(nodes: ReadonlyArray<IFamilyExtNode>) {
+  function convert(nodes: ReadonlyArray<ExtNode>) {
     return nodes.reduce((res: ResultObj, n) => {
       res[n.id] = n.hasSubTree;
       return res;

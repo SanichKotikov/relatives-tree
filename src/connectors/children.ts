@@ -1,34 +1,35 @@
-import Family from '../models/family';
-import { flat, inAscOrder, max, min, prop, withId, withType } from '../utils';
+import { getUnitX, nodeCount, nodeIds } from '../utils/units';
+import { withType } from '../utils/family';
+import { flat, inAscOrder, max, min, withId } from '../utils';
 import { SIZE } from '../constants';
-import { IConnector } from '../types';
+import { Connector, Family, FamilyType } from '../types';
 
-export default (families: Family[]): IConnector[] => {
-  const connectors: IConnector[] = [];
+export const children = (families: Family[]): Connector[] => {
+  const connectors: Connector[] = [];
 
-  families.filter(withType('root', 'child')).forEach(family => {
+  families.filter(withType(FamilyType.root, FamilyType.child)).forEach(family => {
     let pX = 0;
-    const mY = family.top + (family.pUnits.length ? SIZE : 0);
+    const mY = family.Y + (family.parents.length ? SIZE : 0);
 
-    if (family.pUnits.length === 1) {
-      const pUnit = family.pUnits[0];
-      pX = family.left + pUnit.shift + (pUnit.size); // TODO
+    if (family.parents.length === 1) {
+      const pUnit = family.parents[0];
+      pX = getUnitX(family, pUnit) + nodeCount(pUnit); // TODO
 
       // from parent(s) to child
       if (pUnit.nodes.every(node => !!node.children.length)) {
-        const pY = family.top + 1;
+        const pY = family.Y + 1;
         connectors.push({ points: [pX, pY, pX, mY] });
       }
     }
 
-    const parentIds = family.pUnits
-      .map(prop('ids'))
+    const parentIds = family.parents
+      .map(nodeIds)
       .reduce(flat, []);
 
     const cXs: number[] = [];
 
-    family.cUnits.forEach(cUnit => {
-      const cX = family.left + cUnit.shift + 1;
+    family.children.forEach(cUnit => {
+      const cX = getUnitX(family, cUnit) + 1;
 
       // from child to parent(s)
       cUnit.nodes.forEach((node, index) => {
@@ -42,15 +43,15 @@ export default (families: Family[]): IConnector[] => {
       });
 
       // between child and child's spouse
-      if (cUnit.size === 2) {
+      if (nodeCount(cUnit) === 2) {
         connectors.push({
           points: [cX, mY + 1, cX + 2, mY + 1],
         });
       }
-      else if (cUnit.size === 1 && cUnit.nodes[0].spouses.length) {
-        family.cUnits.forEach(nUnit => {
+      else if (nodeCount(cUnit) === 1 && cUnit.nodes[0].spouses.length) {
+        family.children.forEach(nUnit => {
           if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
-            const xX = [cX, family.left + nUnit.shift + 1].sort(inAscOrder);
+            const xX = [cX, getUnitX(family, nUnit) + 1].sort(inAscOrder);
             connectors.push({
               points: [xX[0], mY + 1, xX[1], mY + 1],
             });

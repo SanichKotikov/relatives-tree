@@ -1,21 +1,18 @@
-import Family from '../models/family';
-import Unit from '../models/unit';
-import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { prop, withId } from '../utils';
-import { IFamilyNode } from '../types';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
+import { Family, Node, Unit } from '../types';
 
 // left is blood, right is adopted
-export default (lFamily: Family, rFamily: Family) => {
-  const lChildren: IFamilyNode[] = lFamily.cUnits
-    .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
-  const rChildren: IFamilyNode[] = rFamily.cUnits
-    .reduce((a: IFamilyNode[], b: Unit) => a.concat(b.nodes), []);
+export const fixOverlaps = (lFamily: Family, rFamily: Family) => {
+  const lChildren: Node[] = lFamily.children
+    .reduce((a: Node[], b: Unit) => a.concat(b.nodes), []);
+  const rChildren: Node[] = rFamily.children
+    .reduce((a: Node[], b: Unit) => a.concat(b.nodes), []);
 
   const ids = lChildren.filter(node => !!rChildren.find(withId(node.id))).map(prop('id'));
-  const shifts = lFamily.cUnits.map(prop('shift'));
+  const shifts = lFamily.children.map(prop('pos'));
 
-  // TODO:
-  lFamily.cUnits = lFamily.cUnits.sort((a, b) => {
+  lFamily.children = [...lFamily.children].sort((a, b) => {
     const foundA = !!a.nodes.find(node => ids.indexOf(node.id) !== -1);
     const foundB = !!b.nodes.find(node => ids.indexOf(node.id) !== -1);
 
@@ -25,10 +22,10 @@ export default (lFamily: Family, rFamily: Family) => {
   });
 
   // reapply shifts
-  lFamily.cUnits.forEach((unit, idx) => unit.shift = shifts[idx]);
+  lFamily.children.forEach((unit, idx) => unit.pos = shifts[idx]);
 
   // remove
-  rFamily.cUnits = rFamily.cUnits.filter(unit => (
+  rFamily.children = rFamily.children.filter(unit => (
     !!unit.nodes.find(node => ids.indexOf(node.id) === -1)
   ));
 

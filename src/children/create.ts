@@ -1,35 +1,42 @@
-import Unit from '../models/unit';
-import { SIZE } from '../constants';
-import { prop, withType } from '../utils';
 import Store from '../store';
-import byParents from './byParents';
-import arrange from './arrange';
+import { byGender, relToNode, withId } from '../utils';
+import { newUnit } from '../utils/units';
+import { newFamily } from '../utils/family';
+import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
+import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
+import { Family, FamilyType, Node, Relation, Unit } from '../types';
 
-export default (store: Store): Store => {
-  const createFamily = byParents(store);
-  const arrangeFamily = arrange(store);
-  const root = store.familiesArray.filter(withType('root'));
+const hasSameRelation = (node: Node | undefined) => (
+  (rel: Relation): boolean => !node || node.children.some(withId(rel.id))
+);
 
-  for (const rootFamily of root) {
-    let stack = rootFamily.cUnitsWithChildren.reverse();
+const getChildUnitsFunc = (store: Store) => {
+  const toNode = relToNode(store);
+  const createChildUnits = createChildUnitsFunc(store);
 
-    while (stack.length) {
-      const familyUnit = stack.pop() as Unit; // TODO
+  return (familyId: number, parents: readonly Node[]): readonly Unit[] => {
+    const [first, second] = parents as [Node, Node | undefined];
 
-      const family = createFamily(familyUnit.nodes.map(prop('id')), 'child');
-      const parentFamily = store.getFamily(familyUnit.familyId);
+    return first.children
+      .filter(hasSameRelation(second))
+      .flatMap((rel) => createChildUnits(familyId, toNode(rel)));
+  };
+};
 
-      family.pID = parentFamily.id;
-      family.top = parentFamily.top + parentFamily.height - SIZE;
-      family.left = parentFamily.left + familyUnit.shift;
+export const createFamilyFunc = (store: Store) => {
+  const getChildUnits = getChildUnitsFunc(store);
 
-      arrangeFamily(family);
-      store.families.set(family.id, family);
+  return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
+    const family = newFamily(store.getNextId(), type, isMain);
 
-      const nextUnits = family.cUnitsWithChildren;
-      if (nextUnits.length) stack = [...stack, ...nextUnits.reverse()];
-    }
-  }
+    const parents: Node[] = parentIDs
+      .map(id => store.getNode(id))
+      .sort(byGender(store.root.gender));
 
-  return store;
+    family.parents = [newUnit(family.id, parents)];
+    family.children = getChildUnits(family.id, parents);
+
+    setDefaultUnitShift(family);
+    return family;
+  };
 };

@@ -1,32 +1,38 @@
-import byChildren from './byChildren';
-import arrange from './arrange';
-import { prop, withType } from '../utils';
 import Store from '../store';
-import Unit from '../models/unit';
+import { prop } from '../utils';
+import { getUnitX } from '../utils/units';
+import { Family, Unit } from '../types';
+import { byChildren } from './byChildren';
+import { arrangeFamiliesFunc } from './arrange';
 
-export default (store: Store): Store => {
+const getParentUnitsWithParents = (family: Family): Unit[] => (
+  family.parents.filter(unit => (
+    !!unit.nodes.find(node => !!node.parents.length)
+  ))
+);
+
+export const parents = (store: Store): Store => {
   const createFamily = byChildren(store);
-  const arrangeFamily = arrange(store);
-  const root = store.familiesArray.filter(withType('root'));
+  const arrangeFamily = arrangeFamiliesFunc(store);
 
-  for (const rootFamily of root) {
+  for (const rootFamily of store.rootFamilies) {
     if (!rootFamily.main) continue;
-    let stack = rootFamily.pUnitsWithParents.reverse();
+    let stack = getParentUnitsWithParents(rootFamily).reverse();
 
     while (stack.length) {
       const familyUnit: Unit = stack.pop() as Unit;
 
       const family = createFamily(familyUnit.nodes.map(prop('id')));
-      const childFamily = store.getFamily(familyUnit.familyId);
+      const childFamily = store.getFamily(familyUnit.fid);
 
-      family.cID = childFamily.id;
-      family.top = childFamily.top - 2;
-      family.left = childFamily.left + familyUnit.shift;
+      family.cid = childFamily.id;
+      family.Y = childFamily.Y - 2;
+      family.X = getUnitX(childFamily, familyUnit);
 
       arrangeFamily(family);
       store.families.set(family.id, family);
 
-      const nextUnits = family.pUnitsWithParents;
+      const nextUnits = getParentUnitsWithParents(family);
       if (nextUnits.length) stack = [...stack, ...nextUnits.reverse()];
     }
   }
