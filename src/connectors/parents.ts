@@ -1,4 +1,4 @@
-import { flat, prop, unique } from '../utils';
+import { prop, unique } from '../utils';
 import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
 import { Connector, Family, FamilyType } from '../types';
@@ -26,7 +26,7 @@ export const parents = (families: Family[]): Connector[] => {
 
       const ids = pUnit.nodes
         .map(prop('children'))
-        .reduce(flat)
+        .flat()
         .map(prop('id'))
         .filter(unique);
 

@@ -3,7 +3,7 @@ import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
 import { createFamilyFunc } from '../children/create';
 import { getSpouseNodesFunc } from '../utils/getSpouseNodesFunc';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
-import { flat, hasDiffParents, prop, withRelType } from '../utils';
+import { hasDiffParents, prop, withRelType } from '../utils';
 import { newFamily, rightOf } from '../utils/family';
 import { Family, FamilyType, RelType } from '../types';
 import { fixOverlaps } from './fixOverlaps';
@@ -45,9 +45,7 @@ export const middle = (store: Store): Store => {
 
       families = [mainFamily];
 
-      const parents = mainFamily.parents
-        .map(prop('nodes'))
-        .reduce(flat);
+      const parents = mainFamily.parents.map(prop('nodes')).flat();
 
       if (parents.length === 2) {
         const { left, right } = getSpouseNodesFunc(store)(parents);

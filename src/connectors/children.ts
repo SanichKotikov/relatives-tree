@@ -1,6 +1,6 @@
 import { getUnitX, nodeCount, nodeIds } from '../utils/units';
 import { withType } from '../utils/family';
-import { flat, inAscOrder, max, min, withId } from '../utils';
+import { inAscOrder, max, min, withId } from '../utils';
 import { SIZE } from '../constants';
 import { Connector, Family, FamilyType } from '../types';
 
@@ -22,9 +22,7 @@ export const children = (families: Family[]): Connector[] => {
       }
     }
 
-    const parentIds = family.parents
-      .map(nodeIds)
-      .reduce(flat, []);
+    const parentIds = family.parents.map(nodeIds).flat();
 
     const cXs: number[] = [];
 
