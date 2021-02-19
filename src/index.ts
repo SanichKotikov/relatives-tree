@@ -10,6 +10,7 @@ import { getExtendedNodes } from './utils/getExtendedNodes';
 import { pipe } from './utils';
 import { Node, Options, RelData } from './types';
 
+// TODO: refactor middle, parents, correctPositions
 const calcFamilies = pipe(middle, parents, inChildDirection, correctPositions);
 
 export default (nodes: readonly Node[], options: Options): RelData => {
