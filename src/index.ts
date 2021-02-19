@@ -1,6 +1,6 @@
 import Store from './store';
 import { placeholders } from './middle/placeholders';
-import { middle } from './middle/create';
+import { inMiddleDirection } from './middle';
 import { inParentDirection } from './parents';
 import { inChildDirection } from './children';
 import { connectors } from './connectors';
@@ -10,8 +10,12 @@ import { getExtendedNodes } from './utils/getExtendedNodes';
 import { pipe } from './utils';
 import { Node, Options, RelData } from './types';
 
-// TODO: refactor middle, correctPositions
-const calcFamilies = pipe(middle, inParentDirection, inChildDirection, correctPositions);
+const calcFamilies = pipe(
+  inMiddleDirection,
+  inParentDirection,
+  inChildDirection,
+  correctPositions, // TODO: refactor
+);
 
 export default (nodes: readonly Node[], options: Options): RelData => {
   const store = new Store(nodes, options.rootId);
