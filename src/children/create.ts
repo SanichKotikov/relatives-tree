@@ -26,7 +26,7 @@ const getChildUnitsFunc = (store: Store) => {
 export const createFamilyFunc = (store: Store) => {
   const getChildUnits = getChildUnitsFunc(store);
 
-  return (parentIDs: string[], type = FamilyType.root, isMain: boolean = false): Family => {
+  return (parentIDs: readonly string[], type = FamilyType.root, isMain: boolean = false): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 
     const parents: Node[] = parentIDs

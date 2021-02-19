@@ -1,5 +1,5 @@
 import Store from '../store';
-import { Family, FamilyType } from '../types';
+import { FamilyType } from '../types';
 import { min, prop } from './index';
 import { withType } from './family';
 import { getUnitX } from './units';
@@ -10,7 +10,7 @@ export const correctPositions = (store: Store): Store => {
   const vShift = min(families.map(prop('Y'))) * -1;
   if (vShift !== 0) families.forEach(family => family.Y += vShift);
 
-  const rootChild = families.find(f => f.main) as Family; // TODO
+  const rootChild = store.rootFamily;
   const rootParent = families.find(f => f.cid === rootChild.id);
 
   if (rootParent) {

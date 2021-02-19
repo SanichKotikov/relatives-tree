@@ -27,7 +27,7 @@ class Store {
     return this.nodes.get(id)!;
   }
 
-  getNodes(ids: readonly string[]): readonly Node[] {
+  getNodes(ids: readonly string[]): Node[] {
     return ids.map(id => this.getNode(id));
   }
 
@@ -41,6 +41,10 @@ class Store {
 
   get rootFamilies(): readonly Family[] {
     return this.familiesArray.filter(withType(FamilyType.root));
+  }
+
+  get rootFamily(): Family {
+    return this.rootFamilies.find(family => family.main)!;
   }
 
 }

@@ -1,41 +1,34 @@
 import Store from '../store';
-import { prop } from '../utils';
-import { getUnitX } from '../utils/units';
-import { Family, Unit } from '../types';
-import { byChildren } from './byChildren';
-import { arrangeFamiliesFunc } from './arrange';
+import { byGender, prop } from '../utils';
+import { arrangeInOrder, newUnit } from '../utils/units';
+import { newFamily } from '../utils/family';
+import { Family, FamilyType, Unit } from '../types';
 
-const getParentUnitsWithParents = (family: Family): Unit[] => (
-  family.parents.filter(unit => (
-    !!unit.nodes.find(node => !!node.parents.length)
-  ))
+const getParentUnits = (store: Store, unit: Unit): readonly Unit[] => (
+  unit.nodes.reduce<Unit[]>((units, child) => {
+    const parents = store
+      .getNodes(child.parents.map(prop('id')))
+      .sort(byGender(store.root.gender));
+
+    if (parents.length) units.push(newUnit(unit.fid, parents));
+    return units;
+  }, [])
 );
 
-export const parents = (store: Store): Store => {
-  const createFamily = byChildren(store);
-  const arrangeFamily = arrangeFamiliesFunc(store);
+const setDefaultUnitShift = (family: Family): void => {
+  arrangeInOrder(family.children);
+  arrangeInOrder(family.parents);
+};
 
-  for (const rootFamily of store.rootFamilies) {
-    if (!rootFamily.main) continue;
-    let stack = getParentUnitsWithParents(rootFamily).reverse();
+export const createFamilyFunc = (store: Store) => {
+  return (childIDs: readonly string[]): Family => {
+    const family = newFamily(store.getNextId(), FamilyType.parent);
+    const childUnit = newUnit(family.id, store.getNodes(childIDs), true);
 
-    while (stack.length) {
-      const familyUnit: Unit = stack.pop() as Unit;
+    family.children = [childUnit];
+    family.parents = getParentUnits(store, childUnit);
 
-      const family = createFamily(familyUnit.nodes.map(prop('id')));
-      const childFamily = store.getFamily(familyUnit.fid);
-
-      family.cid = childFamily.id;
-      family.Y = childFamily.Y - 2;
-      family.X = getUnitX(childFamily, familyUnit);
-
-      arrangeFamily(family);
-      store.families.set(family.id, family);
-
-      const nextUnits = getParentUnitsWithParents(family);
-      if (nextUnits.length) stack = [...stack, ...nextUnits.reverse()];
-    }
-  }
-
-  return store;
+    setDefaultUnitShift(family);
+    return family;
+  };
 };

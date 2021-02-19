@@ -19,3 +19,13 @@ export const hasChildren = (unit: Unit): boolean => unit.nodes.some(node => node
 export const rightSide = (unit: Unit): number => unit.pos + nodeCount(unit) * SIZE;
 export const sameAs = (target: Unit) => (unit: Unit) => nodeIds(target).join('') === nodeIds(unit).join('');
 export const getUnitX = (family: Family, unit: Unit) => family.X + unit.pos;
+
+export const arrangeInOrder = (units: readonly Unit[]): void => {
+  units.forEach((unit, idx, self) => (
+    unit.pos = idx === 0 ? 0 : rightSide(self[idx - 1])
+  ));
+};
+
+export const correctUnitsShift = (units: readonly Unit[], shift: number) => (
+  units.forEach((unit) => unit.pos += shift)
+);

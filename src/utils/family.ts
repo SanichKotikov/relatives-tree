@@ -22,4 +22,4 @@ export const heightOf = (family: Family): number => [
 ].filter(Boolean).length * SIZE;
 export const rightOf = (family: Family): number => family.X + widthOf(family);
 export const bottomOf = (family: Family) => family.Y + heightOf(family);
-export const unitCount = (units: readonly Unit[]): number => units.reduce((a, b) => a + nodeCount(b), 0);
+export const unitNodesCount = (units: readonly Unit[]): number => units.reduce((acc, b) => acc + nodeCount(b), 0);

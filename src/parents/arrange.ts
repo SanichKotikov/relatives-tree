@@ -1,11 +1,12 @@
 import Store from '../store';
 import { SIZE } from '../constants';
-import { getUnitX, nodeCount, sameAs } from '../utils/units';
-import { rightOf, unitCount, widthOf } from '../utils/family';
+import { correctUnitsShift, getUnitX, nodeCount, sameAs } from '../utils/units';
+import { rightOf, unitNodesCount, widthOf } from '../utils/family';
 import { nextIndex } from '../utils';
-import { Family, Unit } from '../types';
+import { Family } from '../types';
 
-const arrangeNextFamily = (family: Family, nextFamily: Family, unit: Unit) => {
+const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
+  const unit = family.children[0];
   const index = nextFamily.parents.findIndex(sameAs(unit));
 
   index === 0 && nextFamily.parents[index].pos === 0
@@ -15,24 +16,26 @@ const arrangeNextFamily = (family: Family, nextFamily: Family, unit: Unit) => {
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.parents[nextIdx]) {
-    const shift = rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]);
-    nextFamily.parents.slice(nextIdx).forEach(unit => unit.pos += shift);
+    correctUnitsShift(
+      nextFamily.parents.slice(nextIdx),
+      rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]),
+    );
   }
 };
 
 export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {
     while (family.cid) {
-      const unit = family.children[0];
       const nextFamily = store.getFamily(family.cid);
+      const unit = family.children[0];
 
-      if (/* is middle (root) family */ !nextFamily.cid)
+      if (/* is middle (root) family */ !nextFamily.cid) {
         unit.pos = (widthOf(family) - nodeCount(unit) * SIZE) / 2;
+      }
       else {
-        if (family.parents.length === 2 && unitCount(family.parents) > 2)
+        if (family.parents.length === 2 && unitNodesCount(family.parents) > 2)
           unit.pos = Math.floor(family.parents[1].pos / 2);
-
-        arrangeNextFamily(family, nextFamily, unit);
+        arrangeNextFamily(family, nextFamily);
       }
 
       family = nextFamily;
