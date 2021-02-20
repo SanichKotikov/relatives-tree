@@ -19,12 +19,14 @@ const moveSharedUnitToRight = (sharedIDs: readonly string[]) => (
   }
 );
 
-export const correctOverlaps = (bloodFamily: Family, adoptedFamily: Family): void => {
-  const lChildren = unitsToNodes(bloodFamily.children);
-  const rChildren = unitsToNodes(adoptedFamily.children);
+const sameIn = (units: readonly Unit[]) => {
+  const target = unitsToNodes(units);
+  return (node: Node) => target.some(withId(node.id));
+};
 
-  const sharedIDs = lChildren
-    .filter(node => rChildren.some(withId(node.id)))
+export const correctOverlaps = (bloodFamily: Family, adoptedFamily: Family): void => {
+  const sharedIDs = unitsToNodes(bloodFamily.children)
+    .filter(sameIn(adoptedFamily.children))
     .map(prop('id'));
 
   const cachePos: readonly number[] = bloodFamily.children.map(prop('pos'));

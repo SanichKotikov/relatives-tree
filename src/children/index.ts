@@ -1,7 +1,6 @@
 import Store from '../store';
-import { prop } from '../utils';
 import { withType } from '../utils/family';
-import { hasChildren } from '../utils/units';
+import { hasChildren, nodeIds } from '../utils/units';
 import { Family, FamilyType, Unit } from '../types';
 import { createFamilyFunc } from './create';
 import { updateFamilyFunc } from './update';
@@ -23,11 +22,7 @@ export const inChildDirection = (store: Store): Store => {
 
       while (stack.length) {
         const parentUnit = stack.pop()!;
-
-        const family = createFamily(
-          parentUnit.nodes.map(prop('id')),
-          FamilyType.child,
-        );
+        const family = createFamily(nodeIds(parentUnit), FamilyType.child);
 
         updateFamily(family, parentUnit);
         arrangeFamilies(family);
