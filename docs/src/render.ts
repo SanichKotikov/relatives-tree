@@ -1,6 +1,6 @@
 import { SIZE } from '../../src/constants';
 import { heightOf, widthOf } from '../../src/utils/family';
-import { RelData, Size } from '../../src/types';
+import { Gender, RelData, Size } from '../../src/types';
 
 const X = 40;
 const uP = 4; // unit padding
@@ -107,7 +107,7 @@ export function draw(
 
     ctx.setLineDash([]);
     ctx.beginPath();
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = node.gender === Gender.male ? '#eee' : '#fff';
     ctx.strokeStyle = '#000';
     ctx.lineWidth = node.id === options.root ? 2 : 1;
     ctx.rect(x + nP, y + nP, SIZE * X - nP * 2, SIZE * X - nP * 2);
