@@ -14,7 +14,7 @@ const calcFamilies = pipe(
   inMiddleDirection,
   inParentDirection,
   inChildDirection,
-  correctPositions, // TODO: refactor
+  correctPositions,
 );
 
 export default (nodes: readonly Node[], options: Options): RelData => {

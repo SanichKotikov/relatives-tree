@@ -1,37 +1,35 @@
 import Store from '../store';
-import { FamilyType } from '../types';
+import { Family, FamilyType } from '../types';
 import { min, prop } from './index';
 import { withType } from './family';
 import { getUnitX } from './units';
 
+const alignGenerations = (families: readonly Family[], root: Family): void => {
+  const parents = families.find(family => family.cid === root.id);
+
+  if (parents) {
+    const shift = (
+      getUnitX(parents, parents.children[0]) -
+      getUnitX(root, root.parents[0])
+    );
+
+    families
+      .filter(withType(FamilyType.child, FamilyType.root))
+      .forEach(family => family.X += shift);
+  }
+};
+
+const correct = (families: readonly Family[], coordinate: 'X' | 'Y'): void => {
+  const shift = min(families.map(prop(coordinate))) * -1;
+  if (shift !== 0) families.forEach(family => family[coordinate] += shift);
+};
+
 export const correctPositions = (store: Store): Store => {
   const families = store.familiesArray;
 
-  const vShift = min(families.map(prop('Y'))) * -1;
-  if (vShift !== 0) families.forEach(family => family.Y += vShift);
-
-  const rootChild = store.rootFamily;
-  const rootParent = families.find(f => f.cid === rootChild.id);
-
-  if (rootParent) {
-    const cUnit = rootChild.parents[0];
-    const pUnit = rootParent.children[0];
-
-    const diff = getUnitX(rootParent, pUnit) - getUnitX(rootChild, cUnit);
-
-    if (diff > 0) families
-      .filter(withType(FamilyType.child, FamilyType.root))
-      .forEach(family => family.X += diff);
-    else if (diff < 0) families
-      .filter(withType(FamilyType.parent))
-      .forEach(family => family.X += diff * -1);
-
-    const hShift = min(families.map(prop('X')));
-    if (hShift > 0) families.forEach(family => family.X -= hShift);
-  }
-
-  const totalShift = min(families.map(f => f.X)) * -1;
-  if (totalShift !== 0) families.forEach(family => family.X += totalShift);
+  alignGenerations(families, store.rootFamily);
+  correct(families, 'Y');
+  correct(families, 'X');
 
   return store;
 };
