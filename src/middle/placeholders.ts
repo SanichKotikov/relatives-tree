@@ -14,17 +14,15 @@ const createNode = (gender: Gender): Mutable<Node> => ({
   children: [],
 });
 
-const createParents = (store: Store): Relation[] => {
+const createParents = (store: Store): readonly Relation[] => {
   const father = createNode(Gender.male);
   const mother = createNode(Gender.female);
 
   father.spouses = [createRel(mother.id, RelType.married)];
   mother.spouses = [createRel(father.id, RelType.married)];
 
-  const { id, siblings } = store.root;
-
   return [father, mother].map(node => {
-    node.children = siblings.concat(createRel(id));
+    node.children = store.root.siblings.concat(createRel(store.root.id));
     store.nodes.set(node.id, node);
 
     return createRel(node.id);
@@ -36,14 +34,14 @@ const setParents = (parents: readonly Relation[]) => (
 );
 
 export const placeholders = (store: Store): Store => {
-  if (store.root.parents.length) return store;
-  const setParentsTo = setParents(createParents(store));
+  if (!store.root.parents.length) {
+    const setParentsTo = setParents(createParents(store));
+    setParentsTo(store.root);
 
-  setParentsTo(store.root);
-
-  store.root.siblings
-    .map(relToNode(store))
-    .forEach(setParentsTo);
+    store.root.siblings
+      .map(relToNode(store))
+      .forEach(setParentsTo);
+  }
 
   return store;
 };
