@@ -1,16 +1,12 @@
-import { prop, withId } from '../utils';
+import { prop, withId, withIds } from '../utils';
 import { unitsToNodes } from '../utils/units';
 import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { Family, Node, Unit } from '../types';
 
-const includes = (ids: readonly string[], include = true) => (
-  (node: Node) => ids.includes(node.id) === include
-);
-
 const moveSharedUnitToRight = (sharedIDs: readonly string[]) => (
   (a: Unit, b: Unit) => {
-    const foundA = a.nodes.some(includes(sharedIDs));
-    const foundB = b.nodes.some(includes(sharedIDs));
+    const foundA = a.nodes.some(withIds(sharedIDs));
+    const foundB = b.nodes.some(withIds(sharedIDs));
 
     if (foundA && !foundB) return 1;
     if (!foundA && foundB) return -1;
@@ -34,7 +30,7 @@ export const correctOverlaps = (bloodFamily: Family, adoptedFamily: Family): voi
   bloodFamily.children.forEach((unit, idx) => unit.pos = cachePos[idx]);
 
   adoptedFamily.children = adoptedFamily.children
-    .filter(unit => unit.nodes.some(includes(sharedIDs, false)));
+    .filter(unit => unit.nodes.some(withIds(sharedIDs, false)));
 
   setDefaultUnitShift(adoptedFamily);
 };

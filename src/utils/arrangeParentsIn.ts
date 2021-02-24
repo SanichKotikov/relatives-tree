@@ -1,25 +1,30 @@
 import { SIZE } from '../constants';
-import { Family } from '../types';
-import { prop } from './index';
+import { Family, Unit } from '../types';
+import { prop, withIds } from './index';
 import { unitNodesCount } from './family';
+
+const calcShifts = (units: readonly Unit[], ids: readonly string[]): readonly number[] => (
+  units.reduce<number[]>((acc, unit) => {
+    const index = unit.nodes.findIndex(withIds(ids));
+    if (index !== -1) acc.push(unit.pos + (index * SIZE));
+    return acc;
+  }, [])
+);
 
 const middle = (values: readonly number[]): number => {
   const result = (values[0] + values[values.length - 1]) / 2;
   return Number.isNaN(result) ? 0 : result;
 };
 
-export const arrangeParentsIn = (family: Family) => {
-  const pUnit = family.parents[0];
-  if (!pUnit) return;
+export const arrangeParentsIn = (family: Family): void => {
+  const unit = family.parents[0];
 
-  // TODO: add note about nodes[0]
-  const children: readonly string[] = pUnit.nodes[0].children.map(prop('id'));
+  if (unit) {
+    const ids = unit.nodes[0].children.map(prop('id'));
 
-  const shifts = family.children.reduce<number[]>((result, unit) => {
-    const index = unit.nodes.findIndex(node => children.includes(node.id));
-    if (index !== -1) result.push(unit.pos + (index * SIZE));
-    return result;
-  }, []);
-
-  pUnit.pos = Math.floor(middle(shifts) - (unitNodesCount(family.parents) - 1));
+    unit.pos = Math.floor(
+      middle(calcShifts(family.children, ids)) -
+      (unitNodesCount(family.parents) - 1),
+    );
+  }
 };

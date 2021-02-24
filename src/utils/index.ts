@@ -3,7 +3,12 @@ import { Gender, Node, Relation } from '../types';
 
 export const nextIndex = (index: number) => index + 1;
 export const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
-export const withId = <T extends { id: any; }, K extends keyof { id: any; }>(id: T[K]) => (item: T) => item.id === id;
+export const withId = <T extends { id: any; }, K extends keyof T>(id: T[K]) => (item: T) => item.id === id;
+
+export const withIds = <T extends { id: any; }, K extends keyof T>(ids: readonly (T[K])[], include = true) => (
+  (item: T) => ids.includes(item.id) === include
+);
+
 export const unique = <T>(item: T, index: number, arr: T[]): boolean => arr.indexOf(item) === index;
 export const inAscOrder = (v1: number, v2: number) => v1 - v2;
 export const pipe = (...fus: Function[]) => <T>(init: T) => fus.reduce((res, fn) => fn(res), init);
