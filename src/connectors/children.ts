@@ -4,6 +4,7 @@ import { inAscOrder, max, min, withId } from '../utils';
 import { SIZE } from '../constants';
 import { Connector, Family, FamilyType } from '../types';
 
+// TODO refactor
 export const children = (families: Family[]): Connector[] => {
   const connectors: Connector[] = [];
 
