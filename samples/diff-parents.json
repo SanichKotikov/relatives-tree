@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dyTpfj6st",
+    "gender": "male",
+    "spouses": [],
+    "siblings": [],
+    "parents": [
+      {
+        "id": "aoF9dn5Ew",
+        "type": "blood"
+      },
+      {
+        "id": "tdRwdtR54",
+        "type": "blood"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "ahfR5lR2s",
+    "gender": "female",
+    "spouses": [
+      {
+        "id": "aoF9dn5Ew",
+        "type": "married"
+      }
+    ],
+    "siblings": [],
+    "parents": [],
+    "children": []
+  },
+  {
+    "id": "aoF9dn5Ew",
+    "gender": "male",
+    "spouses": [
+      {
+        "id": "ahfR5lR2s",
+        "type": "married"
+      },
+      {
+        "id": "tdRwdtR54",
+        "type": "divorced"
+      }
+    ],
+    "siblings": [],
+    "parents": [],
+    "children": [
+      {
+        "id": "dyTpfj6st",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "tdRwdtR54",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "aoF9dn5Ew",
+        "type": "divorced"
+      }
+    ],
+    "children": [
+      {
+        "id": "dyTpfj6st",
+        "type": "adopted"
+      }
+    ]
+  }
+]

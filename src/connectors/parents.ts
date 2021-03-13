@@ -8,7 +8,7 @@ const getChildIDs = (unit: Unit): readonly string[] => (
   unit.nodes.map(prop('children')).flat().map(prop('id'))
 );
 
-const getConnectors = (family: Family) => (
+const calcConnectors = (family: Family) => (
   (connectors: Connector[], unit: Unit) => {
     const pX = getUnitX(family, unit) + nodeCount(unit);
     const pY = family.Y + HALF_SIZE;
@@ -35,10 +35,10 @@ const getConnectors = (family: Family) => (
   }
 );
 
-export const parents = (families: Family[]): readonly Connector[] => {
-  return families
+export const parents = (families: readonly Family[]): readonly Connector[] => (
+  families
     .filter(withType(FamilyType.parent))
     .reduce<Connector[]>((connectors, family) => (
-      connectors.concat(family.parents.reduce(getConnectors(family), []))
-    ), []);
-};
+      connectors.concat(family.parents.reduce(calcConnectors(family), []))
+    ), [])
+);

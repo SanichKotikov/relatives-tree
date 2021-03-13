@@ -1,35 +1,39 @@
 import { inAscOrder, withId } from '../utils';
 import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
-import { Connector, Family, FamilyType } from '../types';
+import { HALF_SIZE, SIZE } from '../constants';
+import { Connector, Family, FamilyType, Unit } from '../types';
 
-export const middle = (families: Family[]): Connector[] => {
-  const connectors: Connector[] = [];
+const calcConnectors = (family: Family, families: readonly Family[]) => (
+  (connectors: Connector[], unit: Unit) => {
+    const pX = getUnitX(family, unit) + HALF_SIZE;
+    const pY = family.Y + HALF_SIZE;
 
-  families.filter(withType(FamilyType.root)).forEach(family => {
-    // between parents
-    family.parents.forEach(pUnit => {
-      const pX = getUnitX(family, pUnit) + 1;
-      const pY = family.Y + 1;
-
-      if (nodeCount(pUnit) === 2) {
-        connectors.push([pX, pY, pX + 2, pY]);
-      }
-      else if (nodeCount(pUnit) === 1 && pUnit.nodes[0].spouses.length) {
-        // TODO
-        families
-          .filter(rFamily => rFamily.id !== family.id)
-          .forEach(rFamily => {
-            rFamily.parents.forEach(unit => {
-              if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
-                const xX = [pX, getUnitX(rFamily, unit) + 1].sort(inAscOrder);
-                connectors.push([xX[0], pY, xX[1], pY]);
-              }
-            });
+    if (nodeCount(unit) === 2) {
+      connectors.push([pX, pY, pX + SIZE, pY]);
+    }
+    // TODO: update and refactor
+    else if (nodeCount(unit) === 1 && unit.nodes[0].spouses.length) {
+      families
+        .filter(item => item.id !== family.id)
+        .forEach(other => {
+          other.parents.forEach(parent => {
+            if (parent.nodes.some(withId(unit.nodes[0].spouses[0].id))) {
+              const xX = [pX, getUnitX(other, parent) + HALF_SIZE].sort(inAscOrder);
+              connectors.push([xX[0], pY, xX[1], pY]);
+            }
           });
-      }
-    });
-  });
+        });
+    }
 
-  return connectors;
+    return connectors;
+  }
+);
+
+export const middle = (families: readonly Family[]): readonly Connector[] => {
+  const rootFamilies = families.filter(withType(FamilyType.root));
+
+  return rootFamilies.reduce<Connector[]>((connectors, family) => (
+    connectors.concat(family.parents.reduce(calcConnectors(family, rootFamilies), []))
+  ), []);
 };

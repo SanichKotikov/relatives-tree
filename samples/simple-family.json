@@ -1,7 +1,7 @@
 [
   {
     "id": "dyTpfj6sr",
-    "gender": "Male",
+    "gender": "male",
     "spouses": [],
     "siblings": [],
     "parents": [],
@@ -18,7 +18,7 @@
   },
   {
     "id": "ahfR5lR2s",
-    "gender": "Female",
+    "gender": "female",
     "spouses": [],
     "siblings": [],
     "parents": [
@@ -31,7 +31,7 @@
   },
   {
     "id": "aoF9dn5Ew",
-    "gender": "Male",
+    "gender": "male",
     "spouses": [],
     "siblings": [],
     "parents": [

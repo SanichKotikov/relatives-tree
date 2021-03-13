@@ -3,6 +3,7 @@ import { Node } from '../../src/types';
 import empty from '../../samples/empty.json';
 import couple from '../../samples/couple.json';
 import simple from '../../samples/simple-family.json';
+import diff from '../../samples/diff-parents.json';
 import spouses from '../../samples/several-spouses.json';
 import testTree1 from '../../samples/test-tree-n1.json';
 import testTree2 from '../../samples/test-tree-n2.json';
@@ -16,6 +17,7 @@ const data: { [key: string]: any[] } = {
   'gRstruEr4': empty,
   'jsyRsE5sr': couple,
   'dyTpfj6sr': simple,
+  'dyTpfj6st': diff,
   'js2RsE5sr': spouses,
   'aeqW': testTree1,
   'uJK9': testTree2,
