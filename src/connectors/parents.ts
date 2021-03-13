@@ -1,53 +1,48 @@
-import { prop, unique } from '../utils';
+import { prop, withIds } from '../utils';
 import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
-import { Connector, Family, FamilyType } from '../types';
+import { HALF_SIZE, SIZE } from '../constants';
+import { Connector, Family, FamilyType, Unit } from '../types';
 
-export const parents = (families: Family[]): Connector[] => {
-  const connectors: Connector[] = [];
+const getChildIDs = (unit: Unit): readonly string[] => (
+  unit.nodes.map(prop('children')).flat().map(prop('id'))
+);
 
-  families.filter(withType(FamilyType.parent)).forEach(family => {
-    family.parents.forEach(pUnit => {
-      const pX = getUnitX(family, pUnit) + nodeCount(pUnit); // TODO
-      const pY = family.Y + 1;
-      const mY = family.Y + 2;
+const getConnectors = (family: Family) => (
+  (connectors: Connector[], unit: Unit) => {
+    const pX = getUnitX(family, unit) + nodeCount(unit);
+    const pY = family.Y + HALF_SIZE;
+    const mY = family.Y + SIZE;
 
-      // between parents
-      if (nodeCount(pUnit) === 2) {
-        connectors.push({
-          points: [pX - 1, pY, pX - 1 + 2, pY],
-        });
-      }
+    // between parents
+    if (nodeCount(unit) === 2) {
+      connectors.push({ points: [pX - HALF_SIZE, pY, pX + HALF_SIZE, pY] });
+    }
 
-      // from parent(s) to child
-      connectors.push({
-        points: [pX, pY, pX, mY],
-      });
+    // from parent(s) to child
+    connectors.push({ points: [pX, pY, pX, mY] });
 
-      const ids = pUnit.nodes
-        .map(prop('children'))
-        .flat()
-        .map(prop('id'))
-        .filter(unique);
+    const child = family.children[0];
 
-      family.children.forEach(cUnit => {
-        const cIndex = cUnit.nodes.findIndex(node => ids.indexOf(node.id) !== -1);
-        const cX = getUnitX(family, cUnit) + (cIndex * 2) + 1;
+    const cX = (
+      getUnitX(family, child) +
+      (child.nodes.findIndex(withIds(getChildIDs(unit))) * SIZE) + HALF_SIZE
+    );
 
-        // from child to parent(s)
-        connectors.push({
-          points: [cX, mY, cX, mY + 1],
-        });
+    // from child to parent(s)
+    connectors.push({ points: [cX, mY, cX, mY + HALF_SIZE] });
 
-        if (pX !== cX) {
-          // horizontal between parent(s) and child
-          connectors.push({
-            points: [Math.min(pX, cX), mY, Math.max(pX, cX), mY],
-          });
-        }
-      });
-    });
-  });
+    // horizontal between parent(s) and child
+    if (pX !== cX) connectors.push({ points: [Math.min(pX, cX), mY, Math.max(pX, cX), mY] });
 
-  return connectors;
+    return connectors;
+  }
+);
+
+export const parents = (families: Family[]): readonly Connector[] => {
+  return families
+    .filter(withType(FamilyType.parent))
+    .reduce<Connector[]>((connectors, family) => (
+      connectors.concat(family.parents.reduce(getConnectors(family), []))
+    ), []);
 };
