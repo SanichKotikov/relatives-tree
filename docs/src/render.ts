@@ -44,7 +44,7 @@ export function draw(
 
   ctx.lineWidth = 1;
 
-  tree.connectors.forEach(({ points }) => {
+  tree.connectors.forEach((points) => {
     const [x1, y1, x2, y2] = points;
     ctx.beginPath();
     ctx.moveTo(x1 * X, y1 * X);

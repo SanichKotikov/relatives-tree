@@ -72,9 +72,7 @@ export type ExtNode = Node & Readonly<{
   hasSubTree: boolean;
 }>
 
-export type Connector = Readonly<{
-  points: readonly [x1: number, y1: number, x2: number, y2: number];
-}>
+export type Connector = readonly [x1: number, y1: number, x2: number, y2: number];
 
 export type RelData = Readonly<{
   canvas: Size;

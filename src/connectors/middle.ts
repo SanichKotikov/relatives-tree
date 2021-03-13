@@ -13,9 +13,7 @@ export const middle = (families: Family[]): Connector[] => {
       const pY = family.Y + 1;
 
       if (nodeCount(pUnit) === 2) {
-        connectors.push({
-          points: [pX, pY, pX + 2, pY],
-        });
+        connectors.push([pX, pY, pX + 2, pY]);
       }
       else if (nodeCount(pUnit) === 1 && pUnit.nodes[0].spouses.length) {
         // TODO
@@ -25,9 +23,7 @@ export const middle = (families: Family[]): Connector[] => {
             rFamily.parents.forEach(unit => {
               if (unit.nodes.findIndex(withId(pUnit.nodes[0].spouses[0].id)) !== -1) {
                 const xX = [pX, getUnitX(rFamily, unit) + 1].sort(inAscOrder);
-                connectors.push({
-                  points: [xX[0], pY, xX[1], pY],
-                });
+                connectors.push([xX[0], pY, xX[1], pY]);
               }
             });
           });

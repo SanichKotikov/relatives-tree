@@ -15,12 +15,9 @@ const getConnectors = (family: Family) => (
     const mY = family.Y + SIZE;
 
     // between parents
-    if (nodeCount(unit) === 2) {
-      connectors.push({ points: [pX - HALF_SIZE, pY, pX + HALF_SIZE, pY] });
-    }
-
+    if (nodeCount(unit) === 2) connectors.push([pX - HALF_SIZE, pY, pX + HALF_SIZE, pY]);
     // from parent(s) to child
-    connectors.push({ points: [pX, pY, pX, mY] });
+    connectors.push([pX, pY, pX, mY]);
 
     const child = family.children[0];
 
@@ -30,10 +27,9 @@ const getConnectors = (family: Family) => (
     );
 
     // from child to parent(s)
-    connectors.push({ points: [cX, mY, cX, mY + HALF_SIZE] });
-
+    connectors.push([cX, mY, cX, mY + HALF_SIZE]);
     // horizontal between parent(s) and child
-    if (pX !== cX) connectors.push({ points: [Math.min(pX, cX), mY, Math.max(pX, cX), mY] });
+    if (pX !== cX) connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY]);
 
     return connectors;
   }
