@@ -1,67 +1,63 @@
+import { getParentsX, withType } from '../utils/family';
 import { getUnitX, nodeCount, nodeIds } from '../utils/units';
-import { withType } from '../utils/family';
-import { inAscOrder, max, min, withId } from '../utils';
-import { SIZE } from '../constants';
-import { Connector, Family, FamilyType } from '../types';
+import { inAscOrder, max, min, withId, withIds } from '../utils';
+import { HALF_SIZE, NODES_IN_COUPLE, SIZE } from '../constants';
+import { Connector, Family, FamilyType, Unit } from '../types';
 
-// TODO refactor
-export const children = (families: Family[]): Connector[] => {
-  const connectors: Connector[] = [];
+export const children = (families: readonly Family[]): readonly Connector[] => (
+  families
+    .filter(withType(FamilyType.root, FamilyType.child))
+    .reduce<Connector[]>((connectors, family) => {
+      const parent: Unit | undefined = family.parents[0];
 
-  families.filter(withType(FamilyType.root, FamilyType.child)).forEach(family => {
-    let pX = 0;
-    const mY = family.Y + (family.parents.length ? SIZE : 0);
-
-    if (family.parents.length === 1) {
-      const pUnit = family.parents[0];
-      pX = getUnitX(family, pUnit) + nodeCount(pUnit); // TODO
+      const pX = getParentsX(family, parent);
+      const mY = family.Y + (parent ? SIZE : 0);
 
       // from parent(s) to child
-      if (pUnit.nodes.every(node => !!node.children.length)) {
-        const pY = family.Y + 1;
+      if (parent && parent.nodes.every(node => !!node.children.length)) {
+        const pY = family.Y + HALF_SIZE;
         connectors.push([pX, pY, pX, mY]);
       }
-    }
 
-    const parentIds = family.parents.map(nodeIds).flat();
+      const parentIds = family.parents.map(nodeIds).flat();
+      const positions: number[] = [];
 
-    const cXs: number[] = [];
+      family.children.forEach(unit => {
+        const left = getUnitX(family, unit) + HALF_SIZE;
 
-    family.children.forEach(cUnit => {
-      const cX = getUnitX(family, cUnit) + 1;
+        // from child to parent(s)
+        unit.nodes.forEach((node, index) => {
+          if (node.parents.some(withIds(parentIds))) {
+            const nX = left + (index * SIZE);
+            positions.push(nX);
+            connectors.push([nX, mY, nX, mY + HALF_SIZE]);
+          }
+        });
 
-      // from child to parent(s)
-      cUnit.nodes.forEach((node, index) => {
-        if (node.parents.find(rel => parentIds.indexOf(rel.id) !== -1)) {
-          const nX = cX + (index * 2);
-          cXs.push(nX);
-          connectors.push([nX, mY, nX, mY + 1]);
+        // between child and child's spouse
+        if (nodeCount(unit) === NODES_IN_COUPLE) {
+          connectors.push([left, mY + HALF_SIZE, left + SIZE, mY + HALF_SIZE]);
+        }
+
+        // between child and child's side spouse
+        else if (nodeCount(unit) === 1 && unit.nodes[0].spouses.length) {
+          family.children.forEach(nUnit => {
+            if (nUnit.nodes.some(withId(unit.nodes[0].spouses[0].id))) {
+              const xX = [left, getUnitX(family, nUnit) + HALF_SIZE].sort(inAscOrder);
+              connectors.push([xX[0], mY + HALF_SIZE, xX[1], mY + HALF_SIZE]);
+            }
+          });
         }
       });
 
-      // between child and child's spouse
-      if (nodeCount(cUnit) === 2) {
-        connectors.push([cX, mY + 1, cX + 2, mY + 1]);
-      }
-      else if (nodeCount(cUnit) === 1 && cUnit.nodes[0].spouses.length) {
-        family.children.forEach(nUnit => {
-          if (nUnit.nodes.findIndex(withId(cUnit.nodes[0].spouses[0].id)) !== -1) {
-            const xX = [cX, getUnitX(family, nUnit) + 1].sort(inAscOrder);
-            connectors.push([xX[0], mY + 1, xX[1], mY + 1]);
-          }
-        });
-      }
-    });
-
-    if (cXs.length > 1) {
       // horizontal above children
-      connectors.push([min(cXs), mY, max(cXs), mY]);
-    }
-    else if (cXs.length === 1 && pX !== cXs[0]) {
-      // horizontal between parent(s) and child
-      connectors.push([Math.min(pX, cXs[0]), mY, Math.max(pX, cXs[0]), mY]);
-    }
-  });
+      if (positions.length > 1)
+        connectors.push([min(positions), mY, max(positions), mY]);
 
-  return connectors;
-};
+      // horizontal between parent(s) and child
+      else if (positions.length === 1 && pX !== positions[0])
+        connectors.push([Math.min(pX, positions[0]), mY, Math.max(pX, positions[0]), mY]);
+
+      return connectors;
+    }, [])
+);

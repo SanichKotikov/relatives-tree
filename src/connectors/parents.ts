@@ -1,7 +1,7 @@
 import { prop, withIds } from '../utils';
 import { getUnitX, nodeCount } from '../utils/units';
-import { withType } from '../utils/family';
-import { HALF_SIZE, SIZE } from '../constants';
+import { getParentsX, withType } from '../utils/family';
+import { HALF_SIZE, NODES_IN_COUPLE, SIZE } from '../constants';
 import { Connector, Family, FamilyType, Unit } from '../types';
 
 const getChildIDs = (unit: Unit): readonly string[] => (
@@ -10,12 +10,12 @@ const getChildIDs = (unit: Unit): readonly string[] => (
 
 const calcConnectors = (family: Family) => (
   (connectors: Connector[], unit: Unit) => {
-    const pX = getUnitX(family, unit) + nodeCount(unit);
+    const pX = getParentsX(family, unit);
     const pY = family.Y + HALF_SIZE;
     const mY = family.Y + SIZE;
 
     // between parents
-    if (nodeCount(unit) === 2) connectors.push([pX - HALF_SIZE, pY, pX + HALF_SIZE, pY]);
+    if (nodeCount(unit) === NODES_IN_COUPLE) connectors.push([pX - HALF_SIZE, pY, pX + HALF_SIZE, pY]);
     // from parent(s) to child
     connectors.push([pX, pY, pX, mY]);
 

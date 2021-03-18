@@ -1,8 +1,7 @@
 import Store from '../store';
+import { NODES_IN_COUPLE } from '../constants';
 import { Node, Relation, RelType } from '../types';
 import { byGender, relToNode, withRelType } from './index';
-
-const NODES_IN_COUPLE = 2;
 
 type SpousesNodes = {
   left: readonly Node[];

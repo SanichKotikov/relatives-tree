@@ -6,6 +6,7 @@ import { setDefaultUnitShift } from '../utils/setDefaultUnitShift';
 import { prop, withRelType } from '../utils';
 import { newFamily } from '../utils/family';
 import { unitsToNodes } from '../utils/units';
+import { NODES_IN_COUPLE } from '../constants';
 import { Family, FamilyType, Node, RelType } from '../types';
 import { correctOverlaps } from './correctOverlaps';
 
@@ -39,7 +40,7 @@ export const createBloodFamilies = (store: Store): readonly Family[] => {
   const mainFamily = createFamily(store.root.parents.map(prop('id')), FamilyType.root, true);
   const parents = unitsToNodes(mainFamily.parents);
 
-  if (parents.length === 2) {
+  if (parents.length === NODES_IN_COUPLE) {
     const { left, right } = getSpouseNodesFunc(store)(parents);
 
     return [

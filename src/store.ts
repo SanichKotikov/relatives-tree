@@ -2,6 +2,7 @@ import { toMap, withId } from './utils';
 import { withType } from './utils/family';
 import { Family, FamilyType, Node } from './types';
 
+// TODO think about refactoring
 class Store {
 
   private nextId: number;

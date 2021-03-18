@@ -1,7 +1,7 @@
 import { SIZE } from '../constants';
 import { Family, FamilyType, Unit } from '../types';
 import { max } from './index';
-import { nodeCount, rightSide } from './units';
+import { getUnitX, nodeCount, rightSide } from './units';
 
 export const newFamily = (id: number, type: FamilyType, main = false): Family => ({
   id,
@@ -23,3 +23,7 @@ export const heightOf = (family: Family): number => [
 export const rightOf = (family: Family): number => family.X + widthOf(family);
 export const bottomOf = (family: Family) => family.Y + heightOf(family);
 export const unitNodesCount = (units: readonly Unit[]): number => units.reduce((acc, b) => acc + nodeCount(b), 0);
+
+export const getParentsX = (family: Family, unit: Unit | undefined): number => {
+  return unit ? getUnitX(family, unit) + nodeCount(unit) : 0;
+};

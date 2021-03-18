@@ -1,7 +1,7 @@
 import { inAscOrder, withId } from '../utils';
 import { getUnitX, nodeCount } from '../utils/units';
 import { withType } from '../utils/family';
-import { HALF_SIZE, SIZE } from '../constants';
+import { HALF_SIZE, NODES_IN_COUPLE, SIZE } from '../constants';
 import { Connector, Family, FamilyType, Unit } from '../types';
 
 const calcConnectors = (family: Family, families: readonly Family[]) => (
@@ -9,7 +9,7 @@ const calcConnectors = (family: Family, families: readonly Family[]) => (
     const pX = getUnitX(family, unit) + HALF_SIZE;
     const pY = family.Y + HALF_SIZE;
 
-    if (nodeCount(unit) === 2) {
+    if (nodeCount(unit) === NODES_IN_COUPLE) {
       connectors.push([pX, pY, pX + SIZE, pY]);
     }
     // TODO: update and refactor
