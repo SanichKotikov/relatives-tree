@@ -1,0 +1,125 @@
+[
+  {
+    "id": "user1",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "user5",
+        "type": "blood"
+      },
+      {
+        "id": "user6",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "user4",
+        "type": "blood"
+      }
+    ],
+    "spouses": [],
+    "children": [
+      {
+        "id": "user3",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "user2",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "user5",
+        "type": "married"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "user3",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "user1",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "user4",
+    "gender": "female",
+    "parents": [
+      {
+        "id": "user5",
+        "type": "blood"
+      },
+      {
+        "id": "user6",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "user1",
+        "type": "blood"
+      }
+    ],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "user5",
+    "gender": "male",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "user6",
+        "type": "divorced"
+      },
+      {
+        "id": "user2",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "user1",
+        "type": "blood"
+      },
+      {
+        "id": "user4",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "user6",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "user5",
+        "type": "divorced"
+      }
+    ],
+    "children": [
+      {
+        "id": "user1",
+        "type": "blood"
+      },
+      {
+        "id": "user4",
+        "type": "blood"
+      }
+    ]
+  }
+]

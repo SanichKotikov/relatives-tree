@@ -42,7 +42,7 @@ export const arrangeFamiliesFunc = (store: Store) => (
       arrangeParentsIn(nextFamily);
 
       if (/* is middle (root) family */ !nextFamily.pid)
-        arrangeMiddleFamilies(store.rootFamilies, nextFamily.id, rightOf(family));
+        arrangeMiddleFamilies(store.rootFamilies, nextFamily.id, rightOf(nextFamily));
 
       family = nextFamily;
     }

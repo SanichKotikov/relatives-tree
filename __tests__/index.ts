@@ -5,6 +5,7 @@ import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';
 import simple from '../samples/simple-family.json';
 import diff from '../samples/diff-parents.json';
+import divorced from '../samples/divorced-parents.json';
 import spouses from '../samples/several-spouses.json';
 import testTree1 from '../samples/test-tree-n1.json';
 import testTree2 from '../samples/test-tree-n2.json';
@@ -16,6 +17,7 @@ const emptyTree = calcTree(empty as any, { rootId: 'gRstruEr4' });
 const coupleTree = calcTree(couple as any, { rootId: 'jsyRsE5sr' });
 const simpleTree = calcTree(simple as any, { rootId: 'dyTpfj6sr' });
 const diffTree = calcTree(diff as any, { rootId: 'dyTpfj6st' });
+const divorcedTree = calcTree(divorced as any, { rootId: 'user4' });
 const spousesTree = calcTree(spouses as any, { rootId: 'js2RsE5sr' });
 const testTreeN1 = calcTree(testTree1 as any, { rootId: 'aeqW' });
 const testTreeN2 = calcTree(testTree2 as any, { rootId: 'uJK9' });
@@ -31,6 +33,7 @@ test('Canvas size', () => {
   expect(coupleTree.canvas).toEqual({ width: 4, height: 2 });
   expect(simpleTree.canvas).toEqual({ width: 4, height: 4 });
   expect(diffTree.canvas).toEqual({ width: 6, height: 4 });
+  expect(divorcedTree.canvas).toEqual({ width: 6, height: 6 });
   expect(spousesTree.canvas).toEqual({ width: 6, height: 2 });
   expect(testTreeN1.canvas).toEqual({ width: 16, height: 8 });
   expect(testTreeN2.canvas).toEqual({ width: 6, height: 4 });
@@ -58,6 +61,16 @@ test('Connectors', () => {
     [3, 1, 5, 1],
     [4, 1, 4, 2],
     [4, 2, 4, 3],
+  ]);
+  expect(divorcedTree.connectors).toEqual([
+    [1, 1, 3, 1],
+    [1, 1, 5, 1],
+    [2, 1, 2, 2],
+    [1, 2, 1, 3],
+    [3, 2, 3, 3],
+    [1, 2, 3, 2],
+    [1, 3, 1, 4],
+    [1, 4, 1, 5],
   ]);
   expect(spousesTree.connectors).toEqual([
     [1, 1, 3, 1],
@@ -266,6 +279,7 @@ test('Family size & position', () => {
   expect(convert(coupleTree.families)).toEqual(['1|0|0|4|4']);
   expect(convert(simpleTree.families)).toEqual(['1|0|1|3|2', '2|0|0|4|4']);
   expect(convert(diffTree.families)).toEqual(['2|0|0|2|2', '1|0|2|6|4']);
+  expect(convert(divorcedTree.families)).toEqual(['1|0|0|4|4', '2|0|4|6|2', '3|2|0|2|2']);
   expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
   expect(convert(testTreeN1.families)).toEqual(['1|0|0|15|15', '2|0|0|4|4', '3|0|8|16|8', '4|2|6|14|8', '5|4|4|8|4']);
   expect(convert(testTreeN2.families)).toEqual(['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
@@ -323,6 +337,14 @@ test('Node position', () => {
     'aoF9dn5Ew': '0|2',
     'dyTpfj6st': '2|3',
     'tdRwdtR54': '0|4',
+  });
+  expect(convert(divorcedTree.nodes)).toEqual({
+    'user1': '2|0',
+    'user2': '0|4',
+    'user3': '4|0',
+    'user4': '2|2',
+    'user5': '0|2',
+    'user6': '0|0',
   });
   expect(convert(spousesTree.nodes)).toEqual({
     'js2RsE5sr': '0|2',
