@@ -20,7 +20,7 @@ export const toMap = <T extends { id: any }>(items: readonly T[]): Map<T['id'], 
 );
 
 export const hasDiffParents = (node: Node): boolean => node.parents.map(prop('type')).filter(unique).length > 1;
-export const byGender = (target: Gender) => (a: Node, b: Node) => (b.gender !== target) ? -1 : 0;
+export const byGender = (target: Gender) => (a: Node, b: Node) => (b.gender !== target) ? -1 : 1;
 
 export const relToNode = (store: Store) => (rel: Relation) => store.getNode(rel.id);
 export const withRelType = (...types: readonly Relation['type'][]) => (item: Relation) => types.includes(item.type);
