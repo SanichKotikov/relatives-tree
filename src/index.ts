@@ -8,7 +8,7 @@ import { correctPositions } from './utils/correctPositions';
 import { getCanvasSize } from './utils/getCanvasSize';
 import { getExtendedNodes } from './utils/getExtendedNodes';
 import { pipe } from './utils';
-import { Node, Options, RelData } from './types';
+import type { Node, Options, RelData } from './types';
 
 const calcFamilies = pipe(
   inMiddleDirection,

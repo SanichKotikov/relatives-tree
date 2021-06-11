@@ -1,7 +1,7 @@
 import { parents } from './parents';
 import { middle } from './middle';
 import { children } from './children';
-import { Connector, Family } from '../types';
+import type { Connector, Family } from '../types';
 
 const toConnectors = (families: readonly Family[]) => (fn: Function) => fn(families);
 

@@ -1,4 +1,4 @@
-import Store from '../store';
+import type Store from '../store';
 import { byGender, prop } from '../utils';
 import { arrangeInOrder, newUnit } from '../utils/units';
 import { newFamily } from '../utils/family';

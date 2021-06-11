@@ -1,5 +1,5 @@
 import calcTree from '../../src';
-import { Node } from '../../src/types';
+import type { Node } from '../../src/types';
 import empty from '../../samples/empty.json';
 import couple from '../../samples/couple.json';
 import simple from '../../samples/simple-family.json';
@@ -40,5 +40,5 @@ function drawTree(el: HTMLElement, nodes: Node[], rootId: string) {
 }
 
 Object.keys(data).forEach(id => {
-  drawTree(content, data[id], id);
+  drawTree(content, data[id]!, id);
 });

@@ -1,5 +1,5 @@
 import calcTree from '../src';
-import { ExtNode, Family } from '../src/types';
+import type { ExtNode, Family } from '../src/types';
 import { rightOf, widthOf } from '../src/utils/family';
 import empty from '../samples/empty.json';
 import couple from '../samples/couple.json';

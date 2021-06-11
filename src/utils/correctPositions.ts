@@ -1,4 +1,4 @@
-import Store from '../store';
+import type Store from '../store';
 import { Family, FamilyType } from '../types';
 import { min, prop } from './index';
 import { withType } from './family';
@@ -9,8 +9,8 @@ const alignGenerations = (families: readonly Family[], root: Family): void => {
 
   if (parents) {
     const shift = (
-      getUnitX(parents, parents.children[0]) -
-      getUnitX(root, root.parents[0])
+      getUnitX(parents, parents.children[0]!) -
+      getUnitX(root, root.parents[0]!)
     );
 
     families

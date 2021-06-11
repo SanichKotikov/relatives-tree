@@ -1,24 +1,24 @@
-import Store from '../store';
+import type Store from '../store';
 import { correctUnitsShift, getUnitX, sameAs } from '../utils/units';
 import { rightOf } from '../utils/family';
 import { nextIndex, withId } from '../utils';
 import { arrangeParentsIn } from '../utils/arrangeParentsIn';
-import { Family } from '../types';
+import type { Family } from '../types';
 
 const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
-  const unit = family.parents[0];
+  const unit = family.parents[0]!;
   const index = nextFamily.children.findIndex(sameAs(unit));
 
   index === 0
-    ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index].pos
-    : nextFamily.children[index].pos = getUnitX(family, unit) - nextFamily.X;
+    ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index]!.pos
+    : nextFamily.children[index]!.pos = getUnitX(family, unit) - nextFamily.X;
 
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.children[nextIdx]) {
     correctUnitsShift(
       nextFamily.children.slice(nextIdx),
-      rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]),
+      rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]!),
     );
   }
 };
@@ -29,7 +29,7 @@ const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFr
 
   if (family) {
     const shift: number = startFrom - family.X;
-    for (let i = start; i < families.length; i++) families[i].X += shift;
+    for (let i = start; i < families.length; i++) families[i]!.X += shift;
   }
 };
 

@@ -1,6 +1,6 @@
-import Store from '../store';
+import type Store from '../store';
 import { nodeIds } from '../utils/units';
-import { Family, Unit } from '../types';
+import type { Family, Unit } from '../types';
 import { createFamilyFunc } from './create';
 import { updateFamilyFunc } from './update';
 import { arrangeFamiliesFunc } from './arrange';

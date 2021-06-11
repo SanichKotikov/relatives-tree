@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": ["esnext"],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "downlevelIteration": true,
-    "strict": true
-  }
-}

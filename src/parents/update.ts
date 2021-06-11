@@ -1,7 +1,7 @@
-import Store from '../store';
+import type Store from '../store';
 import { SIZE } from '../constants';
 import { getUnitX } from '../utils/units';
-import { Family, Unit } from '../types';
+import type { Family, Unit } from '../types';
 
 export const updateFamilyFunc = (store: Store) => (
   (family: Family, childUnit: Unit): void => {

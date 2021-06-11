@@ -1,27 +1,37 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
-    "target": "esnext",
+    "baseUrl": "src",
+    "target": "es2017",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "outDir": "lib",
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "downlevelIteration": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
     "sourceMap": true,
     "declaration": true,
     "removeComments": true,
-    "preserveConstEnums": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "noImplicitAny": true,
-    "noImplicitThis": true
+    "incremental": true,
+    "jsx": "react"
   },
   "include": [
-    "src/**/*"
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
   ]
 }

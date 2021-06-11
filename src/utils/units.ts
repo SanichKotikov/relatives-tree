@@ -1,6 +1,6 @@
 import { SIZE } from '../constants';
 import { prop } from './index';
-import { Family, Node, Unit } from '../types';
+import type { Family, Node, Unit } from '../types';
 
 export const newUnit = (
   fid: number,
@@ -23,7 +23,7 @@ export const unitsToNodes = (units: readonly Unit[]) => units.map(prop('nodes'))
 
 export const arrangeInOrder = (units: readonly Unit[]): void => {
   units.forEach((unit, idx, self) => (
-    unit.pos = idx === 0 ? 0 : rightSide(self[idx - 1])
+    unit.pos = idx === 0 ? 0 : rightSide(self[idx - 1]!)
   ));
 };
 

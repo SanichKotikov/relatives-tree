@@ -19,7 +19,7 @@ const calcConnectors = (family: Family) => (
     // from parent(s) to child
     connectors.push([pX, pY, pX, mY]);
 
-    const child = family.children[0];
+    const child = family.children[0]!;
 
     const cX = (
       getUnitX(family, child) +

@@ -1,7 +1,7 @@
 import { min, prop } from './index';
 import { arrangeParentsIn } from './arrangeParentsIn';
 import { arrangeInOrder, correctUnitsShift } from './units';
-import { Family } from '../types';
+import type { Family } from '../types';
 
 export const setDefaultUnitShift = (family: Family): void => {
   const units = [family.parents, family.children];

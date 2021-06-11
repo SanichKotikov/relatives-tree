@@ -1,4 +1,4 @@
-import { Family, Size } from '../types';
+import type { Family, Size } from '../types';
 import { max } from './index';
 import { bottomOf, rightOf } from './family';
 

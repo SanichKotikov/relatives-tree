@@ -1,5 +1,5 @@
 import { SIZE } from '../constants';
-import { Family, FamilyType, Unit } from '../types';
+import type { Family, FamilyType, Unit } from '../types';
 import { max } from './index';
 import { getUnitX, nodeCount, rightSide } from './units';
 

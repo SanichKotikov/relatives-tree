@@ -8,7 +8,7 @@ export const children = (families: readonly Family[]): readonly Connector[] => (
   families
     .filter(withType(FamilyType.root, FamilyType.child))
     .reduce<Connector[]>((connectors, family) => {
-      const parent: Unit | undefined = family.parents[0];
+      const parent: Unit | undefined = family.parents[0]!;
 
       const pX = getParentsX(family, parent);
       const mY = family.Y + (parent ? SIZE : 0);
@@ -40,11 +40,11 @@ export const children = (families: readonly Family[]): readonly Connector[] => (
         }
 
         // between child and child's side spouse
-        else if (nodeCount(unit) === 1 && unit.nodes[0].spouses.length) {
+        else if (nodeCount(unit) === 1 && unit.nodes[0]!.spouses.length) {
           family.children.forEach(nUnit => {
-            if (nUnit.nodes.some(withId(unit.nodes[0].spouses[0].id))) {
+            if (nUnit.nodes.some(withId(unit.nodes[0]!.spouses[0]!.id))) {
               const xX = [left, getUnitX(family, nUnit) + HALF_SIZE].sort(inAscOrder);
-              connectors.push([xX[0], mY + HALF_SIZE, xX[1], mY + HALF_SIZE]);
+              connectors.push([xX[0]!, mY + HALF_SIZE, xX[1]!, mY + HALF_SIZE]);
             }
           });
         }
@@ -56,7 +56,7 @@ export const children = (families: readonly Family[]): readonly Connector[] => (
 
       // horizontal between parent(s) and child
       else if (positions.length === 1 && pX !== positions[0])
-        connectors.push([Math.min(pX, positions[0]), mY, Math.max(pX, positions[0]), mY]);
+        connectors.push([Math.min(pX, positions[0]!), mY, Math.max(pX, positions[0]!), mY]);
 
       return connectors;
     }, [])

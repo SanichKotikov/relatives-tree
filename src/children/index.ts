@@ -1,4 +1,4 @@
-import Store from '../store';
+import type Store from '../store';
 import { withType } from '../utils/family';
 import { hasChildren, nodeIds } from '../utils/units';
 import { Family, FamilyType, Unit } from '../types';

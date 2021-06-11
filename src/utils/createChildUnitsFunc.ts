@@ -1,5 +1,5 @@
-import Store from '../store';
-import { Node, Unit } from '../types';
+import type Store from '../store';
+import type { Node, Unit } from '../types';
 import { getSpouseNodesFunc } from './getSpouseNodesFunc';
 import { newUnit } from './units';
 

@@ -1,4 +1,4 @@
-import Store from '../store';
+import type Store from '../store';
 import { createChildUnitsFunc } from '../utils/createChildUnitsFunc';
 import { createFamilyFunc } from '../children/create';
 import { getSpouseNodesFunc } from '../utils/getSpouseNodesFunc';

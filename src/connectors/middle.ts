@@ -13,14 +13,14 @@ const calcConnectors = (family: Family, families: readonly Family[]) => (
       connectors.push([pX, pY, pX + SIZE, pY]);
     }
     // TODO: update and refactor
-    else if (nodeCount(unit) === 1 && unit.nodes[0].spouses.length) {
+    else if (nodeCount(unit) === 1 && unit.nodes[0]!.spouses.length) {
       families
         .filter(item => item.id !== family.id)
         .forEach(other => {
           other.parents.forEach(parent => {
-            if (parent.nodes.some(withId(unit.nodes[0].spouses[0].id))) {
+            if (parent.nodes.some(withId(unit.nodes[0]!.spouses[0]!.id))) {
               const xX = [pX, getUnitX(other, parent) + HALF_SIZE].sort(inAscOrder);
-              connectors.push([xX[0], pY, xX[1], pY]);
+              connectors.push([xX[0]!, pY, xX[1]!, pY]);
             }
           });
         });

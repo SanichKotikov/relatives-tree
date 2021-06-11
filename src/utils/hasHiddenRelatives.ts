@@ -15,7 +15,7 @@ export const hasHiddenRelatives = (family: Family, node: Node): boolean => {
   }
 
   if (family.type !== FamilyType.parent && inUnits(family.children, node.id)) {
-    const parentIds = family.parents.length ? nodeIds(family.parents[0]) : [];
+    const parentIds = family.parents.length ? nodeIds(family.parents[0]!) : [];
 
     return (
       !node.parents.some(withIds(parentIds)) &&

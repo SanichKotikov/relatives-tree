@@ -1,5 +1,5 @@
-import Store from '../store';
-import { Gender, Node, Relation } from '../types';
+import type Store from '../store';
+import type { Gender, Node, Relation } from '../types';
 
 export const nextIndex = (index: number) => index + 1;
 export const prop = <T, K extends keyof T>(name: K) => (item: T): T[K] => item[name];
@@ -20,7 +20,7 @@ export const toMap = <T extends { id: any }>(items: readonly T[]): Map<T['id'], 
 );
 
 export const hasDiffParents = (node: Node): boolean => node.parents.map(prop('type')).filter(unique).length > 1;
-export const byGender = (target: Gender) => (a: Node, b: Node) => (b.gender !== target) ? -1 : 1;
+export const byGender = (target: Gender) => (_: Node, b: Node) => (b.gender !== target) ? -1 : 1;
 
 export const relToNode = (store: Store) => (rel: Relation) => store.getNode(rel.id);
 export const withRelType = (...types: readonly Relation['type'][]) => (item: Relation) => types.includes(item.type);

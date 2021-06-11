@@ -1,4 +1,4 @@
-import Store from '../store';
+import type Store from '../store';
 import { NODES_IN_COUPLE } from '../constants';
 import { Node, Relation, RelType } from '../types';
 import { byGender, relToNode, withRelType } from './index';
@@ -36,12 +36,12 @@ export const getSpouseNodesFunc = (store: Store) => {
     let middle: readonly Node[] = parents;
 
     if (middle.length !== NODES_IN_COUPLE)
-      middle = getCoupleNodes(store, middle[0]);
+      middle = getCoupleNodes(store, middle[0]!);
 
     const result: SpousesNodes = { left: [], middle, right: [] };
 
     if (middle.length === NODES_IN_COUPLE) {
-      const [first, second] = middle;
+      const [first, second] = middle as [Node, Node];
       result.left = first.spouses.filter(excludeRel(second)).map(toNode);
       result.right = second.spouses.filter(excludeRel(first)).map(toNode);
     }
