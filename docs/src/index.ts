@@ -6,6 +6,7 @@ import simple from '../../samples/simple-family.json';
 import diff from '../../samples/diff-parents.json';
 import divorced from '../../samples/divorced-parents.json';
 import spouses from '../../samples/several-spouses.json';
+import spouses2 from '../../samples/several-spouses-n2.json';
 import testTree1 from '../../samples/test-tree-n1.json';
 import testTree2 from '../../samples/test-tree-n2.json';
 import average from '../../samples/average-tree.json';
@@ -21,6 +22,7 @@ const data: { [key: string]: any[] } = {
   'dyTpfj6st': diff,
   'user4': divorced,
   'js2RsE5sr': spouses,
+  '957875050': spouses2,
   'aeqW': testTree1,
   'uJK9': testTree2,
   'kuVISwh7w': average,

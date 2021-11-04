@@ -5,7 +5,7 @@ import { nextIndex, withId } from '../utils';
 import { arrangeParentsIn } from '../utils/arrangeParentsIn';
 import type { Family } from '../types';
 
-const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
+const arrangeNextFamily = (family: Family, nextFamily: Family, right: number): void => {
   const unit = family.parents[0]!;
   const index = nextFamily.children.findIndex(sameAs(unit));
 
@@ -18,7 +18,7 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   if (nextFamily.children[nextIdx]) {
     correctUnitsShift(
       nextFamily.children.slice(nextIdx),
-      rightOf(family) - getUnitX(nextFamily, nextFamily.children[nextIdx]!),
+      right - getUnitX(nextFamily, nextFamily.children[nextIdx]!),
     );
   }
 };
@@ -35,10 +35,13 @@ const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFr
 
 export const arrangeFamiliesFunc = (store: Store) => (
   (family: Family): void => {
+    let right = 0;
+
     while (family.pid) {
+      right = Math.max(right, rightOf(family));
       const nextFamily = store.getFamily(family.pid);
 
-      arrangeNextFamily(family, nextFamily);
+      arrangeNextFamily(family, nextFamily, right);
       arrangeParentsIn(nextFamily);
 
       if (/* is middle (root) family */ !nextFamily.pid)

@@ -1,0 +1,330 @@
+[
+  {
+    "id": "1718183443",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "710441828",
+        "type": "blood"
+      },
+      {
+        "id": "754994760",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "999499005",
+        "type": "blood"
+      }
+    ],
+    "spouses": [
+      {
+        "id": "1059082765",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "1487133388",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "1059082765",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "1718183443",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "1487133388",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "1487133388",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "1718183443",
+        "type": "blood"
+      },
+      {
+        "id": "1059082765",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "999499005",
+    "gender": "female",
+    "parents": [
+      {
+        "id": "710441828",
+        "type": "blood"
+      },
+      {
+        "id": "754994760",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "1718183443",
+        "type": "blood"
+      }
+    ],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "710441828",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "957875050",
+        "type": "blood"
+      },
+      {
+        "id": "641724758",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "556766444",
+        "type": "half"
+      }
+    ],
+    "spouses": [
+      {
+        "id": "754994760",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "1718183443",
+        "type": "blood"
+      },
+      {
+        "id": "999499005",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "754994760",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "710441828",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "1718183443",
+        "type": "blood"
+      },
+      {
+        "id": "999499005",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "957875050",
+    "gender": "male",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "641724758",
+        "type": "divorced"
+      },
+      {
+        "id": "1530408275",
+        "type": "divorced"
+      },
+      {
+        "id": "26132359",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "710441828",
+        "type": "blood"
+      },
+      {
+        "id": "556766444",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "556766444",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "957875050",
+        "type": "blood"
+      },
+      {
+        "id": "1530408275",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "710441828",
+        "type": "half"
+      }
+    ],
+    "spouses": [
+      {
+        "id": "413226302",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "541055541",
+        "type": "blood"
+      },
+      {
+        "id": "53664179",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "413226302",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "556766444",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "541055541",
+        "type": "blood"
+      },
+      {
+        "id": "53664179",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "541055541",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "556766444",
+        "type": "blood"
+      },
+      {
+        "id": "413226302",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "53664179",
+        "type": "blood"
+      }
+    ],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "53664179",
+    "gender": "female",
+    "parents": [
+      {
+        "id": "556766444",
+        "type": "blood"
+      },
+      {
+        "id": "413226302",
+        "type": "blood"
+      }
+    ],
+    "siblings": [
+      {
+        "id": "541055541",
+        "type": "blood"
+      }
+    ],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "641724758",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "957875050",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "710441828",
+        "type": "blood"
+      }
+    ]
+  },
+  {
+    "id": "26132359",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "957875050",
+        "type": "married"
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "1530408275",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "957875050",
+        "type": "married"
+      }
+    ],
+    "children": [
+      {
+        "id": "556766444",
+        "type": "blood"
+      }
+    ]
+  }
+]

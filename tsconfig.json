@@ -20,12 +20,10 @@
     "noUncheckedIndexedAccess": true,
     "suppressImplicitAnyIndexErrors": true,
     "forceConsistentCasingInFileNames": true,
-    "importsNotUsedAsValues": "error",
-    "sourceMap": true,
+    "importsNotUsedAsValues": "remove",
+    "sourceMap": false,
     "declaration": true,
-    "removeComments": true,
-    "incremental": true,
-    "jsx": "react"
+    "removeComments": true
   },
   "include": [
     "src"

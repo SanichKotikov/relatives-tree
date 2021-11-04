@@ -7,6 +7,7 @@ import simple from '../samples/simple-family.json';
 import diff from '../samples/diff-parents.json';
 import divorced from '../samples/divorced-parents.json';
 import spouses from '../samples/several-spouses.json';
+import spouses2 from '../samples/several-spouses-n2.json';
 import testTree1 from '../samples/test-tree-n1.json';
 import testTree2 from '../samples/test-tree-n2.json';
 import average from '../samples/average-tree.json';
@@ -19,6 +20,7 @@ const simpleTree = calcTree(simple as any, { rootId: 'dyTpfj6sr' });
 const diffTree = calcTree(diff as any, { rootId: 'dyTpfj6st' });
 const divorcedTree = calcTree(divorced as any, { rootId: 'user4' });
 const spousesTree = calcTree(spouses as any, { rootId: 'js2RsE5sr' });
+const spousesTreeN2 = calcTree(spouses2 as any, { rootId: '957875050' });
 const testTreeN1 = calcTree(testTree1 as any, { rootId: 'aeqW' });
 const testTreeN2 = calcTree(testTree2 as any, { rootId: 'uJK9' });
 const average1 = calcTree(average as any, { rootId: 'kuVISwh7w' });
@@ -281,6 +283,15 @@ test('Family size & position', () => {
   expect(convert(diffTree.families)).toEqual(['2|0|0|2|2', '1|0|2|6|4']);
   expect(convert(divorcedTree.families)).toEqual(['1|0|0|4|4', '2|0|4|6|2', '3|2|0|2|2']);
   expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
+  expect(convert(spousesTreeN2.families)).toEqual([
+    '1|0|1|14|13',
+    '2|0|1|5|4',
+    '3|2|0|6|6',
+    '4|4|0|4|4',
+    '5|0|6|10|4',
+    '6|2|6|10|4',
+    '7|0|10|14|4',
+  ]);
   expect(convert(testTreeN1.families)).toEqual(['1|0|0|15|15', '2|0|0|4|4', '3|0|8|16|8', '4|2|6|14|8', '5|4|4|8|4']);
   expect(convert(testTreeN2.families)).toEqual(['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
   expect(convert(average1.families)).toEqual([

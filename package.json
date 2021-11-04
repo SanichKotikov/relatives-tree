@@ -1,18 +1,15 @@
 {
   "name": "relatives-tree",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "sideEffects": false,
   "scripts": {
     "benchmarks": "tsc --project ./benchmarks/tsconfig.json && node ./benchmarks/index.js",
-    "start": "parcel docs/index.html --open",
+    "start": "vite",
     "build": "tsc",
-    "build:info": "tsc --extendedDiagnostics",
     "size": "size-limit",
-    "size:why": "size-limit --why",
-    "test:dev": "jest --watchAll",
     "test": "jest"
   },
   "repository": {
@@ -38,14 +35,14 @@
     "connection"
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "4.12.0",
-    "@types/jest": "26.0.23",
+    "@size-limit/preset-small-lib": "5.0.5",
+    "@types/jest": "27.0.2",
     "benchmark": "2.1.4",
-    "jest": "27.0.4",
-    "parcel-bundler": "^1.12.5",
-    "size-limit": "4.12.0",
-    "ts-jest": "27.0.3",
-    "typescript": "4.3.2"
+    "jest": "27.3.1",
+    "size-limit": "5.0.5",
+    "ts-jest": "27.0.7",
+    "typescript": "4.4.4",
+    "vite": "2.6.13"
   },
   "size-limit": [
     {
