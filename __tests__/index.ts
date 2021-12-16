@@ -1,3 +1,6 @@
+import { test } from 'uvu';
+import { equal } from 'uvu/assert';
+
 import calcTree from '../src';
 import type { ExtNode, Family } from '../src/types';
 import { rightOf, widthOf } from '../src/utils/family';
@@ -31,40 +34,40 @@ const average5 = calcTree(average as any, { rootId: 'Fbc9iwnJl' });
 const average6 = calcTree(average as any, { rootId: '2DlrR0fK8' });
 
 test('Canvas size', () => {
-  expect(emptyTree.canvas).toEqual({ width: 2, height: 2 });
-  expect(coupleTree.canvas).toEqual({ width: 4, height: 2 });
-  expect(simpleTree.canvas).toEqual({ width: 4, height: 4 });
-  expect(diffTree.canvas).toEqual({ width: 6, height: 4 });
-  expect(divorcedTree.canvas).toEqual({ width: 6, height: 6 });
-  expect(spousesTree.canvas).toEqual({ width: 6, height: 2 });
-  expect(testTreeN1.canvas).toEqual({ width: 16, height: 8 });
-  expect(testTreeN2.canvas).toEqual({ width: 6, height: 4 });
-  expect(average1.canvas).toEqual({ width: 18, height: 12 });
-  expect(average2.canvas).toEqual({ width: 20, height: 10 });
-  expect(average3.canvas).toEqual({ width: 18, height: 12 });
-  expect(average4.canvas).toEqual({ width: 8, height: 6 });
-  expect(average5.canvas).toEqual({ width: 14, height: 10 });
-  expect(average6.canvas).toEqual({ width: 20, height: 10 });
+  equal(emptyTree.canvas, { width: 2, height: 2 });
+  equal(coupleTree.canvas, { width: 4, height: 2 });
+  equal(simpleTree.canvas, { width: 4, height: 4 });
+  equal(diffTree.canvas, { width: 6, height: 4 });
+  equal(divorcedTree.canvas, { width: 6, height: 6 });
+  equal(spousesTree.canvas, { width: 6, height: 2 });
+  equal(testTreeN1.canvas, { width: 16, height: 8 });
+  equal(testTreeN2.canvas, { width: 6, height: 4 });
+  equal(average1.canvas, { width: 18, height: 12 });
+  equal(average2.canvas, { width: 20, height: 10 });
+  equal(average3.canvas, { width: 18, height: 12 });
+  equal(average4.canvas, { width: 8, height: 6 });
+  equal(average5.canvas, { width: 14, height: 10 });
+  equal(average6.canvas, { width: 20, height: 10 });
 });
 
 test('Connectors', () => {
-  expect(emptyTree.connectors).toEqual([]);
-  expect(coupleTree.connectors).toEqual([
+  equal(emptyTree.connectors, []);
+  equal(coupleTree.connectors, [
     [1, 1, 3, 1],
   ]);
-  expect(simpleTree.connectors).toEqual([
+  equal(simpleTree.connectors, [
     [2, 1, 2, 2],
     [1, 2, 1, 3],
     [3, 2, 3, 3],
     [1, 2, 3, 2],
   ]);
-  expect(diffTree.connectors).toEqual([
+  equal(diffTree.connectors, [
     [1, 1, 3, 1],
     [3, 1, 5, 1],
     [4, 1, 4, 2],
     [4, 2, 4, 3],
   ]);
-  expect(divorcedTree.connectors).toEqual([
+  equal(divorcedTree.connectors, [
     [1, 1, 3, 1],
     [1, 1, 5, 1],
     [2, 1, 2, 2],
@@ -74,11 +77,11 @@ test('Connectors', () => {
     [1, 3, 1, 4],
     [1, 4, 1, 5],
   ]);
-  expect(spousesTree.connectors).toEqual([
+  equal(spousesTree.connectors, [
     [1, 1, 3, 1],
     [3, 1, 5, 1],
   ]);
-  expect(testTreeN1.connectors).toEqual([
+  equal(testTreeN1.connectors, [
     [2, 1, 11, 1],
     [11, 1, 13, 1],
     [2, 1, 2, 2],
@@ -101,13 +104,13 @@ test('Connectors', () => {
     [5, 7, 7, 7],
     [6, 6, 7, 6],
   ]);
-  expect(testTreeN2.connectors).toEqual([
+  equal(testTreeN2.connectors, [
     [1, 1, 3, 1],
     [3, 1, 5, 1],
     [1, 1, 1, 2],
     [1, 2, 1, 3],
   ]);
-  expect(average1.connectors).toEqual([
+  equal(average1.connectors, [
     [5, 3, 7, 3],
     [6, 3, 6, 4],
     [7, 4, 7, 5],
@@ -144,7 +147,7 @@ test('Connectors', () => {
     [10, 9, 10, 10],
     [10, 10, 10, 11],
   ]);
-  expect(average2.connectors).toEqual([
+  equal(average2.connectors, [
     [13, 1, 13, 2],
     [8, 2, 8, 3],
     [8, 3, 10, 3],
@@ -170,7 +173,7 @@ test('Connectors', () => {
     [10, 7, 10, 8],
     [10, 8, 10, 9],
   ]);
-  expect(average3.connectors).toEqual([
+  equal(average3.connectors, [
     [6, 3, 6, 4],
     [8, 4, 8, 5],
     [6, 4, 8, 4],
@@ -207,7 +210,7 @@ test('Connectors', () => {
     [10, 9, 10, 10],
     [10, 10, 10, 11],
   ]);
-  expect(average4.connectors).toEqual([
+  equal(average4.connectors, [
     [3, 1, 5, 1],
     [4, 1, 4, 2],
     [1, 2, 1, 3],
@@ -218,7 +221,7 @@ test('Connectors', () => {
     [4, 3, 4, 4],
     [4, 4, 4, 5],
   ]);
-  expect(average5.connectors).toEqual([
+  equal(average5.connectors, [
     [1, 5, 3, 5],
     [2, 5, 2, 6],
     [4, 6, 4, 7],
@@ -246,7 +249,7 @@ test('Connectors', () => {
     [5, 7, 5, 8],
     [5, 8, 5, 9],
   ]);
-  expect(average6.connectors).toEqual([
+  equal(average6.connectors, [
     [14, 1, 14, 2],
     [9, 2, 9, 3],
     [7, 3, 9, 3],
@@ -279,13 +282,13 @@ test('Family size & position', () => {
     return families.map(f => [f.id, f.Y, f.X, rightOf(f), widthOf(f)].join('|'));
   }
 
-  expect(convert(emptyTree.families)).toEqual(['1|0|0|2|2']);
-  expect(convert(coupleTree.families)).toEqual(['1|0|0|4|4']);
-  expect(convert(simpleTree.families)).toEqual(['1|0|1|3|2', '2|0|0|4|4']);
-  expect(convert(diffTree.families)).toEqual(['2|0|0|2|2', '1|0|2|6|4']);
-  expect(convert(divorcedTree.families)).toEqual(['1|0|0|4|4', '2|0|4|6|2', '3|2|0|2|2']);
-  expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
-  expect(convert(spousesTreeN2.families)).toEqual([
+  equal(convert(emptyTree.families), ['1|0|0|2|2']);
+  equal(convert(coupleTree.families), ['1|0|0|4|4']);
+  equal(convert(simpleTree.families), ['1|0|1|3|2', '2|0|0|4|4']);
+  equal(convert(diffTree.families), ['2|0|0|2|2', '1|0|2|6|4']);
+  equal(convert(divorcedTree.families), ['1|0|0|4|4', '2|0|4|6|2', '3|2|0|2|2']);
+  equal(convert(spousesTree.families), ['1|0|0|6|6']);
+  equal(convert(spousesTreeN2.families), [
     '1|0|2|14|12',
     '2|0|1|5|4',
     '3|2|0|6|6',
@@ -294,15 +297,15 @@ test('Family size & position', () => {
     '6|2|6|10|4',
     '7|0|10|14|4',
   ]);
-  expect(convert(testTreeN1.families)).toEqual([
+  equal(convert(testTreeN1.families), [
     '1|0|1|14|13',
     '2|0|0|4|4',
     '3|0|7|16|9',
     '4|2|5|14|9',
     '5|4|4|8|4',
   ]);
-  expect(convert(testTreeN2.families)).toEqual(['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
-  expect(convert(average1.families)).toEqual([
+  equal(convert(testTreeN2.families), ['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
+  equal(convert(average1.families), [
     '1|4|0|18|18',
     '2|2|4|12|8',
     '3|0|2|10|8',
@@ -310,8 +313,8 @@ test('Family size & position', () => {
     '5|6|6|14|8',
     '6|8|8|12|4',
   ]);
-  expect(convert(average2.families)).toEqual(['1|0|7|20|13', '2|2|0|18|18', '3|4|2|6|4', '4|4|6|14|8', '5|6|8|12|4']);
-  expect(convert(average3.families)).toEqual([
+  equal(convert(average2.families), ['1|0|7|20|13', '2|2|0|18|18', '3|4|2|6|4', '4|4|6|14|8', '5|6|8|12|4']);
+  equal(convert(average3.families), [
     '1|4|0|18|18',
     '2|2|5|13|8',
     '3|0|7|15|8',
@@ -319,9 +322,9 @@ test('Family size & position', () => {
     '5|6|6|14|8',
     '6|8|8|12|4',
   ]);
-  expect(convert(average4.families)).toEqual(['1|0|2|6|4', '2|0|0|8|8', '3|2|2|6|4']);
-  expect(convert(average5.families)).toEqual(['1|6|3|7|4', '2|4|0|10|10', '3|2|4|12|8', '4|0|6|14|8']);
-  expect(convert(average6.families)).toEqual([
+  equal(convert(average4.families), ['1|0|2|6|4', '2|0|0|8|8', '3|2|2|6|4']);
+  equal(convert(average5.families), ['1|6|3|7|4', '2|4|0|10|10', '3|2|4|12|8', '4|0|6|14|8']);
+  equal(convert(average6.families), [
     '1|0|13|15|2',
     '2|0|6|20|14',
     '3|2|0|18|18',
@@ -339,25 +342,25 @@ test('Node position', () => {
     }, {});
   }
 
-  expect(convert(emptyTree.nodes)).toEqual({
+  equal(convert(emptyTree.nodes), {
     'gRstruEr4': '0|0',
   });
-  expect(convert(coupleTree.nodes)).toEqual({
+  equal(convert(coupleTree.nodes), {
     'jsyRsE5sr': '0|0',
     'pdRwdtR54': '0|2',
   });
-  expect(convert(simpleTree.nodes)).toEqual({
+  equal(convert(simpleTree.nodes), {
     'dyTpfj6sr': '0|1',
     'ahfR5lR2s': '2|0',
     'aoF9dn5Ew': '2|2',
   });
-  expect(convert(diffTree.nodes)).toEqual({
+  equal(convert(diffTree.nodes), {
     'ahfR5lR2s': '0|0',
     'aoF9dn5Ew': '0|2',
     'dyTpfj6st': '2|3',
     'tdRwdtR54': '0|4',
   });
-  expect(convert(divorcedTree.nodes)).toEqual({
+  equal(convert(divorcedTree.nodes), {
     'user1': '2|0',
     'user2': '0|4',
     'user3': '4|0',
@@ -365,12 +368,12 @@ test('Node position', () => {
     'user5': '0|2',
     'user6': '0|0',
   });
-  expect(convert(spousesTree.nodes)).toEqual({
+  equal(convert(spousesTree.nodes), {
     'js2RsE5sr': '0|2',
     'pdRwdtR54': '0|4',
     'tdRwdtR54': '0|0',
   });
-  expect(convert(testTreeN1.nodes)).toEqual({
+  equal(convert(testTreeN1.nodes), {
     '13Uo': '4|12',
     '5ejU': '2|7',
     'MEHb': '4|8',
@@ -386,8 +389,8 @@ test('Node position', () => {
     'wIFr': '0|12',
     'yZwk': '6|6',
   });
-  expect(convert(testTreeN2.nodes)).toEqual({ aCZW: '0|0', uJK9: '0|2', wIFr: '0|4', s9HE: '2|0' });
-  expect(convert(average1.nodes)).toEqual({
+  equal(convert(testTreeN2.nodes), { aCZW: '0|0', uJK9: '0|2', wIFr: '0|4', s9HE: '2|0' });
+  equal(convert(average1.nodes), {
     '011jVS4rb': '4|6',
     'PXACjDxmR': '4|8',
     'HkqEDLvxE': '6|0',
@@ -411,7 +414,7 @@ test('Node position', () => {
     '6hNxNY1-I': '8|12',
     'Z0QA5oKks': '10|9',
   });
-  expect(convert(average2.nodes)).toEqual({
+  equal(convert(average2.nodes), {
     '2DlrR0fK8': '0|12',
     'PXACjDxmR': '2|7',
     '011jVS4rb': '2|9',
@@ -430,7 +433,7 @@ test('Node position', () => {
     '6hNxNY1-I': '6|12',
     'Z0QA5oKks': '8|9',
   });
-  expect(convert(average3.nodes)).toEqual({
+  equal(convert(average3.nodes), {
     'PXACjDxmR': '4|7',
     '011jVS4rb': '4|9',
     'HkqEDLvxE': '6|0',
@@ -454,7 +457,7 @@ test('Node position', () => {
     '6hNxNY1-I': '8|12',
     'Z0QA5oKks': '10|9',
   });
-  expect(convert(average4.nodes)).toEqual({
+  equal(convert(average4.nodes), {
     'RZbkr5vAi': '0|2',
     'UIEjvLJMd': '0|4',
     '6_OTJvbvS': '2|0',
@@ -463,7 +466,7 @@ test('Node position', () => {
     '6hNxNY1-I': '2|6',
     'Z0QA5oKks': '4|3',
   });
-  expect(convert(average5.nodes)).toEqual({
+  equal(convert(average5.nodes), {
     'vRSjcaDGj': '6|3',
     'kuVISwh7w': '6|5',
     'Fbc9iwnJl': '8|4',
@@ -479,7 +482,7 @@ test('Node position', () => {
     'T54Km7uOC': '0|10',
     'TsyAkbF89': '0|12',
   });
-  expect(convert(average6.nodes)).toEqual({
+  equal(convert(average6.nodes), {
     '2DlrR0fK8': '0|13',
     '011jVS4rb': '2|6',
     'PXACjDxmR': '2|8',
@@ -508,29 +511,29 @@ test('Node sub tree', () => {
     }, {});
   }
 
-  expect(convert(emptyTree.nodes)).toEqual({
+  equal(convert(emptyTree.nodes), {
     'gRstruEr4': false,
   });
-  expect(convert(coupleTree.nodes)).toEqual({
+  equal(convert(coupleTree.nodes), {
     'jsyRsE5sr': false,
     'pdRwdtR54': false,
   });
-  expect(convert(simpleTree.nodes)).toEqual({
+  equal(convert(simpleTree.nodes), {
     'dyTpfj6sr': false,
     'ahfR5lR2s': false,
     'aoF9dn5Ew': false,
   });
-  expect(convert(simpleTree.nodes)).toEqual({
+  equal(convert(simpleTree.nodes), {
     'ahfR5lR2s': false,
     'aoF9dn5Ew': false,
     'dyTpfj6sr': false,
   });
-  expect(convert(spousesTree.nodes)).toEqual({
+  equal(convert(spousesTree.nodes), {
     'js2RsE5sr': false,
     'pdRwdtR54': false,
     'tdRwdtR54': false,
   });
-  expect(convert(testTreeN1.nodes)).toEqual({
+  equal(convert(testTreeN1.nodes), {
     aCZW: false,
     aeqW: false,
     wIFr: false,
@@ -546,8 +549,8 @@ test('Node sub tree', () => {
     _qhe: false,
     yZwk: false,
   });
-  expect(convert(testTreeN2.nodes)).toEqual({ aCZW: false, uJK9: false, wIFr: false, s9HE: false });
-  expect(convert(average1.nodes)).toEqual({
+  equal(convert(testTreeN2.nodes), { aCZW: false, uJK9: false, wIFr: false, s9HE: false });
+  equal(convert(average1.nodes), {
     '011jVS4rb': false,
     'PXACjDxmR': false,
     'HkqEDLvxE': false,
@@ -571,7 +574,7 @@ test('Node sub tree', () => {
     '6hNxNY1-I': false,
     'Z0QA5oKks': false,
   });
-  expect(convert(average2.nodes)).toEqual({
+  equal(convert(average2.nodes), {
     '2DlrR0fK8': false,
     'PXACjDxmR': false,
     '011jVS4rb': true,
@@ -590,7 +593,7 @@ test('Node sub tree', () => {
     '6hNxNY1-I': false,
     'Z0QA5oKks': false,
   });
-  expect(convert(average3.nodes)).toEqual({
+  equal(convert(average3.nodes), {
     'PXACjDxmR': false,
     '011jVS4rb': false,
     'HkqEDLvxE': false,
@@ -614,7 +617,7 @@ test('Node sub tree', () => {
     '6hNxNY1-I': false,
     'Z0QA5oKks': false,
   });
-  expect(convert(average4.nodes)).toEqual({
+  equal(convert(average4.nodes), {
     'RZbkr5vAi': false,
     'UIEjvLJMd': true,
     '6_OTJvbvS': false,
@@ -623,7 +626,7 @@ test('Node sub tree', () => {
     '6hNxNY1-I': false,
     'Z0QA5oKks': false,
   });
-  expect(convert(average5.nodes)).toEqual({
+  equal(convert(average5.nodes), {
     'vRSjcaDGj': false,
     'kuVISwh7w': false,
     'Fbc9iwnJl': false,
@@ -639,7 +642,7 @@ test('Node sub tree', () => {
     'T54Km7uOC': false,
     'TsyAkbF89': false,
   });
-  expect(convert(average6.nodes)).toEqual({
+  equal(convert(average6.nodes), {
     '2DlrR0fK8': false,
     '011jVS4rb': true,
     'PXACjDxmR': false,
@@ -659,3 +662,5 @@ test('Node sub tree', () => {
     'Z0QA5oKks': false,
   });
 });
+
+test.run();
