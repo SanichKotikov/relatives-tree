@@ -17,14 +17,14 @@ const middle = (values: readonly number[]): number => {
 };
 
 export const arrangeParentsIn = (family: Family): void => {
-  const unit = family.parents[0];
+  if (!family.parents.length || family.children.length <= 1) return;
 
-  if (unit) {
+  family.parents.forEach(unit => {
     const ids = unit.nodes[0]!.children.map(prop('id'));
 
     unit.pos = Math.floor(
       middle(calcShifts(family.children, ids)) -
       (unitNodesCount(family.parents) - 1),
     );
-  }
+  });
 };

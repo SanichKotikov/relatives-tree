@@ -1,11 +1,12 @@
 # relatives-tree
 
-A tiny library (~3.25 KB gz) for calculating specific JSON data to family tree nodes and connectors.
+A tiny library (~3.28 KB gz) for calculating specific JSON data to family tree nodes and connectors.
 
 🖥 [Here is a demo](https://sanichkotikov.github.io/react-family-tree-example/) app with React rendering.
 
 ```js
 import calcTree from 'relatives-tree';
+
 const tree = calcTree(json, { rootId });
 ```
 

@@ -79,25 +79,27 @@ test('Connectors', () => {
     [3, 1, 5, 1],
   ]);
   expect(testTreeN1.connectors).toEqual([
-    [1, 1, 12, 1],
-    [12, 1, 14, 1],
-    [1, 1, 1, 2],
+    [2, 1, 11, 1],
+    [11, 1, 13, 1],
+    [2, 1, 2, 2],
     [1, 2, 1, 3],
     [1, 3, 3, 3],
-    [13, 1, 13, 2],
-    [11, 2, 11, 3],
-    [9, 3, 11, 3],
+    [1, 2, 2, 2],
+    [12, 1, 12, 2],
+    [10, 2, 10, 3],
+    [8, 3, 10, 3],
     [15, 2, 15, 3],
-    [11, 2, 15, 2],
-    [10, 3, 10, 4],
-    [7, 4, 7, 5],
+    [10, 2, 15, 2],
+    [9, 3, 9, 4],
+    [6, 4, 6, 5],
     [9, 4, 9, 5],
     [11, 4, 11, 5],
     [13, 4, 13, 5],
-    [7, 4, 13, 4],
-    [7, 5, 7, 6],
+    [6, 4, 13, 4],
+    [6, 5, 6, 6],
     [7, 6, 7, 7],
     [5, 7, 7, 7],
+    [6, 6, 7, 6],
   ]);
   expect(testTreeN2.connectors).toEqual([
     [1, 1, 3, 1],
@@ -284,7 +286,7 @@ test('Family size & position', () => {
   expect(convert(divorcedTree.families)).toEqual(['1|0|0|4|4', '2|0|4|6|2', '3|2|0|2|2']);
   expect(convert(spousesTree.families)).toEqual(['1|0|0|6|6']);
   expect(convert(spousesTreeN2.families)).toEqual([
-    '1|0|1|14|13',
+    '1|0|2|14|12',
     '2|0|1|5|4',
     '3|2|0|6|6',
     '4|4|0|4|4',
@@ -292,7 +294,13 @@ test('Family size & position', () => {
     '6|2|6|10|4',
     '7|0|10|14|4',
   ]);
-  expect(convert(testTreeN1.families)).toEqual(['1|0|0|15|15', '2|0|0|4|4', '3|0|8|16|8', '4|2|6|14|8', '5|4|4|8|4']);
+  expect(convert(testTreeN1.families)).toEqual([
+    '1|0|1|14|13',
+    '2|0|0|4|4',
+    '3|0|7|16|9',
+    '4|2|5|14|9',
+    '5|4|4|8|4',
+  ]);
   expect(convert(testTreeN2.families)).toEqual(['1|0|0|6|6', '2|0|0|2|2', '3|0|2|6|4']);
   expect(convert(average1.families)).toEqual([
     '1|4|0|18|18',
@@ -363,20 +371,20 @@ test('Node position', () => {
     'tdRwdtR54': '0|0',
   });
   expect(convert(testTreeN1.nodes)).toEqual({
-    aCZW: '0|0',
-    aeqW: '0|11',
-    wIFr: '0|13',
-    s9HE: '2|0',
-    l8un: '2|2',
-    '5ejU': '2|8',
-    YzLf: '2|10',
-    uJK9: '2|14',
-    c3EI: '4|6',
-    MEHb: '4|8',
-    lhDs: '4|10',
     '13Uo': '4|12',
-    _qhe: '6|4',
-    yZwk: '6|6',
+    '5ejU': '2|7',
+    'MEHb': '4|8',
+    'YzLf': '2|9',
+    '_qhe': '6|4',
+    'aCZW': '0|1',
+    'aeqW': '0|10',
+    'c3EI': '4|5',
+    'l8un': '2|2',
+    'lhDs': '4|10',
+    's9HE': '2|0',
+    'uJK9': '2|14',
+    'wIFr': '0|12',
+    'yZwk': '6|6',
   });
   expect(convert(testTreeN2.nodes)).toEqual({ aCZW: '0|0', uJK9: '0|2', wIFr: '0|4', s9HE: '2|0' });
   expect(convert(average1.nodes)).toEqual({
