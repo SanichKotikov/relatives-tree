@@ -26,7 +26,7 @@ export const inParentDirection = (store: Store): Store => {
     arrangeFamily(family);
 
     store.families.set(family.id, family);
-    stack = stack.concat(getParentUnitsWithParents(family));
+    stack = stack.concat(getParentUnitsWithParents(family).reverse());
   }
 
   return store;

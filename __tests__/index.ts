@@ -13,6 +13,8 @@ import spouses from '../samples/several-spouses.json';
 import spouses2 from '../samples/several-spouses-n2.json';
 import testTree1 from '../samples/test-tree-n1.json';
 import testTree2 from '../samples/test-tree-n2.json';
+import testTree3 from '../samples/test-tree-n3.json';
+import testTree4 from '../samples/test-tree-n4.json';
 import average from '../samples/average-tree.json';
 
 type ResultObj = { [id: string]: boolean | string };
@@ -26,6 +28,8 @@ const spousesTree = calcTree(spouses as any, { rootId: 'js2RsE5sr' });
 const spousesTreeN2 = calcTree(spouses2 as any, { rootId: '957875050' });
 const testTreeN1 = calcTree(testTree1 as any, { rootId: 'aeqW' });
 const testTreeN2 = calcTree(testTree2 as any, { rootId: 'uJK9' });
+const testTreeN3 = calcTree(testTree3 as any, { rootId: '1' });
+const testTreeN4 = calcTree(testTree4 as any, { rootId: '1' });
 const average1 = calcTree(average as any, { rootId: 'kuVISwh7w' });
 const average2 = calcTree(average as any, { rootId: 'PXACjDxmR' });
 const average3 = calcTree(average as any, { rootId: 'UIEjvLJMd' });
@@ -390,6 +394,30 @@ test('Node position', () => {
     'yZwk': '6|6',
   });
   equal(convert(testTreeN2.nodes), { aCZW: '0|0', uJK9: '0|2', wIFr: '0|4', s9HE: '2|0' });
+  equal(
+    convert(testTreeN3.nodes),
+    {
+      '1': '6|7',
+      '2': '4|8',
+      '3': '4|6',
+      '4': '2|12',
+      '5': '2|10',
+      '6': '2|2',
+      '7': '2|4',
+      '8': '0|8',
+      '9': '0|10',
+      '10': '0|12',
+      '11': '0|14',
+      '12': '0|0',
+      '13': '0|2',
+      '14': '0|6',
+      '15': '0|4',
+    },
+  );
+  equal(
+    convert(testTreeN4.nodes),
+    { '1': '6|2', '2': '4|1', '3': '4|3', '4': '2|0', '5': '2|4', '6': '0|0', '7': '0|2', '8': '0|4' },
+  );
   equal(convert(average1.nodes), {
     '011jVS4rb': '4|6',
     'PXACjDxmR': '4|8',

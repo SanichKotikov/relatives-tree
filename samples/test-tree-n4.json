@@ -1,0 +1,154 @@
+[
+  {
+    "id": "1",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "2",
+        "type": "blood"
+      },
+      {
+        "id": "3",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [],
+    "children": []
+  },
+  {
+    "id": "2",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "4",
+        "type": "blood"
+      }
+    ],
+    "children": [
+      {
+        "id": "1",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "3",
+        "type": "married"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "gender": "female",
+    "parents": [
+      {
+        "id": "5",
+        "type": "blood"
+      }
+    ],
+    "children": [
+      {
+        "id": "1",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "2",
+        "type": "married"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "6",
+        "type": "blood"
+      },
+      {
+        "id": "7",
+        "type": "blood"
+      }
+    ],
+    "children": [
+      {
+        "id": "2",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": []
+  },
+  {
+    "id": "5",
+    "gender": "male",
+    "parents": [
+      {
+        "id": "8",
+        "type": "blood"
+      }
+    ],
+    "children": [
+      {
+        "id": "3",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": []
+  },
+  {
+    "id": "6",
+    "gender": "male",
+    "parents": [],
+    "children": [
+      {
+        "id": "4",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "7",
+        "type": "married"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "gender": "female",
+    "parents": [],
+    "children": [
+      {
+        "id": "4",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "6",
+        "type": "married"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "gender": "male",
+    "parents": [],
+    "children": [
+      {
+        "id": "5",
+        "type": "blood"
+      }
+    ],
+    "siblings": [],
+    "spouses": []
+  }
+]
