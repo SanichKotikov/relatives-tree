@@ -28,7 +28,7 @@ const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFr
   const family: Family | undefined = families[start];
 
   if (family) {
-    const shift: number = startFrom - family.X;
+    const shift: number = startFrom - family.X + 1;
     for (let i = start; i < families.length; i++) families[i]!.X += shift;
   }
 };
