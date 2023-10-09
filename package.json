@@ -37,6 +37,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "9.0.0",
     "benchmark": "2.1.4",
+    "prettier": "3.0.3",
     "size-limit": "9.0.0",
     "tsm": "2.3.0",
     "typescript": "5.2.2",
