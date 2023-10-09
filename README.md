@@ -18,4 +18,8 @@ The nodes & the connectors are simple JS objects, so you can use any rendering l
 🛠️ [React example](https://github.com/SanichKotikov/react-family-tree) (react-family-tree source code)   
 🛠️ [Solid example](https://github.com/SanichKotikov/solid-family-tree-example)
 
-📝 [JSON data examples](/samples)
+📝 [JSON data examples](/samples).
+
+## Contributing
+
+Please read [this documentation](https://github.com/SanichKotikov/contributing) before contributing.
