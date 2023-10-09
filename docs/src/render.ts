@@ -13,7 +13,7 @@ interface IRenderOptions {
 }
 
 function getRandomColor() {
-  return '#' + ((1 << 24) * Math.random() | 0).toString(16);
+  return '#' + (((1 << 24) * Math.random()) | 0).toString(16);
 }
 
 function setupCanvas(canvas: HTMLCanvasElement, size: Size) {
@@ -56,7 +56,7 @@ export function draw(
   ctx.font = `${FONT_SIZE}px/1 serif`;
 
   if (options.debug) {
-    tree.families.forEach(family => {
+    tree.families.forEach((family) => {
       const x = family.X * X;
       const y = family.Y * X;
       const color = getRandomColor();
@@ -72,26 +72,21 @@ export function draw(
       ctx.fillText(family.id.toString(10), x + uP, y + FONT_SIZE + uP);
 
       if (family.type === 'root' || family.type === 'parent') {
-        family.parents.forEach(unit => {
+        family.parents.forEach((unit) => {
           ctx.beginPath();
-          ctx.rect(
-            (family.X + unit.pos) * X + uP,
-            y + uP,
-            ((unit.nodes.length * SIZE) * X) - (uP * 2),
-            (X * SIZE) - (uP * 2),
-          );
+          ctx.rect((family.X + unit.pos) * X + uP, y + uP, unit.nodes.length * SIZE * X - uP * 2, X * SIZE - uP * 2);
           ctx.stroke();
         });
       }
 
       if (family.type === 'root' || family.type === 'child') {
-        family.children.forEach(unit => {
+        family.children.forEach((unit) => {
           ctx.beginPath();
           ctx.rect(
             (family.X + unit.pos) * X + uP,
             y + uP + (family.parents.length ? X * SIZE : 0),
-            ((unit.nodes.length * SIZE) * X) - (uP * 2),
-            (X * SIZE) - (uP * 2),
+            unit.nodes.length * SIZE * X - uP * 2,
+            X * SIZE - uP * 2,
           );
           ctx.stroke();
         });
@@ -99,7 +94,7 @@ export function draw(
     });
   }
 
-  tree.nodes.forEach(node => {
+  tree.nodes.forEach((node) => {
     const { left, top } = node;
 
     const x = left * X;
@@ -120,7 +115,7 @@ export function draw(
 
     if (node.hasSubTree) {
       ctx.beginPath();
-      ctx.arc(x + (X * SIZE) - nP, y + nP, 4, 0, Math.PI * 2);
+      ctx.arc(x + X * SIZE - nP, y + nP, 4, 0, Math.PI * 2);
       ctx.fill();
     }
   });

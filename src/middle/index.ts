@@ -12,13 +12,13 @@ const arrangeFamilies = (families: readonly Family[]): void => {
 
 export const inMiddleDirection = (store: Store): Store => {
   const families = store.root.parents.length
-    ? (hasDiffParents(store.root))
+    ? hasDiffParents(store.root)
       ? createDiffTypeFamilies(store)
       : createBloodFamilies(store)
     : createFamilyWithoutParents(store);
 
   arrangeFamilies(families);
-  families.forEach(family => store.families.set(family.id, family));
+  families.forEach((family) => store.families.set(family.id, family));
 
   return store;
 };

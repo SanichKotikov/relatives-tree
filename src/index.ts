@@ -10,12 +10,7 @@ import { getExtendedNodes } from './utils/getExtendedNodes';
 import { pipe } from './utils';
 import type { Node, Options, RelData } from './types';
 
-const calcFamilies = pipe(
-  inMiddleDirection,
-  inParentDirection,
-  inChildDirection,
-  correctPositions,
-);
+const calcFamilies = pipe(inMiddleDirection, inParentDirection, inChildDirection, correctPositions);
 
 export default (nodes: readonly Node[], options: Options): RelData => {
   const store = new Store(nodes, options.rootId);
@@ -29,4 +24,4 @@ export default (nodes: readonly Node[], options: Options): RelData => {
     nodes: getExtendedNodes(families),
     connectors: connectors(families),
   };
-}
+};

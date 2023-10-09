@@ -10,16 +10,13 @@ const arrangeNextFamily = (family: Family, nextFamily: Family, right: number): v
   const index = nextFamily.children.findIndex(sameAs(unit));
 
   index === 0
-    ? nextFamily.X = getUnitX(family, unit) - nextFamily.children[index]!.pos
-    : nextFamily.children[index]!.pos = getUnitX(family, unit) - nextFamily.X;
+    ? (nextFamily.X = getUnitX(family, unit) - nextFamily.children[index]!.pos)
+    : (nextFamily.children[index]!.pos = getUnitX(family, unit) - nextFamily.X);
 
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.children[nextIdx]) {
-    correctUnitsShift(
-      nextFamily.children.slice(nextIdx),
-      right - getUnitX(nextFamily, nextFamily.children[nextIdx]!),
-    );
+    correctUnitsShift(nextFamily.children.slice(nextIdx), right - getUnitX(nextFamily, nextFamily.children[nextIdx]!));
   }
 };
 
@@ -33,7 +30,8 @@ const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFr
   }
 };
 
-export const arrangeFamiliesFunc = (store: Store) => (
+export const arrangeFamiliesFunc =
+  (store: Store) =>
   (family: Family): void => {
     let right = 0;
 
@@ -49,5 +47,4 @@ export const arrangeFamiliesFunc = (store: Store) => (
 
       family = nextFamily;
     }
-  }
-);
+  };

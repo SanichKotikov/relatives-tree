@@ -5,11 +5,8 @@ import { createFamilyFunc } from './create';
 import { updateFamilyFunc } from './update';
 import { arrangeFamiliesFunc } from './arrange';
 
-const getParentUnitsWithParents = (family: Family): Unit[] => (
-  family.parents.filter(unit => (
-    unit.nodes.some(node => !!node.parents.length)
-  ))
-);
+const getParentUnitsWithParents = (family: Family): Unit[] =>
+  family.parents.filter((unit) => unit.nodes.some((node) => !!node.parents.length));
 
 export const inParentDirection = (store: Store): Store => {
   const createFamily = createFamilyFunc(store);

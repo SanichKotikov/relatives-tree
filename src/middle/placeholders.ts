@@ -21,7 +21,7 @@ const createParents = (store: Store): readonly Relation[] => {
   father.spouses = [createRel(mother.id, RelType.married)];
   mother.spouses = [createRel(father.id, RelType.married)];
 
-  return [father, mother].map(node => {
+  return [father, mother].map((node) => {
     node.children = store.root.siblings.concat(createRel(store.root.id));
     store.nodes.set(node.id, node);
 
@@ -29,18 +29,14 @@ const createParents = (store: Store): readonly Relation[] => {
   });
 };
 
-const setParents = (parents: readonly Relation[]) => (
-  (node: Mutable<Node>) => node.parents = parents.slice()
-);
+const setParents = (parents: readonly Relation[]) => (node: Mutable<Node>) => (node.parents = parents.slice());
 
 export const placeholders = (store: Store): Store => {
   if (!store.root.parents.length) {
     const setParentsTo = setParents(createParents(store));
     setParentsTo(store.root);
 
-    store.root.siblings
-      .map(relToNode(store))
-      .forEach(setParentsTo);
+    store.root.siblings.map(relToNode(store)).forEach(setParentsTo);
   }
 
   return store;

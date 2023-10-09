@@ -10,8 +10,8 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   const index = nextFamily.parents.findIndex(sameAs(unit));
 
   index === 0 && nextFamily.parents[index]!.pos === 0
-    ? nextFamily.X = getUnitX(family, unit)
-    : nextFamily.parents[index]!.pos = getUnitX(family, unit) - nextFamily.X;
+    ? (nextFamily.X = getUnitX(family, unit))
+    : (nextFamily.parents[index]!.pos = getUnitX(family, unit) - nextFamily.X);
 
   const nextIdx: number = nextIndex(index);
 
@@ -23,7 +23,8 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   }
 };
 
-export const arrangeFamiliesFunc = (store: Store) => (
+export const arrangeFamiliesFunc =
+  (store: Store) =>
   (family: Family): void => {
     while (family.cid) {
       const nextFamily = store.getFamily(family.cid);
@@ -31,8 +32,7 @@ export const arrangeFamiliesFunc = (store: Store) => (
 
       if (/* is middle (root) family */ !nextFamily.cid) {
         unit.pos = (widthOf(family) - nodeCount(unit) * SIZE) / 2;
-      }
-      else {
+      } else {
         if (family.parents.length === 2 && unitNodesCount(family.parents) > 2)
           unit.pos = Math.floor(family.parents[1]!.pos / 2);
         arrangeNextFamily(family, nextFamily);
@@ -40,5 +40,4 @@ export const arrangeFamiliesFunc = (store: Store) => (
 
       family = nextFamily;
     }
-  }
-);
+  };

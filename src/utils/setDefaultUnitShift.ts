@@ -17,5 +17,5 @@ export const setDefaultUnitShift = (family: Family): void => {
   arrangeUnitsIn(family);
 
   const start = min(units.flat().map(prop('pos')));
-  if (start !== 0) units.forEach(items => correctUnitsShift(items, start * -1));
+  if (start !== 0) units.forEach((items) => correctUnitsShift(items, start * -1));
 };

@@ -7,11 +7,9 @@ type SpousesNodes = {
   left: readonly Node[];
   middle: readonly Node[];
   right: readonly Node[];
-}
+};
 
-const inDescOrderOfChildCount = (a: Node, b: Node): number => (
-  b.children.length - a.children.length
-);
+const inDescOrderOfChildCount = (a: Node, b: Node): number => b.children.length - a.children.length;
 
 const getSpouse = (store: Store, spouses: readonly Relation[]): Node | undefined => {
   const toNode = relToNode(store);
@@ -27,7 +25,10 @@ const getCoupleNodes = (store: Store, target: Node): readonly Node[] => {
     .sort(byGender(store.root.gender));
 };
 
-const excludeRel = (target: Node) => (rel: Relation): boolean => rel.id !== target.id;
+const excludeRel =
+  (target: Node) =>
+  (rel: Relation): boolean =>
+    rel.id !== target.id;
 
 export const getSpouseNodesFunc = (store: Store) => {
   const toNode = relToNode(store);
@@ -35,8 +36,7 @@ export const getSpouseNodesFunc = (store: Store) => {
   return (parents: readonly Node[]): SpousesNodes => {
     let middle: readonly Node[] = parents;
 
-    if (middle.length !== NODES_IN_COUPLE)
-      middle = getCoupleNodes(store, middle[0]!);
+    if (middle.length !== NODES_IN_COUPLE) middle = getCoupleNodes(store, middle[0]!);
 
     const result: SpousesNodes = { left: [], middle, right: [] };
 

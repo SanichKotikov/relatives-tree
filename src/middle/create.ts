@@ -17,9 +17,8 @@ export const createFamilyWithoutParents = (store: Store): readonly Family[] => {
   return [family];
 };
 
-const getParentIDs = (root: Node, type: RelType): readonly string[] => (
-  root.parents.filter(withRelType(type)).map(prop('id'))
-);
+const getParentIDs = (root: Node, type: RelType): readonly string[] =>
+  root.parents.filter(withRelType(type)).map(prop('id'));
 
 // Show: parents, my spouses, my siblings (for both parents)
 // Hide: another spouses for parents, half-siblings (for both parents)
@@ -44,9 +43,9 @@ export const createBloodFamilies = (store: Store): readonly Family[] => {
     const { left, right } = getSpouseNodesFunc(store)(parents);
 
     return [
-      left.map(node => createFamily([node.id])),
+      left.map((node) => createFamily([node.id])),
       mainFamily,
-      right.map(node => createFamily([node.id])),
+      right.map((node) => createFamily([node.id])),
     ].flat();
   }
 

@@ -17,7 +17,7 @@ import { draw } from './render';
 const content = document.getElementById('content');
 if (!content) throw new Error('There is no content element');
 
-const data: readonly { id: string, nodes: any[] }[] = [
+const data: readonly { id: string; nodes: any[] }[] = [
   { id: 'gRstruEr4', nodes: empty },
   { id: 'jsyRsE5sr', nodes: couple },
   { id: 'dyTpfj6sr', nodes: simple },
