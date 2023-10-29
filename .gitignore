@@ -1,6 +1,5 @@
 /node_modules
 /benchmarks/lib
-/lib
 /.cache
 /dist
 .idea
