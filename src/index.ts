@@ -17,6 +17,7 @@ export default (nodes: readonly Node[], options: Options): RelData => {
   if (options.placeholders) placeholders(store);
 
   const families = calcFamilies(store).familiesArray;
+  console.log('### families', families)
 
   return {
     families: families,
