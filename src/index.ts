@@ -18,12 +18,11 @@ export default (nodes: readonly Node[], options: Options): RelData => {
 
   const families = calcFamilies(store).familiesArray;
   console.log('### families', families)
-  console.log('### CRAP. THAT SUCKS!')
 
   return {
     families: families,
     canvas: getCanvasSize(families),
     nodes: getExtendedNodes(families),
-    connectors: connectors(families),
+    connectors: [] || connectors(families),
   };
 };
