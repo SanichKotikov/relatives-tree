@@ -9,7 +9,7 @@ const calcConnectors = (family: Family, families: readonly Family[]) => (connect
   const pY = family.Y + HALF_SIZE;
 
   if (nodeCount(unit) === NODES_IN_COUPLE) {
-    connectors.push([pX, pY, pX + SIZE, pY]);
+    // connectors.push([pX, pY, pX + SIZE, pY]);
   }
   // TODO: update and refactor
   else if (nodeCount(unit) === 1 && unit.nodes[0]!.spouses.length) {
