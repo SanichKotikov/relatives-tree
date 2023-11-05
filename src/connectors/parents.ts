@@ -23,7 +23,7 @@ const calcConnectors = (family: Family) => (connectors: Connector[], unit: Unit)
 
   // from child to parent(s)
   console.log('### parents 2', [cX, mY, cX, mY + HALF_SIZE])
-  connectors.push([cX, mY, cX, mY + HALF_SIZE]);
+  // connectors.push([cX, mY, cX, mY + HALF_SIZE]);
   // horizontal between parent(s) and child
   if (pX !== cX) {
     console.log('### parents 3', [cX, mY, cX, mY + HALF_SIZE])
