@@ -14,6 +14,7 @@ const calcConnectors = (family: Family) => (connectors: Connector[], unit: Unit)
   // between parents
   if (nodeCount(unit) === NODES_IN_COUPLE) connectors.push([pX - HALF_SIZE, pY, pX + HALF_SIZE, pY]);
   // from parent(s) to child
+  console.log('### parents 1', [pX, pY, pX, mY])
   connectors.push([pX, pY, pX, mY]);
 
   const child = family.children[0]!;
@@ -21,9 +22,13 @@ const calcConnectors = (family: Family) => (connectors: Connector[], unit: Unit)
   const cX = getUnitX(family, child) + child.nodes.findIndex(withIds(getChildIDs(unit))) * SIZE + HALF_SIZE;
 
   // from child to parent(s)
+  console.log('### parents 2', [cX, mY, cX, mY + HALF_SIZE])
   connectors.push([cX, mY, cX, mY + HALF_SIZE]);
   // horizontal between parent(s) and child
-  if (pX !== cX) connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY]);
+  if (pX !== cX) {
+    console.log('### parents 3', [cX, mY, cX, mY + HALF_SIZE])
+    connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY])
+  };
 
   return connectors;
 };
