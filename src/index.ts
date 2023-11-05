@@ -24,6 +24,6 @@ export default (nodes: readonly Node[], options: Options): RelData => {
     families: families,
     canvas: getCanvasSize(families),
     nodes: getExtendedNodes(families),
-    connectors: [],
+    connectors: connectors(families),
   };
 };
