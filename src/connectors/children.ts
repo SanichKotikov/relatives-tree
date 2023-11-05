@@ -14,8 +14,8 @@ export const children = (families: readonly Family[]): readonly Connector[] =>
     // from parent(s) to child
     if (parent && parent.nodes.every((node) => !!node.children.length)) {
       const pY = family.Y + HALF_SIZE;
-      console.log('### children 1', [pX, pY, pX, mY])
-      connectors.push([pX, pY, pX, mY]);
+      console.log('### children 1', [pX, pY, pX, mY, 'children1'])
+      connectors.push([pX, pY, pX, mY, 'children1']);
     }
 
     const parentIds = family.parents.map(nodeIds).flat();
@@ -29,15 +29,15 @@ export const children = (families: readonly Family[]): readonly Connector[] =>
         if (node.parents.some(withIds(parentIds))) {
           const nX = left + index * SIZE;
           positions.push(nX);
-          console.log('### children 2', [nX, mY, nX, mY + HALF_SIZE])
-          connectors.push([nX, mY, nX, mY + HALF_SIZE]);
+          console.log('### children 2', [nX, mY, nX, mY + HALF_SIZE, 'children2'])
+          connectors.push([nX, mY, nX, mY + HALF_SIZE, 'children2']);
         }
       });
 
       // between child and child's spouse
       if (nodeCount(unit) === NODES_IN_COUPLE) {
-        console.log('### children 3', [left, mY + HALF_SIZE, left + SIZE, mY + HALF_SIZE])
-        connectors.push([left, mY + HALF_SIZE, left + SIZE, mY + HALF_SIZE]);
+        console.log('### children 3', [left, mY + HALF_SIZE, left + SIZE, mY + HALF_SIZE, 'children3'])
+        connectors.push([left, mY + HALF_SIZE, left + SIZE, mY + HALF_SIZE, 'children3']);
       }
 
       // between child and child's side spouse
@@ -45,8 +45,8 @@ export const children = (families: readonly Family[]): readonly Connector[] =>
         family.children.forEach((nUnit) => {
           if (nUnit.nodes.some(withId(unit.nodes[0]!.spouses[0]!.id))) {
             const xX = [left, getUnitX(family, nUnit) + HALF_SIZE].sort(inAscOrder);
-            console.log('### children 4', [xX[0]!, mY + HALF_SIZE, xX[1]!, mY + HALF_SIZE])
-            connectors.push([xX[0]!, mY + HALF_SIZE, xX[1]!, mY + HALF_SIZE]);
+            console.log('### children 4', [xX[0]!, mY + HALF_SIZE, xX[1]!, mY + HALF_SIZE, 'children4'])
+            connectors.push([xX[0]!, mY + HALF_SIZE, xX[1]!, mY + HALF_SIZE, 'children4']);
           }
         });
       }
@@ -54,13 +54,13 @@ export const children = (families: readonly Family[]): readonly Connector[] =>
 
     // horizontal above children
     if (positions.length > 1) {
-      console.log('### children 5', [min(positions), mY, max(positions), mY])
-      connectors.push([min(positions), mY, max(positions), mY]);
+      console.log('### children 5', [min(positions), mY, max(positions), mY, 'children5'])
+      connectors.push([min(positions), mY, max(positions), mY, 'children5']);
     }
     // horizontal between parent(s) and child
     else if (positions.length === 1 && pX !== positions[0])
-      console.log('### children 6', [Math.min(pX, positions[0]!), mY, Math.max(pX, positions[0]!), mY]);
-      connectors.push([Math.min(pX, positions[0]!), mY, Math.max(pX, positions[0]!), mY]);
+      console.log('### children 6', [Math.min(pX, positions[0]!), mY, Math.max(pX, positions[0]!), mY, 'children6']);
+      connectors.push([Math.min(pX, positions[0]!), mY, Math.max(pX, positions[0]!), mY, 'children6']);
 
     return connectors;
   }, []);
