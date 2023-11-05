@@ -19,10 +19,9 @@ const calcConnectors = (family: Family) => (connectors: Connector[], unit: Unit)
   const child = family.children[0]!;
 
   const cX = getUnitX(family, child) + child.nodes.findIndex(withIds(getChildIDs(unit))) * SIZE + HALF_SIZE;
-  console.log(cX)
 
   // from child to parent(s)
-  // connectors.push([cX, mY, cX, mY + HALF_SIZE]);
+  connectors.push([cX, mY, cX, mY + HALF_SIZE]);
   // horizontal between parent(s) and child
   // if (pX !== cX) connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY]);
 
