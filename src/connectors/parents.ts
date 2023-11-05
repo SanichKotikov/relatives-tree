@@ -23,7 +23,7 @@ const calcConnectors = (family: Family) => (connectors: Connector[], unit: Unit)
   // from child to parent(s)
   connectors.push([cX, mY, cX, mY + HALF_SIZE]);
   // horizontal between parent(s) and child
-  // if (pX !== cX) connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY]);
+  if (pX !== cX) connectors.push([Math.min(pX, cX), mY, Math.max(pX, cX), mY]);
 
   return connectors;
 };
