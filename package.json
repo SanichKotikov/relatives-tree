@@ -1,6 +1,6 @@
 {
-  "name": "relatives-tree",
-  "version": "3.2.11",
+  "name": "dehimer-relatives-tree",
+  "version": "3.2.12",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SanichKotikov/relatives-tree.git"
+    "url": "git+https://github.com/dehimer/relatives-tree.git"
   },
   "bugs": {
-    "url": "https://github.com/SanichKotikov/relatives-tree/issues"
+    "url": "https://github.com/dehimer/relatives-tree/issues"
   },
-  "homepage": "https://github.com/SanichKotikov/relatives-tree",
-  "author": "Sanich Kotikov <sancho@cdrpro.ru> (https://sanichkotikov.github.io)",
+  "homepage": "https://github.com/dehimer/relatives-tree",
+  "author": "Denis Novikov <den-vse@yandex.ru> (https://dehimer.github.io)",
   "license": "MIT",
   "files": [
     "lib",
@@ -48,5 +48,10 @@
     {
       "path": "lib/index.js"
     }
-  ]
+  ],
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  }
 }
