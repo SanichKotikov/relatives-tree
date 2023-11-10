@@ -18,7 +18,7 @@ export default (nodes: readonly Node[], options: Options): RelData => {
 
   const families = calcFamilies(store).familiesArray;
   console.log('### families', families)
-  console.log('### connectors(families)', connectors(families))
+  console.log('### connectors with types', connectors(families))
 
   return {
     families: families,
