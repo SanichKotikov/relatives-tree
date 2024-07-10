@@ -1,6 +1,6 @@
 {
   "name": "relatives-tree",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Calculates families and nodes positions for rendering a family tree",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -35,14 +35,14 @@
     "connection"
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "9.0.0",
+    "@size-limit/preset-small-lib": "11.1.4",
     "benchmark": "2.1.4",
-    "prettier": "3.0.3",
-    "size-limit": "9.0.0",
+    "prettier": "3.3.2",
+    "size-limit": "11.1.4",
     "tsm": "2.3.0",
-    "typescript": "5.2.2",
+    "typescript": "5.5.3",
     "uvu": "0.5.6",
-    "vite": "4.4.11"
+    "vite": "5.3.3"
   },
   "size-limit": [
     {
