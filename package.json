@@ -10,7 +10,7 @@
     "start": "vite",
     "build": "tsc",
     "size": "size-limit",
-    "test": "uvu -r tsm __tests__"
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -39,10 +39,9 @@
     "benchmark": "2.1.4",
     "prettier": "3.5.3",
     "size-limit": "11.2.0",
-    "tsm": "2.3.0",
     "typescript": "5.8.2",
-    "uvu": "0.5.6",
-    "vite": "6.2.2"
+    "vite": "6.2.2",
+    "vitest": "3.0.8"
   },
   "size-limit": [
     {
