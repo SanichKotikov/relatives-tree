@@ -5,7 +5,7 @@ import { rightOf, unitNodesCount, widthOf } from '../utils/family';
 import { nextIndex } from '../utils';
 import type { Family } from '../types';
 
-const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
+const arrangeNextFamily = (family: Family, nextFamily: Family, right: number): void => {
   const unit = family.children[0]!;
   const index = nextFamily.parents.findIndex(sameAs(unit));
 
@@ -18,7 +18,7 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
   if (nextFamily.parents[nextIdx]) {
     correctUnitsShift(
       nextFamily.parents.slice(nextIdx),
-      rightOf(family) - getUnitX(nextFamily, nextFamily.parents[nextIdx]!),
+      right - getUnitX(nextFamily, nextFamily.parents[nextIdx]!),
     );
   }
 };
@@ -26,7 +26,11 @@ const arrangeNextFamily = (family: Family, nextFamily: Family): void => {
 export const arrangeFamiliesFunc =
   (store: Store) =>
   (family: Family): void => {
+    let right = 0;
+
     while (family.cid) {
+      right = Math.max(right, rightOf(family));
+
       const nextFamily = store.getFamily(family.cid);
       const unit = family.children[0]!;
 
@@ -35,7 +39,7 @@ export const arrangeFamiliesFunc =
       } else {
         if (family.parents.length === 2 && unitNodesCount(family.parents) > 2)
           unit.pos = Math.floor(family.parents[1]!.pos / 2);
-        arrangeNextFamily(family, nextFamily);
+        arrangeNextFamily(family, nextFamily, right);
       }
 
       family = nextFamily;
