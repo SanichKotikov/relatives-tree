@@ -11,6 +11,8 @@ export const createChildUnitsFunc = (store: Store) => {
   return (familyId: number, child: Node): readonly Unit[] => {
     const { left, middle, right } = getSpouseNodes([child]);
 
-    return [...toArray(left), middle, ...toArray(right)].map((nodes) => newUnit(familyId, nodes, true));
+    return [...toArray(left), middle, ...toArray(right)].map((nodes) =>
+      newUnit(familyId, nodes, true),
+    );
   };
 };

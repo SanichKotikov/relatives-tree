@@ -35,14 +35,14 @@
     "connection"
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "11.1.4",
+    "@size-limit/preset-small-lib": "11.2.0",
     "benchmark": "2.1.4",
-    "prettier": "3.3.2",
-    "size-limit": "11.1.4",
+    "prettier": "3.5.3",
+    "size-limit": "11.2.0",
     "tsm": "2.3.0",
-    "typescript": "5.5.3",
+    "typescript": "5.8.2",
     "uvu": "0.5.6",
-    "vite": "5.3.3"
+    "vite": "6.2.2"
   },
   "size-limit": [
     {

@@ -10,7 +10,9 @@ const alignGenerations = (families: readonly Family[], root: Family): void => {
   if (parents) {
     const shift = getUnitX(parents, parents.children[0]!) - getUnitX(root, root.parents[0]!);
 
-    families.filter(withType(FamilyType.child, FamilyType.root)).forEach((family) => (family.X += shift));
+    families
+      .filter(withType(FamilyType.child, FamilyType.root))
+      .forEach((family) => (family.X += shift));
   }
 };
 

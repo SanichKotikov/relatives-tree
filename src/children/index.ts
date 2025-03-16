@@ -6,7 +6,8 @@ import { createFamilyFunc } from './create';
 import { updateFamilyFunc } from './update';
 import { arrangeFamiliesFunc } from './arrange';
 
-const getUnitsWithChildren = (family: Family): Unit[] => family.children.filter(hasChildren).reverse();
+const getUnitsWithChildren = (family: Family): Unit[] =>
+  family.children.filter(hasChildren).reverse();
 
 export const inChildDirection = (store: Store): Store => {
   const createFamily = createFamilyFunc(store);

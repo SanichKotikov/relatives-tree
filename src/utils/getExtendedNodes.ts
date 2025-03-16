@@ -12,10 +12,15 @@ const extendNode = (family: Family) => (unit: Unit) =>
   }));
 
 const getParentNodes = (family: Family) =>
-  ([FamilyType.root, FamilyType.parent].includes(family.type) ? family.parents : []).map(extendNode(family));
+  ([FamilyType.root, FamilyType.parent].includes(family.type) ? family.parents : []).map(
+    extendNode(family),
+  );
 
 const getChildNodes = (family: Family) =>
-  ([FamilyType.root, FamilyType.child].includes(family.type) ? family.children : []).map(extendNode(family));
+  ([FamilyType.root, FamilyType.child].includes(family.type) ? family.children : []).map(
+    extendNode(family),
+  );
 
 const mapFamily = (family: Family) => [getParentNodes(family), getChildNodes(family)].flat(2);
-export const getExtendedNodes = (families: readonly Family[]): readonly ExtNode[] => families.map(mapFamily).flat();
+export const getExtendedNodes = (families: readonly Family[]): readonly ExtNode[] =>
+  families.map(mapFamily).flat();

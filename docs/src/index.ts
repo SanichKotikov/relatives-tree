@@ -36,7 +36,7 @@ const data: readonly { id: string; nodes: any[] }[] = [
   { id: '2DlrR0fK8', nodes: average },
   { id: '1', nodes: testTree3 },
   { id: '1', nodes: testTree4 },
-  { id: "0194884b-2d69-7177-8948-c9970c21f007", nodes: testTree5 },
+  { id: '0194884b-2d69-7177-8948-c9970c21f007', nodes: testTree5 },
 ];
 
 function drawTree(el: HTMLElement, nodes: Node[], rootId: string) {

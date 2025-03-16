@@ -16,11 +16,18 @@ const arrangeNextFamily = (family: Family, nextFamily: Family, right: number): v
   const nextIdx: number = nextIndex(index);
 
   if (nextFamily.children[nextIdx]) {
-    correctUnitsShift(nextFamily.children.slice(nextIdx), right - getUnitX(nextFamily, nextFamily.children[nextIdx]!));
+    correctUnitsShift(
+      nextFamily.children.slice(nextIdx),
+      right - getUnitX(nextFamily, nextFamily.children[nextIdx]!),
+    );
   }
 };
 
-const arrangeMiddleFamilies = (families: readonly Family[], fid: number, startFrom: number): void => {
+const arrangeMiddleFamilies = (
+  families: readonly Family[],
+  fid: number,
+  startFrom: number,
+): void => {
   const start = nextIndex(families.findIndex(withId(fid)));
   const family: Family | undefined = families[start];
 
@@ -43,7 +50,11 @@ export const arrangeFamiliesFunc =
       arrangeParentsIn(nextFamily);
 
       if (/* is middle (root) family */ !nextFamily.pid)
-        arrangeMiddleFamilies(store.rootFamilies, nextFamily.id, Math.max(right, rightOf(nextFamily)));
+        arrangeMiddleFamilies(
+          store.rootFamilies,
+          nextFamily.id,
+          Math.max(right, rightOf(nextFamily)),
+        );
 
       family = nextFamily;
     }

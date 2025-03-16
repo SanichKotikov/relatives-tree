@@ -21,6 +21,8 @@ export const arrangeParentsIn = (family: Family): void => {
   family.parents.forEach((unit) => {
     const ids = unit.nodes[0]!.children.map(prop('id'));
 
-    unit.pos = Math.floor(middle(calcShifts(family.children, ids)) - (unitNodesCount(family.parents) - 1));
+    unit.pos = Math.floor(
+      middle(calcShifts(family.children, ids)) - (unitNodesCount(family.parents) - 1),
+    );
   });
 };

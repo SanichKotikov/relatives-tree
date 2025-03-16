@@ -18,17 +18,25 @@ const getChildUnitsFunc = (store: Store) => {
   return (familyId: number, parents: readonly Node[]): readonly Unit[] => {
     const [first, second] = parents as [Node, Node | undefined];
 
-    return first.children.filter(hasSameRelation(second)).flatMap((rel) => createChildUnits(familyId, toNode(rel)));
+    return first.children
+      .filter(hasSameRelation(second))
+      .flatMap((rel) => createChildUnits(familyId, toNode(rel)));
   };
 };
 
 export const createFamilyFunc = (store: Store) => {
   const getChildUnits = getChildUnitsFunc(store);
 
-  return (parentIDs: readonly string[], type = FamilyType.root, isMain: boolean = false): Family => {
+  return (
+    parentIDs: readonly string[],
+    type = FamilyType.root,
+    isMain: boolean = false,
+  ): Family => {
     const family = newFamily(store.getNextId(), type, isMain);
 
-    const parents: Node[] = parentIDs.map((id) => store.getNode(id)).sort(byGender(store.root.gender));
+    const parents: Node[] = parentIDs
+      .map((id) => store.getNode(id))
+      .sort(byGender(store.root.gender));
 
     family.parents = [newUnit(family.id, parents)];
     family.children = getChildUnits(family.id, parents);

@@ -28,7 +28,8 @@ export const max = (arr: number[]): number => Math.max.apply(null, arr);
 export const toMap = <T extends { id: any }>(items: readonly T[]): Map<T['id'], T> =>
   new Map(items.map((item) => [item.id, { ...item }]));
 
-export const hasDiffParents = (node: Node): boolean => node.parents.map(prop('type')).filter(unique).length > 1;
+export const hasDiffParents = (node: Node): boolean =>
+  node.parents.map(prop('type')).filter(unique).length > 1;
 export const byGender = (target: Gender) => (_: Node, b: Node) => (b.gender !== target ? -1 : 1);
 
 export const relToNode = (store: Store) => (rel: Relation) => store.getNode(rel.id);

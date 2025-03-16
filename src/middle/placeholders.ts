@@ -29,7 +29,8 @@ const createParents = (store: Store): readonly Relation[] => {
   });
 };
 
-const setParents = (parents: readonly Relation[]) => (node: Mutable<Node>) => (node.parents = parents.slice());
+const setParents = (parents: readonly Relation[]) => (node: Mutable<Node>) =>
+  (node.parents = parents.slice());
 
 export const placeholders = (store: Store): Store => {
   if (!store.root.parents.length) {
