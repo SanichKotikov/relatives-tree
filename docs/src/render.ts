@@ -6,6 +6,7 @@ const X = 40;
 const uP = 4; // unit padding
 const nP = 10; // node padding
 const FONT_SIZE = 10;
+const ID_MAX_LENGTH = 10;
 
 interface IRenderOptions {
   root: string;
@@ -14,6 +15,15 @@ interface IRenderOptions {
 
 function getRandomColor() {
   return '#' + (((1 << 24) * Math.random()) | 0).toString(16);
+}
+
+function formatId(id: string): string {
+  if (id.length > ID_MAX_LENGTH) {
+    const chunk = Math.floor(ID_MAX_LENGTH / 2);
+    return id.slice(0, chunk) + '...' + id.slice(-chunk);
+  }
+
+  return id;
 }
 
 function setupCanvas(canvas: HTMLCanvasElement, size: Size) {
@@ -74,7 +84,12 @@ export function draw(
       if (family.type === 'root' || family.type === 'parent') {
         family.parents.forEach((unit) => {
           ctx.beginPath();
-          ctx.rect((family.X + unit.pos) * X + uP, y + uP, unit.nodes.length * SIZE * X - uP * 2, X * SIZE - uP * 2);
+          ctx.rect(
+            (family.X + unit.pos) * X + uP,
+            y + uP,
+            unit.nodes.length * SIZE * X - uP * 2,
+            X * SIZE - uP * 2,
+          );
           ctx.stroke();
         });
       }
@@ -111,7 +126,7 @@ export function draw(
 
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
-    ctx.fillText(node.id, x + X, y + X);
+    ctx.fillText(formatId(node.id), x + X, y + X);
 
     if (node.hasSubTree) {
       ctx.beginPath();
